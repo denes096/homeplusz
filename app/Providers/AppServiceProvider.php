@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\PropertyType;
 use App\Models\Settlement;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
