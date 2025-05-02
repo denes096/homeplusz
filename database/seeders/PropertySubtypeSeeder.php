@@ -14,13 +14,11 @@ class PropertySubtypeSeeder extends Seeder
      */
     public function run(): void
     {
-        {
-            $path=database_path('sql/property_subtypes.sql');
-            if (File::exists($path)) {
-                DB::unprepared(File::get($path));
-            } else {
-                throw new \Exception("SQL file not found: $path");
-            }
+        $path=database_path('sql/property_subtypes.sql');
+        if (File::exists($path)) {
+            DB::unprepared(File::get($path));
+        } else {
+            throw new \Exception("SQL file not found: $path");
         }
     }
 }
