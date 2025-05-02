@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class PropertySubtypeSeeder extends Seeder
+class PropertySubTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
