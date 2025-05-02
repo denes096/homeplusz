@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="Otthonplusz">
+	<meta name="description" content="Otthonplusz">
+    <meta property="og:site_name" content="Homy">
+    <meta property="og:url" content="https://otthonplusz.hu">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Otthonplusz">
+	<meta name='og:image' content='../images/assets/ogg.png'>
+	<!-- For IE -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- For Resposive Device -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- For Window Tab Color -->
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#0D1A1C">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#0D1A1C">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#0D1A1C">
+	<title>Otthonplusz</title>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" sizes="56x56" href="../images/fav-icon/icon.png">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" media="all">
+	<!-- Main style sheet -->
+	<link rel="stylesheet" type="text/css" href="../css/style.css" media="all">
+	<!-- responsive style sheet -->
+	<link rel="stylesheet" type="text/css" href="../css/responsive.css" media="all">
+
+	<!-- Fix Internet Explorer ______________________________________-->
+	<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="vendor/html5shiv.js"></script>
+			<script src="vendor/respond.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+	<div class="main-page-wrapper">
+		<!-- ===================================================
+			Loading Transition
+		==================================================== -->
+		<div id="preloader">
+			<div id="ctn-preloader" class="ctn-preloader">
+				<div class="icon"><img src="images/logo_02.jpg" alt="" class="m-auto d-block" width="64"></div>
+			</div>
+		</div>
+
+		<!-- 
+		=============================================
+			Dashboard Aside Menu
+		============================================== 
+		-->
+		<aside class="dash-aside-navbar">
+			<div class="position-relative">
+				<div class="logo d-md-block d-flex align-items-center justify-content-between plr bottom-line pb-30">
+					<a href="dashboard-index.html">
+						<img src="images/logo_02.jpg" style="width: 30% !important;" alt="otthonplusz">
+					</a>
+					<button class="close-btn d-block d-md-none"><i class="fa-light fa-circle-xmark"></i></button>
+				</div>
+				<nav class="dasboard-main-nav pt-30 pb-30 bottom-line">
+					<ul class="style-none">
+						<li class="plr"><a href="#" class="d-flex w-100 align-items-center active">
+							<img src="images/icon/icon_1_active.svg" alt="">
+							<span>Dashboard</span>
+						</a></li>
+						<li class="plr"><a href="message.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_2.svg" alt="">
+							<span>Üzenetek</span>
+						</a></li>
+						<li class="bottom-line pt-30 lg-pt-20 mb-40 lg-mb-30"></li>
+						<li><div class="nav-title">Profile</div></li>
+						<li class="plr"><a href="profile.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_3.svg" alt="">
+							<span>Profil</span>
+						</a></li>
+						<li class="plr"><a href="account-settings.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_4.svg" alt="">
+							<span>Beálítások</span>
+						</a></li>
+						<li class="plr"><a href="membership.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_5.svg" alt="">
+							<span>Tagság</span>
+						</a></li>
+						<li class="bottom-line pt-30 lg-pt-20 mb-40 lg-mb-30"></li>
+						<li><div class="nav-title">Listázás</div></li>
+						<li class="plr"><a href="properties-list.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_6.svg" alt="">
+							<span>Termékek</span>
+						</a></li>
+						<li class="plr"><a href="add-property.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_7.svg" alt="">
+							<span>Termék hozzáadása</span>
+						</a></li>
+						<li class="plr"><a href="favourites.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_8.svg" alt="">
+							<span>Kedvencek</span>
+						</a></li>
+						<li class="plr"><a href="saved-search.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_9.svg" alt="">
+							<span>Mentett keresések</span>
+						</a></li>
+						<li class="plr"><a href="review.html" class="d-flex w-100 align-items-center">
+							<img src="images/icon/icon_10.svg" alt="">
+							<span>Kommentek</span>
+						</a></li>
+					</ul>
+				</nav>
+				<!-- /.dasboard-main-nav -->
+				<div class="profile-complete-status bottom-line pb-35 plr">
+					<div class="progress-value fw-500">82%</div>
+					<div class="progress-line position-relative">
+						<div class="inner-line" style="width:80%;"></div>
+					</div>
+					<p>Profile Complete</p>
+				</div>
+				<!-- /.profile-complete-status -->
+
+				<div class="plr">
+					<a href="#" class="d-flex w-100 align-items-center logout-btn">
+						<div class="icon tran3s d-flex align-items-center justify-content-center rounded-circle"><img src="images/icon/icon_41.svg" alt=""></div>
+						<span>Kilépés</span>
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- /.dash-aside-navbar -->
+
+		<!-- 
+		=============================================
+			Dashboard Body
+		============================================== 
+		-->
+		<div class="dashboard-body">
+			<div class="position-relative">
+				<!-- ************************ Header **************************** -->
+				<header class="dashboard-header">
+					<div class="d-flex align-items-center justify-content-end">
+						<h4 class="m0 d-none d-lg-block">Dashboard</h4>
+						<button class="dash-mobile-nav-toggler d-block d-md-none me-auto">
+							<span></span>
+						</button>
+						<form action="#" class="search-form ms-auto">
+							<input type="text" placeholder="Keresés">
+							<button><img src="../images/lazy.svg" data-src="images/icon/icon_43.svg" alt="" class="lazy-img m-auto"></button>
+						</form>
+						<div class="profile-notification position-relative dropdown-center ms-3 ms-md-5 me-4">
+							<button class="noti-btn dropdown-toggle" type="button" id="notification-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								<img src="../images/lazy.svg" data-src="images/icon/icon_11.svg" alt="" class="lazy-img">
+								<div class="badge-pill"></div>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="notification-dropdown">
+								<li>
+									<h4>Megjegyzések</h4>
+									<ul class="style-none notify-list">
+										<li class="d-flex align-items-center unread">
+											<img src="../images/lazy.svg" data-src="images/icon/icon_36.svg" alt="" class="lazy-img icon">
+											<div class="flex-fill ps-2">
+												<h6>3 új üzeneted érkezett</h6>
+												<span class="time">3 órája</span>
+											</div>
+										</li>
+										<li class="d-flex align-items-center">
+											<img src="../images/lazy.svg" data-src="images/icon/icon_37.svg" alt="" class="lazy-img icon">
+											<div class="flex-fill ps-2">
+												<h6>A terméked hozzá lett adva a listához</h6>
+												<span class="time">1 napja</span>
+											</div>
+										</li>
+										<li class="d-flex align-items-center unread">
+											<img src="../images/lazy.svg" data-src="images/icon/icon_38.svg" alt="" class="lazy-img icon">
+											<div class="flex-fill ps-2">
+												<h6>Meeting</h6>
+												<span class="time">1 órája</span>
+											</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="d-none d-md-block me-3">
+							<a href="add-property.html" class="btn-lila rounded-pill px-4 py-3" style="background-color: purple; color: #fff;"><span>Hozzáadás listához</span> <i class="fa-thin fa-arrow-up-right"></i></a>
+						</div>
+						<div class="user-data position-relative">
+							<button class="user-avatar online position-relative rounded-circle dropdown-toggle" type="button" id="profile-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								<img src="../images/lazy.svg" data-src="images/avatar_01.jpg" alt="" class="lazy-img">
+							</button>
+							<!-- /.user-avatar -->
+							<div class="user-name-data">
+								<ul class="dropdown-menu" aria-labelledby="profile-dropdown">
+									<li>
+										<a class="dropdown-item d-flex align-items-center" href="profile.html"><img src="../images/lazy.svg" data-src="images/icon/icon_23.svg" alt="" class="lazy-img"><span class="ms-2 ps-1">Profil</span></a>
+									</li>
+									<li>
+										<a class="dropdown-item d-flex align-items-center" href="account-settings.html"><img src="../images/lazy.svg" data-src="images/icon/icon_24.svg" alt="" class="lazy-img"><span class="ms-2 ps-1">Beállítások</span></a>
+									</li>
+									<li>
+										<a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><img src="../images/lazy.svg" data-src="images/icon/icon_25.svg" alt="" class="lazy-img"><span class="ms-2 ps-1">Profil törlése</span></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- /.user-data -->
+					</div>
+				</header>
+				<!-- End Header -->
+
+				<div class="row gx-0 align-items-center">
+					<div class="offcanvas compose-mail-offcanvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+						<div class="compose-new-email-container">
+							<div class="new-email-header position-relative">
+								<div class="btn-group">
+									<a data-bs-toggle="collapse" href="#CC-input" role="button" aria-expanded="false" aria-controls="collapseExample">Cc</a>
+									<a data-bs-toggle="collapse" href="#BCC-input" role="button" aria-expanded="false" aria-controls="collapseExample">Bcc</a>
+								</div>
+								<div class="input-group d-flex align-items-center">
+									<div class="text-center" style="width: 60px;">To</div>
+									<input type="email" class="flex-fill" placeholder="payoneer@inquiry.com">
+								</div>
+								<div class="collapse" id="CC-input">
+									<div class="input-group d-flex align-items-center">
+										<div class="text-center" style="width: 60px;">Cc</div>
+										<input type="email" class="flex-fill" placeholder="payoneer@inquiry.com">
+									</div>
+								</div>
+								<div class="collapse" id="BCC-input">
+									<div class="input-group d-flex align-items-center">
+										<div class="text-center" style="width: 60px;">Bcc</div>
+										<input type="email" class="flex-fill" placeholder="payoneer@inquiry.com">
+									</div>
+								</div>
+							</div>
+							<!-- /.new-email-header -->
+							<div class="compose-body">
+								<textarea>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus accusamus exercitationem saepe laudantium consectetur dignissimos ducimus nemo! Minus beatae debitis consequatur quas blanditiis deleniti officiis delectus iure fuga! Reiciendis, cumque?</textarea>
+							</div>
+							<!-- /.compose-body -->
+
+							<div class="compose-email-footer d-flex justify-content-between">
+								<div class="d-flex align-items-center">
+									<div class="insert-file position-relative me-3">
+										<img src="../images/lazy.svg" data-src="images/icon/icon_32.svg" alt="" class="lazy-img">
+										<input type="file" name="uploadImg" placeholder="" title="Insert File">
+									</div>
+									<button class="insert-emoji me-3"><img src="../images/lazy.svg" data-src="images/icon/icon_33.svg" alt="" class="lazy-img"></button>
+									<div class="insert-file position-relative me-3">
+										<img src="../images/lazy.svg" data-src="images/icon/icon_34.svg" alt="" class="lazy-img">
+										<input type="file" name="uploadImg" placeholder="" title="Insert Image">
+									</div>
+								</div>
+
+								<div class="d-flex align-items-center">
+									<a href="#" class="delete-mail me-3"><img src="../images/lazy.svg" data-src="images/icon/icon_35.svg" alt="" class="lazy-img"></a>
+									<a href="#" class="reply-btn tran3s">Reply</a>
+								</div>
+							</div>
+							<!-- /.compose-email-footer -->
+						</div>
+						<!-- /.compose-new-email-container -->
+						<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					</div>
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-center justify-content-between">
+							<h2 class="main-title d-block d-lg-none m0">Messages</h2>
+                            <a class="new-message-compose rounded-circle" data-bs-toggle="offcanvas" href="#offcanvasScrolling" role="button" aria-controls="offcanvasScrolling">+</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="message-pagination ps-lg-4 ps-xxl-5 d-flex align-items-center justify-content-between md-mt-40">
+                            <a href="javascript:void()" class="prev-msg"><img src="../images/lazy.svg" data-src="images/icon/icon_26.svg" alt="" class="lazy-img"></a>
+                            <div class="d-flex align-items-center">
+								<a href="#"><i class="bi bi-chevron-left"></i></a>
+								<span>1-5 of 120</span>
+								<a href="#"><i class="bi bi-chevron-right"></i></a>
+                            </div>
+                            <a href="javascript:void()" class="next-msg"><img src="../images/lazy.svg" data-src="images/icon/icon_27.svg" alt="" class="lazy-img"></a>
+                        </div>
+                        <!-- /.message-pagination -->
+                    </div>
+                </div>
+
+				<div class="bg-white card-box border-20 p0 mt-30">
+                    <div class="message-wrapper">
+						<div class="row gx-0">
+							<div class="col-lg-4">
+								<div class="message-sidebar pt-20">
+									<div class="ps-3 pe-3 ps-xxl-4 pe-xxl-4">
+										<div class="d-flex align-items-center justify-content-between">
+											<div class="page-title fw-500">Beérkező</div>
+											<div class="action-dots float-end">
+												<button class="action-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+													<span></span>
+												</button>
+												<ul class="dropdown-menu dropdown-menu-end">
+												<li><a class="dropdown-item" href="#">Elkűldött</a></li>
+												<li><a class="dropdown-item" href="#">Fontos</a></li>
+												<li><a class="dropdown-item" href="#">Terv</a></li>
+												<li><a class="dropdown-item" href="#">Lomtár</a></li>
+												</ul>
+											</div>
+										</div>
+										<form action="#" class="search-form mt-20 mb-20">
+											<input type="text" placeholder="Keresés a kontaktok között">
+											<button><img src="../images/lazy.svg" data-src="images/icon/icon_43.svg" alt="" class="lazy-img m-auto"></button>
+										</form>
+
+										<div class="message_filter d-flex align-items-center justify-content-between mb-20" id="module_btns">
+											<button class="filter_btn active">Összes</button>
+											<button class="filter_btn"><span style="background:#FF4545;"></span> Olvasott</button>
+											<button class="filter_btn"><span style="background:#3BDA84;"></span> Nemolvasott</button>
+											<button class="filter_btn"><span style="background:#50C0FF;"></span> Primary</button>
+										</div>
+									</div>
+									<div class="email-read-panel">
+										<div class="email-list-item ps-3 pe-3 ps-xxl-4 pe-xxl-4 read">
+											<div class="email-short-preview position-relative">
+												<div class="d-flex align-items-center justify-content-between">
+													<div class="sender-name"> Gipsz Jakab.</div>
+													<div class="date">Augusztus 22</div>
+												</div>
+												<div class="mail-sub">Tárgy</div>
+												<div class="mail-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit omnis delectus fugit? Perferendis facere quas, reprehenderit omnis suscipit ut harum nisi accusamus ratione ipsum quod, quae ex laboriosam tempora illum!</div>
+												<div class="attached-file-preview d-flex align-items-center mt-15">
+													<div class="file d-flex align-items-center me-2">
+														<img src="../images/lazy.svg" data-src="images/icon/icon_28.svg" alt="" class="lazy-img me-2">
+														<span>csatolmány</span>
+													</div>
+												</div>
+												<!-- /.attached-file-preview -->
+											</div>
+											<!-- /.email-short-preview -->
+										</div>
+										<!-- /.email-list-item -->
+
+
+
+
+										<div class="email-list-item ps-3 pe-3 ps-xxl-4 pe-xxl-4 read">
+											<div class="email-short-preview position-relative">
+												<div class="d-flex align-items-center justify-content-between">
+													<div class="sender-name">xxx</div>
+													<div class="date">xxx</div>
+												</div>
+												<div class="mail-sub">xxxxxx</div>
+												<div class="mail-text">xxxxx</div>
+											</div>
+											<!-- /.email-short-preview -->
+										</div>
+										<!-- /.email-list-item -->
+									</div>
+									<!-- /.email-read-panel -->
+									
+								</div>
+								<!-- /.message-sidebar -->
+							</div>
+							<div class="col-lg-8">
+								<div class="open-email-container pb-40">
+									<div class="email-header divider d-flex justify-content-between ps-4 pe-4 ps-xxl-5 pe-xxl-5">
+										<div class="sender-info d-flex align-items-center">
+											<img src="../images/lazy.svg" data-src="images/logo_02.png" alt="" class="lazy-img logo">
+											<div class="ps-3">
+												<div class="sender-name">NÉv</div>
+												<div class="sender-email">mail@mail.com</div>
+											</div>
+										</div>
+										<div class="email-info">
+											<div class="time">12:45</div>
+											<div class="d-flex align-items-center justify-content-end">
+												<button class="delete-email"><img src="../images/lazy.svg" data-src="images/icon/icon_29.svg" alt="" class="lazy-img"></button>
+												<button class="reply-email ms-3 me-3"><img src="../images/lazy.svg" data-src="images/icon/icon_30.svg" alt="" class="lazy-img"></button>
+												<div class="action-dots float-end">
+													<button class="action-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+														<span></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-end">
+													  <li><a class="dropdown-item" href="#">Válasz</a></li>
+													  <li><a class="dropdown-item" href="#">Előrehelyezés</a></li>
+													  <li><a class="dropdown-item" href="#">Blokkolás</a></li>
+													  <li><a class="dropdown-item" href="#">Törlés</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /.email-header -->
+
+									<div class="email-body divider">
+										<div class="ps-4 pe-4 ps-xxl-5 pe-xxl-5">
+											<h2>Tárgy</h2>
+											<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet doloribus assumenda similique perferendis reprehenderit, at eum quidem, dolorem quisquam beatae corporis placeat cumque asperiores consectetur recusandae quo, soluta aperiam ab? </p>
+											<p>xxxxxxxxxxxxxxxxxxxx</p>
+											<ul class="style-none mb-30">
+												<li>xxxxxxxxxxxx</li>
+												<li>xxxxxxxxxxxxxxxx</li>
+											</ul>
+											<p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
+										</div>
+									</div>
+									<!-- /.email-body -->
+
+									<div class="email-footer">
+										<div class="ps-4 pe-4 ps-xxl-5 pe-xxl-5">
+											<div class="attachments mb-30">
+												<div class="d-flex justify-content-between mb-5">
+													<h6 class="m0">Csatolmányok</h6>
+													<a href="#" class="all-download">Letöltés</a>
+												</div>
+												<div class="d-flex">
+													<a href="#" class="file tran3s d-flex align-items-center mt-10" download>
+														<div class="icon rounded-circle d-flex align-items-center justify-content-center"><img src="../images/lazy.svg" data-src="images/icon/icon_31.svg" alt="" class="lazy-img"></div>
+														<div class="ps-2">
+															<div class="file-name">project-details.pdf</div>
+															<div class="file-size">2.3mb</div>
+														</div>
+													</a>
+													<a href="#" class="file tran3s d-flex align-items-center mt-10" download>
+														<div class="icon rounded-circle d-flex align-items-center justify-content-center"><img src="../images/lazy.svg" data-src="images/icon/icon_31.svg" alt="" class="lazy-img"></div>
+														<div class="ps-2">
+															<div class="file-name">form.pdf</div>
+															<div class="file-size">1.3mb</div>
+														</div>
+													</a>
+												</div>
+											</div>
+
+											<div class="compose-new-email-container">
+												<div class="new-email-header position-relative">
+													<div class="btn-group">
+														<a data-bs-toggle="collapse" href="#CC-input" role="button" aria-expanded="false" aria-controls="collapseExample">Cc</a>
+														<a data-bs-toggle="collapse" href="#BCC-input" role="button" aria-expanded="false" aria-controls="collapseExample">Bcc</a>
+													</div>
+													<div class="input-group d-flex align-items-center">
+														<div class="text-center" style="width: 60px;">To</div>
+														<input type="email" class="flex-fill" placeholder="mail@mail.com">
+													</div>
+													<div class="collapse" id="CC-input">
+														<div class="input-group d-flex align-items-center">
+															<div class="text-center" style="width: 60px;">Cc</div>
+															<input type="email" class="flex-fill" placeholder="mail@mail.com">
+														</div>
+													</div>
+													<div class="collapse" id="BCC-input">
+														<div class="input-group d-flex align-items-center">
+															<div class="text-center" style="width: 60px;">Bcc</div>
+															<input type="email" class="flex-fill" placeholder="mail@mail.com">
+														</div>
+													</div>
+												</div>
+												<!-- /.new-email-header -->
+												<div class="compose-body">
+													<textarea>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores, ea harum placeat numquam nihil temporibus ut natus impedit id magnam accusamus, error nemo sint vero, corporis unde sapiente tempore tenetur!</textarea>
+												</div>
+												<!-- /.compose-body -->
+
+												<div class="compose-email-footer d-flex justify-content-between">
+													<div class="d-flex align-items-center">
+														<div class="insert-file position-relative me-3">
+															<img src="../images/lazy.svg" data-src="images/icon/icon_32.svg" alt="" class="lazy-img">
+															<input type="file" name="uploadImg" placeholder="" title="Insert File">
+														</div>
+														<button class="insert-emoji me-3"><img src="../images/lazy.svg" data-src="images/icon/icon_33.svg" alt="" class="lazy-img"></button>
+														<div class="insert-file position-relative me-3">
+															<img src="../images/lazy.svg" data-src="images/icon/icon_34.svg" alt="" class="lazy-img">
+															<input type="file" name="uploadImg" placeholder="" title="Insert Image">
+														</div>
+													</div>
+
+													<div class="d-flex align-items-center">
+														<a href="#" class="delete-mail me-3"><img src="../images/lazy.svg" data-src="images/icon/icon_35.svg" alt="" class="lazy-img"></a>
+														<a href="#" class="reply-btn tran3s">Üzenet küldése</a>
+													</div>
+												</div>
+												<!-- /.compose-email-footer -->
+											</div>
+											<!-- /.compose-new-email-container -->
+										</div>
+									</div>
+									<!-- /.email-footer -->
+								</div>
+								<!-- /.open-email-container -->
+							</div>
+						</div>
+					</div>
+					<!-- /.message-wrapper -->
+                </div>
+				<!-- /.card-box -->				
+			</div>
+		</div>
+		<!-- /.dashboard-body -->
+
+
+
+		<!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+                <div class="container">
+                    <div class="remove-account-popup text-center modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<img src="../images/lazy.svg" data-src="images/icon/icon_22.svg" alt="" class="lazy-img m-auto">
+						<h2>Are you sure?</h2>
+						<p>Are you sure to delete your account? All data will be lost.</p>
+						<div class="button-group d-inline-flex justify-content-center align-items-center pt-15">
+							<a href="#" class="confirm-btn fw-500 tran3s me-3">Yes</a>
+							<button type="button" class="btn-close fw-500 ms-3" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+						</div>
+                    </div>
+                    <!-- /.remove-account-popup -->
+                </div>
+            </div>
+        </div>
+		
+
+
+		<button class="scroll-top">
+			<i class="bi bi-arrow-up-short"></i>
+		</button>
+
+
+
+
+		<!-- Optional JavaScript _____________________________  -->
+
+		<!-- jQuery first, then Bootstrap JS -->
+		<!-- jQuery -->
+		<script src="../vendor/jquery.min.js"></script>
+		<!-- Bootstrap JS -->
+		<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- WOW js -->
+		<script src="../vendor/wow/wow.min.js"></script>
+		<!-- Slick Slider -->
+		<script src="../vendor/slick/slick.min.js"></script>
+		<!-- Fancybox -->
+		<script src="../vendor/fancybox/fancybox.umd.js"></script>
+		<!-- Lazy -->
+		<script src="../vendor/jquery.lazy.min.js"></script>
+		<!-- js Counter -->
+		<script src="../vendor/jquery.counterup.min.js"></script>
+		<script src="../vendor/jquery.waypoints.min.js"></script>
+		<!-- Nice Select -->
+		<script src="../vendor/nice-select/jquery.nice-select.min.js"></script>
+		<!-- validator js -->
+		<script src="../vendor/validator.js"></script>
+
+		<!-- Theme js -->
+		<script src="../js/theme.js"></script>
+	</div> <!-- /.main-page-wrapper -->
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+INSERT INTO `settlement_parts` (`id`, `settlement_id`, `name`) VALUES
+	(1, 5, 'Dombosváros'),
+	(2, 5, 'Érdliget'),
+	(3, 5, 'Fenyves Parkváros'),
+	(4, 5, 'Istvántelep'),
+	(5, 5, 'Ófalu'),
+	(6, 5, 'Parkváros'),
+	(7, 5, 'Postástelep'),
+	(8, 5, 'Sasváros'),
+	(9, 5, 'Tisztviselőtelep'),
+	(10, 5, 'Tusculanum'),
+	(11, 5, 'Újfalu'),
+	(12, 5, 'Újtelep'),
+	(13, 5, 'Városközpont'),
+	(14, 5, 'Vincellér');
