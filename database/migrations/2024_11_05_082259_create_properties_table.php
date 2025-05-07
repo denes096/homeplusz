@@ -21,10 +21,14 @@ return new class extends Migration
             $table->enum('ad_type', ['sell', 'rent', 'buy'])->default('sell');
             $table->float('price');
             $table->text('images')->nullable();
+            $table->string('property_code', 10)->unique()->nullable();
+
             $table->foreignId('settlement_id')->constrained();
             $table->foreignId('settlement_part_id')->nullable()->constrained();
             $table->foreignId('property_type_id')->constrained();
             $table->foreignId('property_subtype_id')->nullable()->constrained();
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('user_id')->constrained();
 
             $table->timestamps();
             $table->softDeletes();

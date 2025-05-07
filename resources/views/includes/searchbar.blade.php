@@ -58,7 +58,7 @@
                                         <label class="room fw-normal d-flex justify-content-center" for="rooms">Szobaszám</label>
                                         <div class="d-flex justify-content-center">
                                             <input type="number" name="number_of_rooms_min" value="{{ request('number_of_rooms_min') }}" class="col-3">
-                                            <span class="px-2">to</span>
+                                            <span class="px-2">-</span>
                                             <input name="number_of_rooms_max" type="number" value="{{ request('number_of_rooms_max') }}" class="col-3">
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                         <label class="size fw-normal d-flex justify-content-center" for="size">Méret</label>
                                         <div class="d-flex justify-content-center">
                                             <input type="number" name="property_area_min" value="{{ request('property_area_min') }}" class="col-4">
-                                            <span class="px-2">to</span>
+                                            <span class="px-2">-</span>
                                             <input name="property_area_max" type="number" value="{{ request('property_area_max') }}" class="col-4">
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                         <label class="price fw-normal d-flex justify-content-center" for="price">Ár</label>
                                         <div class="d-flex justify-content-center">
                                             <input type="number" name="price_min" value="{{ request('price_min') }}" class="col-4">
-                                            <span class="px-2">to</span>
+                                            <span class="px-2">-</span>
                                             <input name="price_max" type="number" value="{{ request('price_max') }}" class="col-4">
                                         </div>
                                     </div>
@@ -105,6 +105,11 @@
                                 </div>
 
                             </div> <!-- /.d-md-flex -->
+                            <div class="w-100 d-flex justify-content-end mt-3 input-box-one">
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#detailedSearchCollapse" aria-expanded="false" aria-controls="detailedSearchCollapse">
+                                    Részletes keresés
+                                </button>
+                            </div>
                         </form>
                     </div> <!-- /.bg-wrapper -->
                 </div> <!-- /.search-wrapper-one -->

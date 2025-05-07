@@ -31,6 +31,7 @@ Route::group([
     Route::crud('information-category', 'InformationCategoryCrudController');
     Route::crud('information', 'InformationCrudController');
     Route::crud('static-page', 'StaticPageCrudController');
+    Route::crud('project', 'ProjectCrudController');
 }); // this should be the absolute last line of this file
 
 /**

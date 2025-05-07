@@ -32,3 +32,18 @@
 @push('after_scripts')
     @basset(base_path('vendor/backpack/crud/src/resources/assets/js/common.js'))
 @endpush
+
+
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('ckeditor')) {
+            CKEDITOR.replace('ckeditor', {
+                height: 300,
+                removePlugins: 'elementspath',
+                resize_enabled: false
+            });
+        }
+    });
+</script>

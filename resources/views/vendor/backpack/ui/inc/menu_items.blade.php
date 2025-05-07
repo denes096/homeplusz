@@ -34,3 +34,4 @@
 <x-backpack::menu-item title="Information categories" icon="la la-question" :link="backpack_url('information-category')" />
 <x-backpack::menu-item title="Information" icon="la la-question" :link="backpack_url('information')" />
 <x-backpack::menu-item title="Static pages" icon="la la-question" :link="backpack_url('static-page')" />
+<x-backpack::menu-item title="Projects" icon="la la-question" :link="backpack_url('project')" />

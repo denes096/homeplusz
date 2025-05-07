@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,6 +33,17 @@ class Property extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($property) {
+            $lastCode = static::max('property_code');
+
+            $nextNumber = $lastCode ? intval($lastCode) + 1 : 1;
+            $property->property_code = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +81,11 @@ class Property extends Model
         return $this->belongsTo(SettlementPart::class);
     }
 
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class);
@@ -77,6 +94,11 @@ class Property extends Model
     public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(PropertyAttribute::class)->withPivot('value');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
     /*
     |--------------------------------------------------------------------------

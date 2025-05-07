@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\PropertyRequest;
 use App\Models\Label;
+use App\Models\Project;
 use App\Models\PropertyAttribute;
 use App\Models\PropertySubtype;
 use App\Models\PropertyType;
 use App\Models\Settlement;
 use App\Models\SettlementPart;
+use App\Models\UniqueCode;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\Route;
@@ -140,6 +142,49 @@ class PropertyCrudController extends CrudController
             ],
             'tab' => 'Base'
         ]);
+        CRUD::addField([
+            'label' => 'Projekt',
+            'type' => 'select',
+            'name' => 'project_id',
+            'entity' => 'project',
+            'attribute' => 'name',
+            'model' => Project::class,
+            'allows_null' => true, // This option allows no selection by default
+            'default' => null,     // Explicitly sets the default value to null (optional)
+            'tab' => 'Base',
+        ]);
+        CRUD::addField([
+            'label' => "Ingatlan azonosító",
+            'type' => 'number',
+            'name' => 'property_code',
+            'value' => UniqueCode::getNextCode(),
+            'tab' => 'Base',
+        ]);
+
+        CRUD::addField([
+            'name' => 'custom_script',
+            'type' => 'custom_html',
+            'value' => '<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const projectSelect = document.querySelector("[name=project_id]");
+            const codeInput = document.querySelector("[name=property_code]");
+
+            if (projectSelect) {
+                projectSelect.addEventListener("change", function () {
+                    const projectId = this.value;
+                    if (projectId) {
+
+                                    codeInput.value = 5101010;
+                    } else {
+                        codeInput.value = "";
+                    }
+                });
+            }
+        });
+    </script>',
+            'tab' => 'Base',
+        ]);
+
         CRUD::addField([   // select_grouped
             'label' => 'Település',
             'type' => 'select',
@@ -295,6 +340,50 @@ class PropertyCrudController extends CrudController
             ],
             'tab' => 'Base'
         ]);
+        CRUD::addField([
+           'label' => 'Projekt',
+           'type' => 'select',
+           'name' => 'project_id',
+           'entity' => 'project',
+           'attribute' => 'name',
+            'model' => Project::class,
+            'tab' => 'Base',
+            'allows_null' => true, // This option allows no selection by default
+            'default' => null,     // Explicitly sets the default value to null (optional)
+        ]);
+
+        CRUD::addField([
+            'label' => "Ingatlan azonosító",
+            'type' => 'number',
+            'name' => 'property_code',
+            'value' => UniqueCode::getNextCode()
+        ]);
+
+        CRUD::addField([
+            'name' => 'custom_script',
+            'type' => 'custom_html',
+            'value' => '<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const projectSelect = document.querySelector("[name=project_id]");
+            const codeInput = document.querySelector("[name=project_code]");
+
+            if (projectSelect) {
+                projectSelect.addEventListener("change", function () {
+                    const projectId = this.value;
+                    if (projectId) {
+
+                                    codeInput.value = 5101010;
+                    } else {
+                        codeInput.value = "";
+                    }
+                });
+            }
+        });
+    </script>',
+            'tab' => 'Base',
+        ]);
+
+
         CRUD::addField([   // select_grouped
             'label' => 'Település',
             'type' => 'select',
