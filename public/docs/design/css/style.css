@@ -138,6 +138,10 @@ p {
   background: #F8F8F8;
 }
 
+.bg-theme{
+  background-color: #96006B !important;
+}
+
 .dark-bg {
   background: #000;
 }
@@ -1896,6 +1900,10 @@ iframe {
 }
 .title-one em span {
   color: #96006B;
+}
+
+.search-id-btn{
+  background-color: #00B579 !important;
 }
 
 .btn-one {

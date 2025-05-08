@@ -55,6 +55,13 @@
                             @endhasanyrole
 
                             <li class="nav-item dropdown">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff"><button type="submit" class="">Keres<i class="bi bi-arrow-up-right"></i></button></span>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
                                 <a href="/bemutatkozas" class="nav-link"><span>Bemutatkozás</span></a>
                             </li>
                             <li class="nav-item dropdown mega-dropdown-sm">
