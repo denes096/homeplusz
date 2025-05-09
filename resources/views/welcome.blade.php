@@ -78,66 +78,49 @@
             <div class="title-one mb-60 lg-mb-40 wow fadeInUp">
                 <a href="project_04.html"><h2 class="font-garamond col-6 nav-item">Projektjeink</h2></a>
             </div>
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    @foreach($projects as $project)
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $loop->index}}" class="{{ $loop->index == 0 ? 'active' : '' }}" aria-current="true" aria-label="Slide {{$loop->index + 1}}"></button>
+                    @endforeach
+                </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div id="isotop-gallery-wrapper" class="grid-1column lg-pt-30">
-                            <div class="grid-sizer"></div>
-                            <div class="isotop-item house flat pb-150">
-                                <div class="project-block-three mt-80 lg-mt-50">
-                                    <div class="row gx-xxl-5 align-items-center">
+                    @foreach($projects as $project)
+                        <div class="carousel-item {{ $loop->index == 0 ? 'active': '' }}">
+                            <div id="isotop-gallery-wrapper" class="grid-1column lg-pt-30">
+                                <div class="grid-sizer"></div>
+                                <div class="isotop-item house flat pb-150">
+                                    <div class="project-block-three mt-80 lg-mt-50">
+                                        <div class="row gx-xxl-5 align-items-center">
 
-                                        <div class="col-lg-6 ms-auto">
-                                            <div class="caption ps-xxl-5">
-                                                <div class="tag fw-500 text-uppercase">X PROJECT II</div>
-                                                <h3 class="nav-item"><a href="project_list.html">Lorem Ipsum</a></h3>
-                                                <p class="fs-24 pt-45 lg-pt-30 md-pt-10 pb-50 lg-pb-30 md-pb-10">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx <br> xxxxxxxxxxxxxxxxxxxxxxxxxx </p>
+                                            <div class="col-lg-6 ms-auto">
+                                                <div class="caption ps-xxl-5">
+                                                    <div class="tag fw-500 text-uppercase">{{ $project->project_code }}</div>
+                                                    <h3 class="nav-item"><a href="/projekt/{{ $project->id }}">{{ $project->name }}</a></h3>
+                                                    <p class="fs-24 pt-45 lg-pt-30 md-pt-10 pb-50 lg-pb-30 md-pb-10">
+                                                        {{  $project->title }}
+                                                    </p>
+                                                </div>
+                                                <!-- /.caption -->
                                             </div>
-                                            <!-- /.caption -->
-                                        </div>
 
-                                        <div class="col-lg-6">
-                                            <figure class="image-wrapper position-relative z-1 overflow-hidden">
-                                                <a href="images/project/img_22.jpg" class="d-block position-relative" data-fancybox data-caption="Apartments on Vintage City">
-                                                    <img src="images/project/img_22.jpg" alt="" class="w-100 tran5s">
-                                                </a>
-                                            </figure>
+                                            <div class="col-lg-6">
+                                                <figure class="image-wrapper position-relative z-1 overflow-hidden">
+                                                   <div class="img-slider-btn">
+                                                        <a href="{{ $project->getImageUrls()[0] }}"class="d-block position-relative" data-fancybox="{{ $project->id }}" data-caption="{{ $project->id }}">
+                                                            <img src="{{ $project->getImageUrls()[0] }}" alt="" class="w-100 tran5s">
+                                                        </a>
+                                                    </div>
+                                                </figure>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- /.project-block-three -->
                                 </div>
-                                <!-- /.project-block-three -->
                             </div>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div id="isotop-gallery-wrapper" class="grid-1column lg-pt-30">
-                            <div class="grid-sizer"></div>
-                            <div class="isotop-item house flat pb-150">
-                                <div class="project-block-three mt-80 lg-mt-50">
-                                    <div class="row gx-xxl-5 align-items-center">
+                    @endforeach
 
-                                        <div class="col-lg-6 ms-auto">
-                                            <div class="caption ps-xxl-5">
-                                                <div class="tag fw-500 text-uppercase">X PROJECT I</div>
-                                                <h3 class="nav-item"><a href="project_list.html">Lorem OAKFKAMf</a></h3>
-                                                <p class="fs-24 pt-45 lg-pt-30 md-pt-10 pb-50 lg-pb-30 md-pb-10">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx <br> xxxxxxxxxxxxxxxxxxxxxxxxxx </p>
-                                            </div>
-                                            <!-- /.caption -->
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <figure class="image-wrapper position-relative z-1 overflow-hidden">
-                                                <a href="images/project/img_22.jpg" class="d-block position-relative" data-fancybox data-caption="Apartments on Vintage City">
-                                                    <img src="images/project/img_22.jpg" alt="" class="w-100 tran5s">
-                                                </a>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.project-block-three -->
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>

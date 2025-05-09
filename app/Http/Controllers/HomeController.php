@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\LabelService;
+use App\Services\ProjectService;
 use App\Services\PropertyService;
 use App\Services\SettlementService;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class HomeController extends Controller
         private LabelService $labelService,
         private PropertyService $propertyService,
         private SettlementService $settlementService,
+        private ProjectService $projectService,
     )
     {
     }
@@ -51,6 +53,7 @@ class HomeController extends Controller
             'featuredProperties' => $featuredProperties,
             'propertiesForLabels' => $propertiesForLabels,
             'settlementGroups' => $settlementGroups,
+            'projects' => $this->projectService->getAll(),
         ]);
     }
 }

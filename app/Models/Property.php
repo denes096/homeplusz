@@ -38,10 +38,7 @@ class Property extends Model
         parent::boot();
 
         static::creating(function ($property) {
-            $lastCode = static::max('property_code');
-
-            $nextNumber = $lastCode ? intval($lastCode) + 1 : 1;
-            $property->property_code = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+            $property->user_id = backpack_user()->id;
         });
     }
 

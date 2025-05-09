@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -39,6 +40,23 @@ class Project extends Model
     public function properties(): HasMany
     {
         return $this->hasMany(Property::class);
+    }
+
+    function shortDesc($maxLength = 200) {
+        if (mb_strlen($this->description, 'UTF-8') > $maxLength) {
+            return mb_substr($this->description, 0, $maxLength, 'UTF-8') . '...';
+        }
+        return $this->description;
+    }
+
+    public function getImageUrls()
+    {
+        $r = [];
+        foreach (json_decode($this->images) as $image) {
+            $r[] = Storage::url($image);
+        }
+
+        return $r;
     }
 
     /*

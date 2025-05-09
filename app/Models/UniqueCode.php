@@ -9,9 +9,29 @@ class UniqueCode extends Model
 {
     //
     protected $table = 'unique_code';
+    public $timestamps = false;
+    protected $primaryKey = 'code'; // ez a meglévő egyetlen oszlop
+    public $incrementing = false;   // nem automatikusan növekvő
+    protected $keyType = 'int';     // ha integer típusú
 
     public static function getNextCode()
     {
-        return static::first()->code + 1;
+        return static::getCurrentCode() + 1;
+    }
+
+    public static function getCurrentCode()
+    {
+        return static::first()->code;
+    }
+
+    public static function updateCode(int $code)
+    {
+        $record = static::first(); // vagy where(...) ha több van
+        if ($record->code < $code) {
+            $record->code = $code;
+            $record->save();
+        } else {
+
+        }
     }
 }

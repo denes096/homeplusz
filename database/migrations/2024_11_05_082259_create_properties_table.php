@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('settlement_part_id')->nullable()->constrained();
             $table->foreignId('property_type_id')->constrained();
             $table->foreignId('property_subtype_id')->nullable()->constrained();
-            $table->foreignId('project_id')->constrained();
+            $table->foreignId('project_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
 
             $table->timestamps();

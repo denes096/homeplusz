@@ -6,6 +6,7 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\UniqueCode;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class ProjectCrudController
@@ -101,5 +102,57 @@ class ProjectCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function store()
+    {
+
+        $this->crud->hasAccessOrFail('create');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        // register any Model Events defined on fields
+        $this->crud->registerFieldEvents();
+
+        // insert item in the db
+        $itemAttributes = $this->crud->getStrippedSaveRequest($request);
+        $item = $this->crud->create($itemAttributes);
+
+        UniqueCode::updateCode((int)$itemAttributes['project_code']);
+
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $request = $this->crud->validateRequest();
+
+        // frissítés maga
+        $itemAttributes = $this->crud->getStrippedSaveRequest($request);
+        $item = $this->crud->update(
+            Route::current()->parameter($this->crud->getModel()->getRouteKeyName()),
+            $itemAttributes
+        );
+
+        UniqueCode::updateCode((int)$itemAttributes['project_code']);
+
+        $this->data['entry'] = $this->crud->entry = $item;
+
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
     }
 }

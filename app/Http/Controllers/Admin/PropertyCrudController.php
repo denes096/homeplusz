@@ -48,6 +48,11 @@ class PropertyCrudController extends CrudController
                 'tab' => 'Base'
             ],
             [
+                'name' => 'property_code',
+                'label' => 'Ingatlan kód',
+                'type' => 'text'
+            ],
+            [
                 'name' => 'title',
                 'label' => 'Cím',
                 'type' => 'text'
@@ -109,11 +114,6 @@ class PropertyCrudController extends CrudController
                 'group_by_relationship_back' => 'subtypes', // relationship from related model back to this model
                 'tab' => 'Base',
             ],
-            [
-                'name' => 'description',
-                'label' => 'Leírás',
-                'type' => 'text'
-            ],
         ]);
     }
 
@@ -155,7 +155,7 @@ class PropertyCrudController extends CrudController
         ]);
         CRUD::addField([
             'label' => "Ingatlan azonosító",
-            'type' => 'number',
+            'type' => 'text',
             'name' => 'property_code',
             'value' => UniqueCode::getNextCode(),
             'tab' => 'Base',
@@ -173,8 +173,16 @@ class PropertyCrudController extends CrudController
                 projectSelect.addEventListener("change", function () {
                     const projectId = this.value;
                     if (projectId) {
-
-                                    codeInput.value = 5101010;
+                        fetch(`/projekt/getNextPropertyId/${projectId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            codeInput.value = data.code ?? "";
+                        })
+                        .catch(error => {
+                            console.error("Hiba történt:", error);
+                            codeInput.value = "";
+                        });
                     } else {
                         codeInput.value = "";
                     }
@@ -341,22 +349,10 @@ class PropertyCrudController extends CrudController
             'tab' => 'Base'
         ]);
         CRUD::addField([
-           'label' => 'Projekt',
-           'type' => 'select',
-           'name' => 'project_id',
-           'entity' => 'project',
-           'attribute' => 'name',
-            'model' => Project::class,
-            'tab' => 'Base',
-            'allows_null' => true, // This option allows no selection by default
-            'default' => null,     // Explicitly sets the default value to null (optional)
-        ]);
-
-        CRUD::addField([
             'label' => "Ingatlan azonosító",
-            'type' => 'number',
+            'type' => 'text',
             'name' => 'property_code',
-            'value' => UniqueCode::getNextCode()
+            'tab' => 'Base',
         ]);
 
         CRUD::addField([
@@ -365,14 +361,22 @@ class PropertyCrudController extends CrudController
             'value' => '<script>
         document.addEventListener("DOMContentLoaded", function () {
             const projectSelect = document.querySelector("[name=project_id]");
-            const codeInput = document.querySelector("[name=project_code]");
+            const codeInput = document.querySelector("[name=property_code]");
 
             if (projectSelect) {
                 projectSelect.addEventListener("change", function () {
                     const projectId = this.value;
                     if (projectId) {
-
-                                    codeInput.value = 5101010;
+                        fetch(`/projekt/getNextPropertyId/${projectId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            codeInput.value = data.code ?? "";
+                        })
+                        .catch(error => {
+                            console.error("Hiba történt:", error);
+                            codeInput.value = "";
+                        });
                     } else {
                         codeInput.value = "";
                     }
@@ -508,6 +512,8 @@ class PropertyCrudController extends CrudController
         $itemAttributes = $this->crud->getStrippedSaveRequest($request);
         $item = $this->crud->create($itemAttributes);
 
+        UniqueCode::updateCode((int)explode('/', $itemAttributes['property_code'])[0]);
+
         foreach ($request->get('properties') as $attributeId => $attributeValue) {
             $item->attributes()->attach($attributeId, ['value' => $attributeValue]);
         }
@@ -535,6 +541,8 @@ class PropertyCrudController extends CrudController
             Route::current()->parameter($this->crud->getModel()->getRouteKeyName()),
             $itemAttributes
         );
+
+        UniqueCode::updateCode((int)explode('/', $itemAttributes['property_code'])[0]);
 
         // attributumok frissítése
         $propertyAttributes = $request->get('properties', []);

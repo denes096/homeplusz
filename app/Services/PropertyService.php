@@ -159,4 +159,9 @@ class PropertyService
 
         return $query->paginate(15);
     }
+
+    public function getByProjectId(int $projectId, ?int $limit = null): Collection
+    {
+        return Property::where('project_id', $projectId)->get();
+    }
 }
