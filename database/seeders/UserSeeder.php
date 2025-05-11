@@ -34,5 +34,9 @@ class UserSeeder extends Seeder
             'email' => 'user@otthonplusz.hu',
             'password' => Hash::make('password'),
         ]);
+
+        DB::table('unique_code')->insert([
+            'code' => 5000
+        ]);
     }
 }

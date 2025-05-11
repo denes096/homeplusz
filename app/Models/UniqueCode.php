@@ -21,7 +21,7 @@ class UniqueCode extends Model
 
     public static function getCurrentCode()
     {
-        return static::first()->code;
+        return static::first()?->code ?? 0;
     }
 
     public static function updateCode(int $code)
