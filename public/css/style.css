@@ -1903,6 +1903,10 @@ iframe {
     color: #96006B;
 }
 
+.search-id-btn{
+    background-color: #00B579 !important;
+}
+
 .btn-one {
     font-weight: 500;
     color: #96006B;

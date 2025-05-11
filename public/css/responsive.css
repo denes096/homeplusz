@@ -389,7 +389,7 @@
 
 
 /*Grid md Start*/
-@media (max-width: 991px) {
+@media (max-width: 1400px) {
   h2 {font-size: 40px; line-height: 1.4em;}
   h3 {font-size: 38px;}
   h4 {font-size: 25px;}

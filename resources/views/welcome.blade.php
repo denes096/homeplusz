@@ -12,7 +12,7 @@
         <div class="container container-large">
             <div class="position-relative z-1">
                 <div class="title-one mb-60 lg-mb-40 wow fadeInUp">
-                <h2 class="font-garamond">Kiemelet ajánlataink</h2>
+                <p class="fs-2 ms-5">Kiemelet ajánlataink</p>
                 </div>
                 <!-- /.title-one -->
 
@@ -30,11 +30,11 @@
     Property Listing 2
 =====================================================
 -->
-    <div class="property-listing-four z-1 overflow-hidden pt-4" style="background-color: #fbfbfb !important ;">
+    <div class="property-listing-four z-1 overflow-hidden pt-4 pb-5" style="background-color: #fbfbfb !important ;">
         <div class="container container-large">
             <div class="position-relative z-1">
                 <div class="title-one mb-60 lg-mb-40 wow fadeInUp d-flex justify-content-between">
-                    <h2 class="font-garamond col-6">Ingatlan ajánlataink</h2>
+                    <p class="fs-2 ms-5 col-6">Ingatlan ajánlataink</p>
                     <div class="col-3 d-flex justify-content-between">
                         @foreach($labels as $index => $label)
                             <a href="#"
@@ -76,7 +76,7 @@
     <div class="project-section-one pt-40">
         <div class="container mb-50">
             <div class="title-one mb-60 lg-mb-40 wow fadeInUp">
-                <a href="project_04.html"><h2 class="font-garamond col-6 nav-item">Projektjeink</h2></a>
+                <a href="project_04.html"><p class="fs-2 col-6 nav-item">Projektjeink</p></a>
             </div>
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -120,7 +120,6 @@
                             </div>
                         </div>
                     @endforeach
-
 
                 </div>
             </div>
