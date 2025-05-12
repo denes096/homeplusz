@@ -57,7 +57,7 @@
                             <li class="nav-item dropdown">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff"><button type="submit" class="">Keres<i class="bi bi-arrow-up-right"></i></button></span>
+                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="submit" class="">Keres<i class="bi bi-arrow-up-right"></i></button></span>
                                 </div>
                             </li>
 
@@ -161,4 +161,5 @@
             </div>
         </div> <!--/.top-header-->
     </div> <!-- /.inner-content -->
+    <div class="w-100" style="height: 6px; background-color: #000"></div>
 </header>

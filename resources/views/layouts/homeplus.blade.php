@@ -30,6 +30,28 @@
     <link rel="stylesheet" type="text/css" href="{{asset("css/style.css")}}" media="all">
     <!-- responsive style sheet -->
     <link rel="stylesheet" type="text/css" href="{{asset("css/responsive.css")}}" media="all">
+    <style>
+        ::-webkit-scrollbar {
+            width: 10px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 6px;
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+            background: #000; 
+            border-radius: 6px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+            background:rgb(0, 0, 0); 
+            }
+    </style>
 
     <!-- Fix Internet Explorer ______________________________________-->
     <!--[if lt IE 9]>

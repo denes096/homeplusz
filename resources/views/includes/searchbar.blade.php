@@ -133,7 +133,7 @@
 				<div class="row">
 					<div class="col-11 m-auto">
 						<div class="search-wrapper-one layout-one position-relative wow fadeInUp" data-wow-delay="0.2s">
-							<div class="bg-wrapper" style="margin-bottom: 100px !important;">
+							<div class="bg-wrapper" style="margin-bottom: 55px !important;">
 								<form action="listing_01.html">
 									<div class="d-lg-flex gx-0 align-items-center">
 										<div class="col">
@@ -156,80 +156,18 @@
 											<div class="input-box-one border-left">
 												<div class="dropdown">
 													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
-														Hol keres.. <img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+														<input type="text" class="border-0" style="width: 60% !important" placeholder="Hol keres.."> <img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
 													</button>
-													<ul class="dropdown-menu p-3">
+													<ul class="dropdown-menu city-list overflow-auto">
 													  <li class="d-flex flex-nowrap">
+                                                        <a href="">
 														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
 														<label class="form-check-label" style="margin-left: 10px !important;"  for="Checkme3">Érd</label>
+                                                        </a>
 													  </li>
 													  <li class="d-flex flex-nowrap">
 														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
 														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Tárnok</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Százhalombatta</label>
-													  </li>
-                                                      <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;"  for="Checkme3">Érd</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Tárnok</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Százhalombatta</label>
-													  </li>
-                                                      <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;"  for="Checkme3">Érd</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Tárnok</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Százhalombatta</label>
-													  </li>
-                                                      <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;"  for="Checkme3">Érd</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Tárnok</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Százhalombatta</label>
-													  </li>
-                                                      <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;"  for="Checkme3">Érd</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Tárnok</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Százhalombatta</label>
-													  </li>
-                                                      <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;"  for="Checkme3">Érd</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Tárnok</label>
-													  </li>
-													  <li class="d-flex flex-nowrap">
-														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
-														<label class="form-check-label" style="margin-left: 10px !important;" for="Checkme3">Százhalombatta</label>
 													  </li>
 													</ul>
 												  </div>
@@ -240,9 +178,9 @@
 											<div class="input-box-one border-left">
 												<div class="dropdown">
 													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
-														Típus.. <img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+                                                    Típus.. <img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
 													</button>
-													<ul class="dropdown-menu p-3">
+													<ul class="dropdown-menu type-list overflow-auto">
 													  <li>
 														<input class="form-check-input" type="checkbox" value="" id="Checkme3" />
 														<label class="form-check-label" for="Checkme3">Ház</label>
@@ -263,7 +201,7 @@
 										<div class="col">
 											<div class="input-box-one border-left">
 												<div class="d-flex justify-content-between align-items-center">
-													<label for="roomNumber location">Szobaszám</label>
+													<label for="roomNumber location">Szoba nappalival</label>
 													<img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
 												</div>
 												<div class="d-flex">
@@ -305,7 +243,7 @@
 										<div class="col">
 											<div class="input-box-one border-left">
 												<div class="dropdown">
-													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
+													<button type="button" class="d-flex justify-content-between w-100 align-items-center details-list overflow-auto" data-bs-toggle="dropdown">
 														Részletes keresés
 													</button>
 													<ul class="dropdown-menu p-3">
@@ -328,13 +266,13 @@
 												<button class="fw-500 w-100 tran3s search-btn-three">Keresés</button>
 											</div>
 											<!-- /.input-box-one -->
-											<div class="form-check d-flex justify-content-center pt-2">
-												<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-												<label class="form-check-label ms-2" for="flexCheckDefault">
-												  Újépítésű
-												</label>
-											  </div>
 										</div>
+									</div>
+                                    <div class="form-check d-flex justify-content-start ms-4">
+										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+										<label class="form-check-label ms-2" for="flexCheckDefault">
+											Újépítésű
+										</label>
 									</div>
 								</form>
 							</div>
@@ -372,4 +310,7 @@
             .switch6-light > span span:last-child { left: 50%; }
             .switch6-light a { position: absolute; right: 50%; top: 0px; z-index: 4; display: block; background-color: #96006B !important; width: 50%; height: 100%; padding: 0px;}
             .form-check-input:checked {background-color: #96006B; border-color: #96006B; border-radius: 50% !important}
+            .city-list, .type-list{position: relative !important; overflow: scroll; height: 100px;}
+            .details-list{position: relative !important; overflow: scroll; max-height: 200px;}
+            .search-wrapper-one .bg-wrapper{padding-top: 25px !important; padding-bottom:15px !important}
         </style>
