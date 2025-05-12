@@ -31,6 +31,16 @@
     <!-- responsive style sheet -->
     <link rel="stylesheet" type="text/css" href="{{asset("css/responsive.css")}}" media="all">
 
+    <style>
+        .hover-dark:hover{
+            background:rgb(255, 255, 255) !important;
+        }
+        .object-fit{
+            object-fit: contain;
+            height: 100%;
+        }
+    </style>
+
     <!-- Fix Internet Explorer ______________________________________-->
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

@@ -11,7 +11,7 @@
     <div class="property-listing-four z-1 overflow-hidden pt-4">
         <div class="container container-large">
             <div class="position-relative z-1">
-                <div class="title-one mb-60 lg-mb-40 wow fadeInUp">
+                <div class="title-one lg-mb-40 wow fadeInUp">
                 <p class="fs-2 ms-5">Kiemelet ajánlataink</p>
                 </div>
                 <!-- /.title-one -->
@@ -33,12 +33,12 @@
     <div class="property-listing-four z-1 overflow-hidden pt-4 pb-5" style="background-color: #fbfbfb !important ;">
         <div class="container container-large">
             <div class="position-relative z-1">
-                <div class="title-one mb-60 lg-mb-40 wow fadeInUp d-flex justify-content-between">
+                <div class="title-one wow fadeInUp d-flex justify-content-between" style="margin-bottom: 2rem !important;">
                     <p class="fs-2 ms-5 col-6">Ingatlan ajánlataink</p>
                     <div class="col-3 d-flex justify-content-between">
                         @foreach($labels as $index => $label)
                             <a href="#"
-                               class="fw-bold btn-eleven label-button {{ $index === 0 ? 'active' : '' }}"
+                               class="me-3 fw-bold btn-eleven label-button {{ $index === 0 ? 'active' : '' }}"
                                data-label="{{ $label->name }}">
                                 <p>{{ $label->name }}</p>
                             </a>
@@ -49,7 +49,7 @@
 
                 @foreach($labels as $index => $label)
                     <div class="property-slider-container" data-label="{{ $label->name }}">
-                        <h3>{{ $label->name }}</h3>
+                        
                         <div class="listing-slider-one">
                             @foreach($propertiesForLabels[$label->name] as $property)
                                 @include('includes/property-list-item')
@@ -75,7 +75,7 @@
 		-->
     <div class="project-section-one pt-40">
         <div class="container mb-50">
-            <div class="title-one mb-60 lg-mb-40 wow fadeInUp">
+            <div class="title-one wow fadeInUp">
                 <a href="project_04.html"><p class="fs-2 col-6 nav-item">Projektjeink</p></a>
             </div>
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -96,19 +96,19 @@
                                             <div class="col-lg-6 ms-auto">
                                                 <div class="caption ps-xxl-5">
                                                     <div class="tag fw-500 text-uppercase">{{ $project->project_code }}</div>
-                                                    <h3 class="nav-item"><a href="/projekt/{{ $project->id }}">{{ $project->name }}</a></h3>
-                                                    <p class="fs-24 pt-45 lg-pt-30 md-pt-10 pb-50 lg-pb-30 md-pb-10">
+                                                    <h4 class="nav-item"><a href="/projekt/{{ $project->id }}">{{ $project->name }}</a></h4>
+                                                    <p class="fs-24 ">
                                                         {{  $project->title }}
                                                     </p>
                                                 </div>
                                                 <!-- /.caption -->
                                             </div>
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6" style="max-height: 480px !important">
                                                 <figure class="image-wrapper position-relative z-1 overflow-hidden">
                                                    <div class="img-slider-btn">
                                                         <a href="{{ $project->getImageUrls()[0] }}"class="d-block position-relative" data-fancybox="{{ $project->id }}" data-caption="{{ $project->id }}">
-                                                            <img src="{{ $project->getImageUrls()[0] }}" alt="" class="w-100 tran5s">
+                                                            <img src="{{ $project->getImageUrls()[0] }}" alt="" class="w-100 tran5s img-fluid object-fit">
                                                         </a>
                                                     </div>
                                                 </figure>
@@ -130,7 +130,6 @@
 
 
     <div>
-        <hr>
     </div>
     @include('includes/areas')
 
