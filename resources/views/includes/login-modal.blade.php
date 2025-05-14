@@ -31,7 +31,7 @@
                                         <div class="input-group-meta position-relative mb-20">
                                             <label>Jelszó*</label>
                                             <input type="password" name="password" placeholder="Jelszó" class="pass_log_id">
-                                            <span class="placeholder_icon"><span class="passVicon"><img src="images/icon/icon_68.svg" alt=""></span></span>
+                                            <span class="placeholder_icon"><span class="passVicon"><img src="/images/icon/icon_68.svg" alt=""></span></span>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -73,7 +73,7 @@
                                         <div class="input-group-meta position-relative mb-20">
                                             <label>Jelszó*</label>
                                             <input type="password" placeholder="Új jelszó" class="pass_log_id">
-                                            <span class="placeholder_icon"><span class="passVicon"><img src="images/icon/icon_68.svg" alt=""></span></span>
+                                            <span class="placeholder_icon"><span class="passVicon"><img src="/images/icon/icon_68.svg" alt=""></span></span>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -101,13 +101,13 @@
                     <div class="row d-none">
                         <div class="col-sm-6">
                             <a href="#" class="social-use-btn d-flex align-items-center justify-content-center tran3s w-100 mt-10">
-                                <img src="images/icon/google.png" alt="">
+                                <img src="/images/icon/google.png" alt="">
                                 <span class="ps-3">Belépés Google fiókommal</span>
                             </a>
                         </div>
                         <div class="col-sm-6">
                             <a href="#" class="social-use-btn d-flex align-items-center justify-content-center tran3s w-100 mt-10">
-                                <img src="images/icon/facebook.png" alt="">
+                                <img src="/images/icon/facebook.png" alt="">
                                 <span class="ps-3">Belépés Facebook fiókommal</span>
                             </a>
                         </div>

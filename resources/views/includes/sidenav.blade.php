@@ -2,7 +2,7 @@
     <div class="offcanvas-header">
         <div class="logo order-lg-0">
             <a href="index-3.html" class="d-flex align-items-center">
-                <img src="images/icon/logotxt.png" style="width: 40% !important;" alt="Otthonplusz">
+                <img src="/images/icon/logotxt.png" style="width: 40% !important;" alt="Otthonplusz">
             </a>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -17,13 +17,13 @@
                             <div class="img-gallery">
                                 <div class="position-relative overflow-hidden">
                                     <div class="tag bg-white text-dark fw-500">Kiadó</div>
-                                    <img src="images/listing/img_70.jpg" class="w-100" alt="...">
+                                    <img src="/images/listing/img_70.jpg" class="w-100" alt="...">
 
                                     <div class="img-slider-btn">
                                         03 <i class="fa-regular fa-image"></i>
-                                        <a href="images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="Érd"></a>
                                     </div>
                                 </div>
                             </div>
@@ -44,13 +44,13 @@
                             <div class="img-gallery">
                                 <div class="position-relative overflow-hidden">
                                     <div class="tag bg-white text-dark fw-500">Kiadó</div>
-                                    <img src="images/listing/img_70.jpg" class="w-100" alt="...">
+                                    <img src="/images/listing/img_70.jpg" class="w-100" alt="...">
 
                                     <div class="img-slider-btn">
                                         03 <i class="fa-regular fa-image"></i>
-                                        <a href="images/listing/img_large_01.jpg" class="d-block" data-fancybox="img2" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_02.jpg" class="d-block" data-fancybox="img2" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_03.jpg" class="d-block" data-fancybox="img2" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img2" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img2" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img2" data-caption="Érd"></a>
                                     </div>
                                 </div>
                             </div>
@@ -71,13 +71,13 @@
                             <div class="img-gallery">
                                 <div class="position-relative overflow-hidden">
                                     <div class="tag bg-white text-dark fw-500">Eladó</div>
-                                    <img src="images/listing/img_71.jpg" class="w-100" alt="...">
+                                    <img src="/images/listing/img_71.jpg" class="w-100" alt="...">
 
                                     <div class="img-slider-btn">
                                         03 <i class="fa-regular fa-image"></i>
-                                        <a href="images/listing/img_large_01.jpg" class="d-block" data-fancybox="img3" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_02.jpg" class="d-block" data-fancybox="img3" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_03.jpg" class="d-block" data-fancybox="img3" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img3" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img3" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img3" data-caption="Érd"></a>
                                     </div>
                                 </div>
                             </div>
@@ -98,13 +98,13 @@
                             <div class="img-gallery">
                                 <div class="position-relative overflow-hidden">
                                     <div class="tag bg-white text-dark fw-500">Eladó</div>
-                                    <img src="images/listing/img_72.jpg" class="w-100" alt="...">
+                                    <img src="/images/listing/img_72.jpg" class="w-100" alt="...">
 
                                     <div class="img-slider-btn">
                                         03 <i class="fa-regular fa-image"></i>
-                                        <a href="images/listing/img_large_01.jpg" class="d-block" data-fancybox="img4" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_02.jpg" class="d-block" data-fancybox="img4" data-caption="Érd"></a>
-                                        <a href="images/listing/img_large_03.jpg" class="d-block" data-fancybox="img4" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img4" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img4" data-caption="Érd"></a>
+                                        <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img4" data-caption="Érd"></a>
                                     </div>
                                 </div>
                             </div>

@@ -29,6 +29,7 @@ Route::get('/szolgaltatasok/{serviceId}-{name}', [ServiceController::class, 'sho
 Route::get('/informaciok/{informationId}-{name}', [InformationController::class, 'show']);
 
 Route::get('/ingatlanok', [PropertyController::class, 'list'])->name('property.list');
+Route::get('/ingatlan/kod/{code}', [PropertyController::class, 'getByCode'])->name('property.get-by-code');
 Route::get('/ingatlan/{id}', [PropertyController::class, 'show'])->name('property.show');
 
 Route::get('/projekt/{id}', [ProjectController::class, 'list'])->name('project.list');

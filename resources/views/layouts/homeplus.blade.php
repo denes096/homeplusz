@@ -23,7 +23,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#0D1A1C">
     <title>OtthonPlusz Ingatlaniroda</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="56x56" href="{{asset("images/fav-icon/icon.png")}}">
+    <link rel="icon" type="image/png" sizes="56x56" href="{{asset("/images/fav-icon/icon.png")}}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset("css/bootstrap.min.css")}}" media="all">
     <!-- Main style sheet -->
@@ -37,19 +37,19 @@
 
             /* Track */
             ::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 5px grey; 
+            box-shadow: inset 0 0 5px grey;
             border-radius: 6px;
             }
-            
+
             /* Handle */
             ::-webkit-scrollbar-thumb {
-            background: #000; 
+            background: #000;
             border-radius: 6px;
             }
 
             /* Handle on hover */
             ::-webkit-scrollbar-thumb:hover {
-            background:rgb(0, 0, 0); 
+            background:rgb(0, 0, 0);
             }
     </style>
 
@@ -81,7 +81,7 @@
 ==================================================== -->
 <div id="preloader">
     <div id="ctn-preloader" class="ctn-preloader">
-        <div class="icon"><img src="{{asset("images/loader.gif")}}" alt="" class="m-auto d-block" width="64"></div>
+        <div class="icon"><img src="{{asset("/images/loader.gif")}}" alt="" class="m-auto d-block" width="64"></div>
     </div>
 </div>
 
@@ -167,7 +167,7 @@
     </div>
 </div>
 <div class="information w-100 d-none d-sm-block">
-    <img src="images/assets/Group 408.jpeg" alt="" class="w-100">
+    <img src="/images/assets/Group 408.jpeg" alt="" class="w-100">
 </div>
 
 <!--

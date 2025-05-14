@@ -25,6 +25,21 @@ class PropertyService
         return $propertyQuery->first();
     }
 
+    public function getByCode(string $code)
+    {
+        $propertyQuery = Property::where("property_code", "=", $code)
+            ->with('settlement')
+            ->with('settlementPart')
+            ->with('propertyType')
+            ->with('propertySubtype')
+            ->with(['attributes' => function ($query) {
+                $query->where('show_in_list',  true);
+            } ])
+        ;
+
+        return $propertyQuery->first();
+    }
+
     public function getPropertiesForListingByLabel(Label $label, ?int $limit = null): Collection
     {
 
@@ -102,6 +117,15 @@ class PropertyService
             });
         } else {
             $query->with('settlement');
+        }
+
+        if ($request->filled('newly_built')) {
+            $query->whereHas('attributes', function ($query) use ($request) {
+                $query->where('name', 'condition')->whereRaw(
+                    "CAST(property_property_attribute.value AS UNSIGNED) >= ?",
+                    ["NEWLY_BUILT"]
+                );
+            });
         }
 
         // 3. Ingatlantípusok (több is lehet)

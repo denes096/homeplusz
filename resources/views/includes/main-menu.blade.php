@@ -6,7 +6,7 @@
         <!-- logo -->
         <div class="logo">
             <a href="/" class="">
-                <img src="images/icon/logotxt.png" alt="OtthonPlusz">
+                <img src="/images/icon/logotxt.png" alt="OtthonPlusz">
             </a>
         </div>
         <div class="right-widget ms-auto me-3 me-lg-0 order-lg-3">
@@ -46,7 +46,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav align-items-lg-center">
-                            <li class="d-flex justify-content-center align-items-center d-lg-none"><div class="logo"><a href="index.html" class="d-block"><img src="images/icon/logotxt.png" alt=""></a></div></li>
+                            <li class="d-flex justify-content-center align-items-center d-lg-none"><div class="logo"><a href="index.html" class="d-block"><img src="/images/icon/logotxt.png" alt=""></a></div></li>
 
                             @hasanyrole('super-admin|admin|referens')
                             <li class="nav-item dashboard-menu">
@@ -56,8 +56,8 @@
 
                             <li class="nav-item dropdown">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="submit" class="">Keres<i class="bi bi-arrow-up-right"></i></button></span>
+                                        <input type="text" name="code" id="search-code" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="button" class="search-for-code">Keres<i class="bi bi-arrow-up-right"></i></button></span>
                                 </div>
                             </li>
 

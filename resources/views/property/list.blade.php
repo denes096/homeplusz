@@ -34,7 +34,7 @@
                             @foreach($propertiesForLabels as $label => $properties)
                                 <div class="asd">{{$label}}</div>
                                 <div class="listing-slider-one">
-                                    @include('project._partialList')
+                                    @include('property._partialList')
                                 </div>
 
                             @endforeach

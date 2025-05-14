@@ -30,3 +30,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+$(document).ready(function () {
+    $('#ad_type').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('input[name="ad_type"]').val('rent');
+        } else {
+            $('input[name="ad_type"]').val('sell');
+        }
+    });
+
+    // inicializáláskor is állítsuk be
+    $('#ad_type').trigger('change');
+
+    document.querySelector('.search-for-code').addEventListener('click', function () {
+        let code = document.getElementById('search-code').value.trim();
+        if (code) {
+            window.location.href = '/ingatlan/kod/' + encodeURIComponent(code);
+        }
+    });
+});

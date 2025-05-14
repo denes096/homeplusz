@@ -14,6 +14,11 @@ class ProjectService
         return Project::where('id', $id)->first();
     }
 
+    public function getByCode(string $id)
+    {
+        return Project::where('project_code', $id)->first();
+    }
+
     public function getAll(): Collection
     {
         return Project::all();

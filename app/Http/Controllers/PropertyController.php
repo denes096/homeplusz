@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use App\Services\LabelService;
+use App\Services\ProjectService;
 use App\Services\PropertyService;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class PropertyController extends Controller
     public function __construct(
         private PropertyService $propertyService,
         private LabelService $labelService,
+        private ProjectService $projectService,
     ) {
 
     }
@@ -33,6 +35,18 @@ class PropertyController extends Controller
     public function show(int $id, Request $request)
     {
         $property = $this->propertyService->getById($id);
+
+        return view('property.show', compact('property'));
+    }
+
+    public function getByCode(string $code, Request $request)
+    {
+        $property = $this->propertyService->getByCode($code);
+
+        if (!$property) {
+            $project = $this->projectService->getByCode($code);
+            return view('project.show', compact('project'));
+        }
 
         return view('property.show', compact('property'));
     }

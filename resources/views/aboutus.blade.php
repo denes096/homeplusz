@@ -20,13 +20,13 @@
                                 <div class="listing-card-one shadow4 style-three border-30 mb-50">
                                     <div class="img-gallery p-15">
                                         <div class="position-relative border-20 overflow-hidden">
-                                            <img src="images/listing/img_13.jpg" class="w-100 border-20" alt="...">
+                                            <img src="/images/listing/img_13.jpg" class="w-100 border-20" alt="...">
                                             <a href="agent_details.html" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
                                             <div class="img-slider-btn">
                                                 03 <i class="fa-regular fa-image"></i>
-                                                <a href="images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
                                             </div>
                                         </div>
                                     </div>

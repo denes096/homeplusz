@@ -120,13 +120,13 @@
                                     <div class="img-gallery p-15">
                                         <div class="position-relative border-20 overflow-hidden">
                                             <div class="tag bg-white text-dark fw-500 border-20">ELADÓ</div>
-                                            <img src="images/listing/img_13.jpg" class="w-100 border-20" alt="...">
+                                            <img src="/images/listing/img_13.jpg" class="w-100 border-20" alt="...">
                                             <a href="listing_details_06.html" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
                                             <div class="img-slider-btn">
                                                 03 <i class="fa-regular fa-image"></i>
-                                                <a href="images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@
                 <div class="col-xl-4 col-lg-8 me-auto ms-auto">
                     <div class="theme-sidebar-one dot-bg p-30 ms-xxl-3 lg-mt-80">
                         <div class="agent-info bg-white border-20 p-30 mb-40">
-                            <img src="images/lazy.svg" data-src="images/agent/img_06.jpg" alt="" class="lazy-img rounded-circle ms-auto me-auto mt-3 avatar">
+                            <img src="/images/lazy.svg" data-src="/images/agent/img_06.jpg" alt="" class="lazy-img rounded-circle ms-auto me-auto mt-3 avatar">
                             <div class="text-center mt-25">
                                 <h6 class="name">Norbert</h6>
                                 <p class="fs-16">Tulajdonos/Értékesítő</p>
