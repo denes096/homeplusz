@@ -3,5 +3,7 @@
 @section('searchbar')@endsection
 
 @section('content')
-    {!! $content !!}
+    <div class="container">
+        {!! $content !!}
+    </div>
 @endsection

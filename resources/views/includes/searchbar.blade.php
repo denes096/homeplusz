@@ -131,7 +131,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-11 m-auto">
+					<div class="col-12 m-auto px-5">
 						<div class="search-wrapper-one layout-one position-relative wow fadeInUp" data-wow-delay="0.2s">
 							<div class="bg-wrapper" style="margin-bottom: 55px !important;">
 								<form action="listing_01.html">
@@ -152,7 +152,7 @@
 											</div>
 											<!-- /.input-box-one -->
 										</div>
-										<div class="col">
+										<div class="" style="width: 12% !important">
 											<div class="input-box-one border-left">
 												<div class="dropdown">
 													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
@@ -174,7 +174,7 @@
 											</div>
 											<!-- /.input-box-one -->
 										</div>
-										<div class="col">
+										<div class="" style="width: 9% !important">
 											<div class="input-box-one border-left">
 												<div class="dropdown">
 													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
@@ -201,7 +201,7 @@
 										<div class="col">
 											<div class="input-box-one border-left">
 												<div class="d-flex justify-content-between align-items-center">
-													<label for="roomNumber location">Szoba nappalival</label>
+													<label for="roomNumber" class="fs-8">Szoba szám nappalival</label>
 													<img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
 												</div>
 												<div class="d-flex">
@@ -215,7 +215,7 @@
 										<div class="col">
 											<div class="input-box-one border-left">
 												<div class="d-flex justify-content-between align-items-center">
-													<label for="roomNumber location">Méret</label>
+													<label for="roomNumber">Méret</label>
 													<img src="images/icon/size-icon.png" width="15" height="15" alt="size-icon">
 												</div>
 												<div class="d-flex">

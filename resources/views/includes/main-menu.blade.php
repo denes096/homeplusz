@@ -56,8 +56,8 @@
 
                             <li class="nav-item dropdown">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="submit" class="">Keres<i class="bi bi-arrow-up-right"></i></button></span>
+                                    <input type="text" id="search-field" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="submit" onclick="" id="search-btn" class="">Keres<i class="bi bi-arrow-up-right"></i></button></span>
                                 </div>
                             </li>
 
@@ -163,3 +163,13 @@
     </div> <!-- /.inner-content -->
     <div class="w-100" style="height: 6px; background-color: #000"></div>
 </header>
+
+<script>
+    var input = document.getElementById("search-field");
+    input.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+    });
+</script>
