@@ -128,7 +128,8 @@
 			<!-- /.hero-slider-one -->
 			<div class=" position-relative z-2">
 				<div class="row">
-					<div class="col-lg-10 m-auto">
+					<div class="col-11 m-auto text-white fs-1 fw-bold" style="text-shadow: 2px 2px 7px rgba(128,128,128,0.83);">
+                        Találjuk meg együtt új <br> otthonát!
 					</div>
 				</div>
 				<div class="row">
@@ -138,8 +139,8 @@
                                 <form action="{{ route('property.list') }}">
 									<div class="d-lg-flex gx-0 align-items-center">
 										<div class="col">
-											<div class="input-box-one border-left">
-                                                <div class="switch6 bg-light rounded-pill">
+											<div class="input-box-one">
+                                                <div class="switch6 bg-light rounded-3">
                                                     <label class="switch6-light " onclick="">
                                                         <input type="hidden" name="ad_type">
                                                         <input type="checkbox" id="ad_type" {{ request('ad_type') == 'rent' ? 'checked' : '' }}>
@@ -147,7 +148,7 @@
                                                             <span data-value="sell">Eladó</span>
                                                             <span data-value="rent">Kiadó</span>
                                                         </span>
-                                                        <a class="btn bg-theme rounded-pill active"></a>
+                                                        <a class="btn bg-theme rounded-3"></a>
                                                     </label>
                                                 </div>
 
@@ -155,10 +156,10 @@
 											<!-- /.input-box-one -->
 										</div>
 										<div class="col">
-											<div class="input-box-one border-left">
+											<div class="input-box-one">
 												<div class="dropdown">
-													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
-														<input type="text" class="border-0" style="width: 60% !important" placeholder="Hol keres.."> <img src="/images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+													<button type="button" class="d-flex justify-content-between w-100 align-items-center border rounded-3 px-2 py-1" data-bs-toggle="dropdown">
+														<input type="text" class="border-0" style="width: 60% !important" placeholder="Hol keres?"> <i class="bi bi-arrow-down-circle" style="font-size: larger !important; color: #96006B"></i>
 													</button>
 													<ul class="dropdown-menu city-list overflow-auto">
                                                         @foreach($settlements as $settlement)
@@ -173,10 +174,10 @@
 											<!-- /.input-box-one -->
 										</div>
 										<div class="col">
-											<div class="input-box-one border-left">
+											<div class="input-box-one">
 												<div class="dropdown">
-													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
-                                                    Típus.. <img src="/images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+													<button type="button" class="d-flex justify-content-between w-100 align-items-center border rounded-3 px-2 py-1" data-bs-toggle="dropdown">
+                                                    Mit keres? <i class="bi bi-arrow-down-circle" style="font-size: larger !important; color: #96006B"></i>
 													</button>
 													<ul class="dropdown-menu type-list overflow-auto">
                                                         @foreach($propertyTypes as $type)
@@ -191,71 +192,66 @@
 											<!-- /.input-box-one -->
 										</div>
 										<div class="col">
-											<div class="input-box-one border-left">
-												<div class="d-flex justify-content-between align-items-center">
-													<label for="roomNumber location">Szoba nappalival</label>
-													<img src="/images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+											<div class="input-box-one">
+												<div class="d-flex justify-content-center align-items-center">
+													<label for="roomNumber location">Szobák (nappalival)</label>
 												</div>
-												<div class="d-flex">
-													<input type="number" name="number_of_rooms_min" value="{{ request('number_of_rooms_min') }}" class="col-6">
-													-
-													<input type="number" name="number_of_rooms_max" value="{{ request('number_of_rooms_max') }}" class="col-6">
-												</div>
-											</div>
-											<!-- /.input-box-one -->
-										</div>
-										<div class="col">
-											<div class="input-box-one border-left">
-												<div class="d-flex justify-content-between align-items-center">
-													<label for="roomNumber location">Méret</label>
-													<img src="/images/icon/size-icon.png" width="15" height="15" alt="size-icon">
-												</div>
-												<div class="d-flex">
-													<input type="number" name="property_area_min" value="{{ request('property_area_min') }}" class="col-6">
-													-
-													<input type="number" name="property_area_max" value="{{ request('property_area_max') }}" class="col-6">
+												<div class="d-flex justify-content-center align-items-center">
+													<input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 px-2 py-1">
+													<span class="mx-1"> - </span>
+													<input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 px-2 py-1">
 												</div>
 											</div>
 											<!-- /.input-box-one -->
 										</div>
 										<div class="col">
-											<div class="input-box-one border-left border-lg-0">
-												<div class="d-flex justify-content-between align-items-center">
-													<label for="roomNumber location">Ár</label>
-													<img src="/images/icon/price-icon.png" width="15" height="15" alt="price-icon">
+											<div class="input-box-one">
+												<div class="d-flex justify-content-center align-items-center">
+													<label for="roomNumber location">Alapterület (m <sup>2</sup>)</label>
 												</div>
-												<div class="d-flex">
-													<input type="number" name="price_min"  value="{{ request('price_min') }}" class="col-6">
+												<div class="d-flex justify-content-center align-items-center">
+													<input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 px-2 py-1">
 													-
-													<input type="number" name="price_max" value="{{ request('price_max') }}"  class="col-6">
+													<input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 px-2 py-1">
 												</div>
 											</div>
 											<!-- /.input-box-one -->
 										</div>
 										<div class="col">
-											<div class="input-box-one border-left">
-												<div class="dropdown">
-													<button type="button" class="d-flex justify-content-between w-100 align-items-center details-list overflow-auto" data-bs-toggle="dropdown">
-														Részletes keresés
+											<div class="input-box-one">
+												<div class="d-flex justify-content-center align-items-center">
+													<label for="roomNumber location">Ár(millió Ft)</label>
+												</div>
+												<div class="d-flex justify-content-center align-items-center">
+													<input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 px-2 py-1">
+													-
+													<input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 px-2 py-1">
+												</div>
+											</div>
+											<!-- /.input-box-one -->
+										</div>
+										<div class="d-flex flex-column align-items-center search-box">
+											<div class="input-box-one">
+                                                <div class="pb-1">
+                                                    <button type="submit" style="background-color: #96006B !important;" class="fw-500 tran3s rounded-3 py-1 px-2"><i class="bi bi-search" style="font-size: 1.5rem !important; color: #fff"></i></button>
+                                                </div>
+												<div class="mega-dropdown-sm pt-1">
+													<button type="button" class="d-flex justify-content-between w-100 align-items-center details-list overflow-auto rounded-3 py-1 px-2" style="border:1px solid #96006B !important;"  data-bs-toggle="dropdown" alt="">
+                                                        <i class="bi bi-funnel" style="font-size: 1.5rem !important; color: #96006B"></i>
 													</button>
-													<ul class="dropdown-menu p-3">
-													  <li class="d-flex flex-nowrap">
-
-													  </li>
-													  <li class="d-flex flex-nowrap">
-
-													  </li>
-													  <li class="d-flex flex-nowrap">
-
-													  </li>
-													</ul>
+                                                    <div class="dropdown-menu dropdown-menu-lg-end details-box overflow-auto mx-5 p-3" style="width: 80vw !important;">
+                                                        <ul class="d-flex flex-wrap list-unstyled">
+                                                            <li class="p-2">
+                                                                
+                                                            </li>
+                                                        </ul>
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <button type="submit" style="background-color: #96006B !important;" class="fw-500 tran3s rounded-3 py-1 px-2">
+                                                                <i class="bi bi-search" style="font-size: 1.5rem !important; color: #fff"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
 												  </div>
-											</div>
-											<!-- /.input-box-one -->
-										</div>
-										<div class="col">
-											<div class="input-box-one lg-mt-10">
-												<button type="submit" class="fw-500 w-100 tran3s search-btn-three">Keresés</button>
 											</div>
 											<!-- /.input-box-one -->
 										</div>
@@ -300,9 +296,29 @@
             .switch6-light > span { position: absolute; left: -100px; width: 100%; margin-top: -14px; padding-right: 100px; text-align: left; }
             .switch6-light > span span { position: absolute; top: 0px; left: 0px; z-index: 5; display: block; width: 50%; margin-left: 100px; text-align: center; }
             .switch6-light > span span:last-child { left: 50%; }
-            .switch6-light a { position: absolute; right: 50%; top: 0px; z-index: 4; display: block; background-color: #96006B !important; width: 50%; height: 100%; padding: 0px;}
-            .form-check-input:checked {background-color: #96006B; border-color: #96006B; border-radius: 50% !important}
-            .city-list, .type-list{position: relative !important; overflow: scroll; height: 100px;}
+            .switch6-light a { position: absolute; right: 50%; top: 0px; z-index: 4; display: block; background-color:rgb(218, 215, 215) !important; width: 50%; height: 100%; padding: 0px; border: none;}
+            .form-check-input:checked {background-color: #96006B; border-color: #96006B; border-radius: 50% !important;}
+            .city-list, .type-list, .details-box{position: absolute !important; overflow: scroll; height: 360px;}
             .details-list{position: relative !important; overflow: scroll; max-height: 200px;}
-            .search-wrapper-one .bg-wrapper{padding-top: 25px !important; padding-bottom:15px !important}
+            .search-wrapper-one .bg-wrapper{padding-top: 25px !important; padding-bottom:15px !important};
+            .search-box{width: 5%;}>
+            
+
+            @media only screen and (max-width: 600px) {
+                .search-box {
+                    width: 100%;
+                    display: block !important;
+                }
+                .search-box button{
+                    width: 100% !important;
+                }
+                }
         </style>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".active").click(function(event) {
+                    $(".active").css('color','white');
+                    $(this).css('color','black');
+                });
+            });
+        </script>

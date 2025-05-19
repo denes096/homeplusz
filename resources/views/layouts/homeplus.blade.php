@@ -58,7 +58,7 @@
             background:rgb(255, 255, 255) !important;
         }
         .object-fit{
-            object-fit: contain;
+            object-fit: cover;
             height: 100%;
         }
     </style>

@@ -5,33 +5,32 @@
     <div class="d-flex pt-3 px-5">
         <!-- logo -->
         <div class="logo">
-            <a href="/" class="">
-                <img src="/images/icon/logotxt.png" alt="OtthonPlusz">
+            <a href="/">
+                <img src="/images/icon/otthonplusz_logo_txt.png" style="width: 60%" alt="OtthonPlusz">
             </a>
         </div>
         <div class="right-widget ms-auto me-3 me-lg-0 order-lg-3">
             <ul class="d-flex align-items-center style-none">
-
-                @if (Auth::guest())
-                    <li class="d-flex align-items-center login-btn-one">
-                        <i class="fa-regular fa-lock"></i>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="fw-500 tran3s">Bejelentkezés <span class="d-none d-sm-inline-block">/ Regisztráció</span></a>
-                    </li>
-                @else
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-
-                        <a class="fw-500 tran3s" href="{{ url("logout") }}"
-                                         onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                            {{ __('Kijelentkezés') }}
-                        </a>
-                    </form>
-                @endif
                     <li class="d-none d-md-inline-block ms-3 ms-xl-4 me-xl-4 w-85">
-                        <a href="dashboard/add-property.html" class="btn-ten" target="_blank"><span>Kedvenc ingatlanjaim</span> <i class="bi bi-arrow-up-right"></i></a>
+                        <a href="dashboard/add-property.html" class="btn-ten" style="line-height: 40px;" target="_blank"><span>Kedvenceim</span><i class="fa-light fa-heart" style="color: #96006B;"></i></a>
                     </li>
+                    @if (Auth::guest())
+                    <li class="d-flex align-items-center login-btn-one">
+                        
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="fw-500 tran3s"><i class="bi bi-person-circle" style="font-size: 30px; color: #96006B;"></i></a>
+                    </li>
+                    @else
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <a class="fw-500 tran3s" href="{{ url("logout") }}"
+                                            onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                {{ __('Kijelentkezés') }}
+                            </a>
+                        </form>
+                    @endif
             </ul>
         </div>
     </div>
@@ -56,8 +55,8 @@
 
                             <li class="nav-item dropdown">
                                 <div class="input-group">
-                                        <input type="text" name="code" id="search-code" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                        <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="button" class="search-for-code">Keres<i class="bi bi-arrow-up-right"></i></button></span>
+                                        <input type="text" style="border-right:none;" name="code" id="search-code" class="form-control" placeholder="Keresés kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <span class="input-group-text" id="basic-addon2" style="background-color:rgba(255, 255, 255, 0); color:#fff;"><button type="button" class="search-for-code"><i class="bi bi-arrow-right-circle" style="font-size: 20px; color: #96006B; border-left: none;"></i></button></span>
                                 </div>
                             </li>
 
@@ -109,6 +108,11 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#" role="button"  aria-expanded="false">
+                                    Otthon <span style="color: #96006B;">magazin</span>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown mega-dropdown-sm">
                                 <a href="contact.html" class="nav-link"><span>Kapcsolat</span></a>
                                 <ul class="dropdown-menu">
@@ -144,16 +148,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown d-none">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                   data-bs-auto-close="outside" aria-expanded="false">Blog
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="blog_03.html" class="dropdown-item"><span>Bejegyzések</span></a></li>
-                                </ul>
-                            </li>
                             <li class="d-md-none ps-2 pe-2 mt-20">
-                                <a href="dashboard/add-property.html" class="btn-ten w-100" target="_blank"><span>Kedvenc ingatlanjaim</span> <i class="bi bi-arrow-up-right"></i></a>
+                                <a href="dashboard/add-property.html" class="btn-ten w-100" target="_blank"><span>Kedvenceim</span><i class="fa-light fa-heart" style="color: #96006B;"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -161,5 +157,4 @@
             </div>
         </div> <!--/.top-header-->
     </div> <!-- /.inner-content -->
-    <div class="w-100" style="height: 6px; background-color: #000"></div>
 </header>
