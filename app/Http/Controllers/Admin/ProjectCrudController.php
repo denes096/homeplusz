@@ -69,23 +69,31 @@ class ProjectCrudController extends CrudController
             'name' => 'project_code',
             'value' => UniqueCode::getNextCode()
         ]);
-        CRUD::field('name');
-        CRUD::field('title');
+        CRUD::field('name')->label("Név");
+        CRUD::field('title')->label("Összefoglaló");
         CRUD::field('description')
             ->type('textarea')
             ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
-            ->label('Description');
+            ->label('Leírás');
 
-        CRUD::field('deadline')->type('date');
-        CRUD::field('contractor');
+        CRUD::field('deadline')->type('date')->label("Határidő");
+        CRUD::field('contractor')->type('text')->label("Kivitelező");
         CRUD::field('images')
+            ->label("Képek")
             ->type('upload_multiple')
             ->withFiles(
                 [
                     'disk' => 'public', // the disk where file will be stored
                     'path' => 'uploads', // the path inside the disk where file will be stored
                 ]
-            );
+            )->attributes([
+                'id' => 'input_images', // 💡 ID hozzáadása a JS miatt
+            ]);
+
+        CRUD::field('image_preview_helper')
+            ->type('custom_html')
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>')
+            ; // vagy bármi a tab neve;
 
         /**
          * Fields can be defined using the fluent syntax:
@@ -101,7 +109,45 @@ class ProjectCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation([
+            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'deadline' => 'required|date',
+            'contractor' => 'required|string',
+        ]);
+
+        CRUD::addField([
+            'label' => "Projekt azonosító",
+            'type' => 'number',
+            'name' => 'project_code'
+        ]);
+        CRUD::field('name')->label("Név");
+        CRUD::field('title')->label("Összefoglaló");
+        CRUD::field('description')
+            ->type('textarea')
+            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->label('Leírás');
+
+        CRUD::field('deadline')->type('date')->label("Határidő");
+        CRUD::field('contractor')->type('text')->label("Kivitelező");
+        CRUD::field('images')
+            ->label("Képek")
+            ->type('upload_multiple')
+            ->withFiles(
+                [
+                    'disk' => 'public', // the disk where file will be stored
+                    'path' => 'uploads', // the path inside the disk where file will be stored
+                ]
+            )->attributes([
+                'id' => 'input_images', // 💡 ID hozzáadása a JS miatt
+            ]);
+
+        CRUD::field('image_preview_helper')
+            ->type('custom_html')
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>')
+        ; // vagy bármi a tab neve;
+
     }
 
     public function store()

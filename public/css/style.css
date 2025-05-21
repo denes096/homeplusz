@@ -13968,3 +13968,20 @@ html.with-fancybox body.hide-scrollbar {
 .zoom:hover{
     transform: scale(103%);
 }
+.labels-on-show {
+    display: flex;
+    justify-content: flex-start;
+}
+.label-on-details {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    width: max-content;
+    margin: 5px;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px  1px 0 black,
+        1px  1px 0 black;
+}

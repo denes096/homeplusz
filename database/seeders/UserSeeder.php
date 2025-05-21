@@ -18,21 +18,25 @@ class UserSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'superadmin@otthonplusz.hu',
             'password' => Hash::make('password'),
+            'position' => 'Tulajdonos',
         ]);
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'admin@otthonplusz.hu',
             'password' => Hash::make('password'),
+            'position' => 'Referens',
         ]);
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'referens@otthonplusz.hu',
             'password' => Hash::make('password'),
+            'position' => 'Referens',
         ]);
         DB::table('users')->insert([
             'name' => 'User',
             'email' => 'user@otthonplusz.hu',
             'password' => Hash::make('password'),
+            'position' => 'Referens',
         ]);
 
         DB::table('unique_code')->insert([

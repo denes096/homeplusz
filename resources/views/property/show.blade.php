@@ -11,10 +11,17 @@
     <div class="listing-details-one theme-details-one bg-white pt-180 lg-pt-150 pb-150 xl-pb-120">
         <div class="container">
             <div class="row">
+                <div class="col-12">
+                    <div class="labels-on-show">
+                        @foreach($property->labels as $label)
+                            <div class="label-on-details" style="background-color: {{ $label->color }}; color: white"><strong>{{ $label->name }}</strong></div>
+                        @endforeach
+                    </div>
+                </div>
                 <div class="col-lg-6">
                     <h3 class="property-titlee">{{$property->settlement?->name}} {{$property->settlementPart?->name}}</h3>
                     <div class="d-flex flex-wrap mt-10">
-                        <div class="list-type text-uppercase border-20 mt-15 me-3">{{$property->ad_type }}</div>
+                        <div class="list-type text-uppercase border-20 mt-15 me-3">{{$property->getAdType() }}</div>
                         <div class="address mt-15"><i class="bi bi-geo-alt"></i> CÍM:</div>
                     </div>
                 </div>
@@ -92,11 +99,11 @@
                     </li>
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_48.svg" alt="" class="lazy-img icon">
-                        <span class="fs-20 color-dark">3</span>
+                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'number_of_rooms')->pivot->value }}</span>
                     </li>
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_49.svg" alt="" class="lazy-img icon">
-                        <span class="fs-20 color-dark">2</span>
+                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'number_of_bathrooms')->pivot->value }}</span>
                     </li>
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_53.svg" alt="garázs" class="lazy-img icon">
@@ -108,7 +115,7 @@
                 <div class="col-xl-8">
                     <div class="property-overview bg-white shadow4 border-20 p-40 mb-50">
                         <h4 class="mb-20">Részletes ingatlan leírás</h4>
-                        <p class="fs-20 lh-lg">Lorem ipsum dolor sit amet consectetur. Et velit varius ipsum tempor vel dignissim tincidunt. Aliquam accumsan laoreet ultricies tincidunt faucibus fames augue in sociis. Nisl enim integer neque nec.</p>
+                        <p class="fs-20 lh-lg">{!! $property->description !!}</p>
                     </div>
 
 
@@ -183,10 +190,10 @@
                 <div class="col-xl-4 col-lg-8 me-auto ms-auto">
                     <div class="theme-sidebar-one dot-bg p-30 ms-xxl-3 lg-mt-80">
                         <div class="agent-info bg-white border-20 p-30 mb-40">
-                            <img src="/images/lazy.svg" data-src="/images/agent/img_06.jpg" alt="" class="lazy-img rounded-circle ms-auto me-auto mt-3 avatar">
+                            <img src="{{ $property->user->getProfilePicture() }}" data-src="{{ $property->user->getProfilePicture() }}" alt="" class="lazy-img rounded-circle ms-auto me-auto mt-3 avatar">
                             <div class="text-center mt-25">
-                                <h6 class="name">Norbert</h6>
-                                <p class="fs-16">Tulajdonos/Értékesítő</p>
+                                <h6 class="name">{{ $property->user->name }}</h6>
+                                <p class="fs-16">{{ $property->user->position }}</p>
                                 <ul class="style-none d-flex align-items-center justify-content-center social-icon">
                                     <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
                                     <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
@@ -195,7 +202,7 @@
                             </div>
                             <div class="divider-line mt-40 mb-45 pt-20">
                                 <ul class="style-none">
-                                    <li>Email: <span><a href="mailto:akabirr770@gmail.com">norbert@otthonplusz.hu</a></span></li>
+                                    <li>Email: <span><a href="mailto:akabirr770@gmail.com">{{ $property->user->email }}</a></span></li>
                                     <li>Phone: <span><a href="tel:+12347687565">+36301112233</a></span></li>
                                 </ul>
                             </div>

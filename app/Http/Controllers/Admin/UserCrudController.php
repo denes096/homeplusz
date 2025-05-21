@@ -78,6 +78,26 @@ class UserCrudController extends CrudController
     {
         CRUD::setValidation(UserRequest::class);
         $this->addUserFields();
+
+        CRUD::field('profile_picture')
+            ->label('Profilkép')
+            ->type('upload')
+            ->withFiles(
+                [
+                    'disk' => 'public', // the disk where file will be stored
+                    'path' => 'uploads', // the path inside the disk where file will be stored
+                ]
+            )->attributes([
+                'id' => 'input_images', // 💡 ID hozzáadása a JS miatt
+            ]);
+
+        CRUD::field('image_preview_helper')
+            ->type('custom_html')
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>');
+
+        CRUD::field('position')
+            ->type('text')
+            ->label('Pozíció megnevezése');
     }
 
     /**

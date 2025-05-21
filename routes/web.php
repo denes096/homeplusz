@@ -39,3 +39,4 @@ Route::get('/bemutatkozas', [AboutUsController::class, 'show'])->name('aboutUs.s
 
 Route::get('/{slug}', [StaticPageController::class, 'show']);
 
+

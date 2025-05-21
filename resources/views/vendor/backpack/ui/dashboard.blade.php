@@ -1,22 +1,17 @@
 @extends(backpack_view('blank'))
 
 @php
-    if (backpack_theme_config('show_getting_started')) {
-        $widgets['before_content'][] = [
-            'type'        => 'view',
-            'view'        => backpack_view('inc.getting_started'),
-        ];
-    } else {
-        $widgets['before_content'][] = [
-            'type'        => 'jumbotron',
-            'heading'     => trans('backpack::base.welcome'),
-            'heading_class' => 'display-3 '.(backpack_theme_config('layout') === 'horizontal_overlap' ? ' text-white' : ''),
-            'content'     => trans('backpack::base.use_sidebar'),
-            'content_class' => backpack_theme_config('layout') === 'horizontal_overlap' ? 'text-white' : '',
-            'button_link' => backpack_url('logout'),
-            'button_text' => trans('backpack::base.logout'),
-        ];
-    }
+    $user = \Illuminate\Support\Facades\Auth::user();
+    $widgets['before_content'][] = [
+        'type'        => 'jumbotron',
+        'heading'     => "Üdvözöllek $user->name!",
+        'heading_class' => 'display-3 '.(backpack_theme_config('layout') === 'horizontal_overlap' ? ' text-white' : ''),
+        'content'     => '',
+        'content_class' => backpack_theme_config('layout') === 'horizontal_overlap' ? 'text-white' : '',
+        'button_link' => backpack_url('logout'),
+        'button_text' => trans('Kejelentkezés'),
+    ];
+
 @endphp
 
 @section('content')
@@ -46,14 +41,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3>Ingatlan/Projekt keresése kód alapján</h3>
+                    <h3 class="text-center w-100">Ingatlan/Projekt keresése kód alapján</h3>
                 </div>
                 <div class="card-body">
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="search-container">
-                                    <input type="text" class="form-control search-input" placeholder="!!!!!!!!FOLYAMATBAN!!!!!!!">
+                                    <input type="text" id="property-search" class="form-control search-input">
                                     <i class="fas fa-search search-icon"></i>
                                 </div>
                             </div>
@@ -62,26 +57,46 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <a href="/admin/project" class="btn btn-primary w-100" style="height: 90px">Projektek</a>
+                    <a href="/admin/property" class="btn btn-primary w-100" style="height: 90px">Ingatlan karbantartás</a>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <a href="/admin/property" class="btn btn-primary w-100" style="height: 90px">Ingatlanok</a>
+                    <a href="/admin/property/create" class="btn btn-primary w-100" style="height: 90px">Új ingatlan felvitele</a>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <a href="/admin/user" class="btn btn-primary w-100" style="height: 90px">Felhasználók</a>
+                    <a href="/admin/property-image-downloader" class="btn btn-primary w-100" style="height: 90px">Képletöltés</a>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="" class="btn btn-primary w-100" style="height: 90px">Új vevő felvitele</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="" class="btn btn-primary w-100" style="height: 90px">Vevő karbantartás</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
 @endsection
+
+

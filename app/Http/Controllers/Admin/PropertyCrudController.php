@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\PropertyRequest;
 use App\Models\Label;
 use App\Models\Project;
+use App\Models\Property;
 use App\Models\PropertyAttribute;
 use App\Models\PropertySubtype;
 use App\Models\PropertyType;
@@ -41,6 +42,13 @@ class PropertyCrudController extends CrudController
 
         $this->crud->addColumns([
             [
+                'name'  => 'is_active',
+                'label' => 'Aktív',
+                'type'  => 'checkbox',
+                'default' => false,
+                'tab' => 'Base'
+            ],
+            [
                 'name'  => 'featured',
                 'label' => 'Kiemelt',
                 'type'  => 'checkbox',
@@ -60,7 +68,9 @@ class PropertyCrudController extends CrudController
             [
                 'name' => 'price',
                 'label' => 'Ár',
-                'type' => 'number'
+                'type' => 'model_function',
+                'function_name' => 'getFormattedPrice',
+                'suffix' => ' M',
             ],
             [
                 'name' => 'ad_type',
@@ -122,6 +132,15 @@ class PropertyCrudController extends CrudController
         CRUD::setValidation(PropertyRequest::class);
 
         CRUD::addField([
+                'name' => 'is_active',
+                'label' => 'aktív',
+                'type' => 'checkbox',
+                'default' => true,
+                'tab' => 'Base'
+            ]
+        );
+
+        CRUD::addField([
                 'name' => 'featured',
                 'label' => 'Kiemelt',
                 'type' => 'checkbox',
@@ -130,7 +149,10 @@ class PropertyCrudController extends CrudController
             ]
         );
         CRUD::field('title')->type('text')->label('Cím')->tab('Base');
-        CRUD::field('price')->type('number')->label('Irányár')->suffix('M Ft')->tab('Base');
+        CRUD::field('price')->type('number')->label('Irányár')->suffix('M Ft')->tab('Base')->attributes([
+            'step' => '0.01', // ez engedélyezi a tizedes számokat
+            'min' => '0',     // opcionális
+        ]);
         CRUD::addField([
             'name' => 'ad_type',
             'label' => 'Típus',
@@ -253,24 +275,39 @@ class PropertyCrudController extends CrudController
         CRUD::field('images')
             ->type('upload_multiple')
             ->tab('Base')
+            ->upload('false')
             ->withFiles(
                 [
                     'disk' => 'public', // the disk where file will be stored
                     'path' => 'uploads', // the path inside the disk where file will be stored
                 ]
-            );
+            )->attributes([
+                'id' => 'input_images', // 💡 ID hozzáadása a JS miatt
+            ]);
 
-        CRUD::field('description')->type('summernote')->label('Részletes leírás')->tab('Base');
+        CRUD::field('image_preview_helper')
+            ->type('custom_html')
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>')
+            ->tab('Base'); // vagy bármi a tab neve
+
+
+
+        CRUD::field('description')
+            ->type('textarea')
+            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->label('Részletes leírás')
+            ->tab('Base');
 
 
         foreach (PropertyAttribute::all() as $attribute) {
             switch ($attribute->type) {
                 case 'checkbox':
                     CRUD::addField([
-                        'label' => $attribute->name,
+                        'label' => $attribute->label,
                         'type' => 'checkbox',
                         'name' => 'properties[' . $attribute->id . ']',
-                        'tab' => $attribute->category->name
+                        'tab' => $attribute->category->name,
+                        'wrapperAttributes' => ['class' => 'col-4'], // wrapper div-hez
                     ]);
                     break;
                 case 'radio':
@@ -326,7 +363,14 @@ class PropertyCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         CRUD::setValidation(PropertyRequest::class);
-
+        CRUD::addField([
+                'name' => 'is_active',
+                'label' => 'aktív',
+                'type' => 'checkbox',
+                'default' => true,
+                'tab' => 'Base'
+            ]
+        );
         CRUD::addField([
                 'name' => 'featured',
                 'label' => 'Kiemelt',
@@ -336,7 +380,11 @@ class PropertyCrudController extends CrudController
             ]
         );
         CRUD::field('title')->type('text')->label('Cím')->tab('Base');
-        CRUD::field('price')->type('number')->label('Irányár')->suffix('M Ft')->tab('Base');
+        CRUD::field('price')->type('number')->label('Irányár')->suffix('M Ft')->tab('Base')->attributes([
+            'step' => '0.01', // ez engedélyezi a tizedes számokat
+            'min' => '0',     // opcionális
+        ]);
+
         CRUD::addField([
             'name' => 'ad_type',
             'label' => 'Típus',
@@ -417,7 +465,7 @@ class PropertyCrudController extends CrudController
             'entity' => 'propertyType',
             'attribute' => 'name',
             'model' => PropertyType::class,
-            'tab' => 'Base',
+            'tab' => 'Teszt',
         ]);
 
         CRUD::addField([   // select_grouped
@@ -453,9 +501,20 @@ class PropertyCrudController extends CrudController
                     'disk' => 'public', // the disk where file will be stored
                     'path' => 'uploads', // the path inside the disk where file will be stored
                 ]
-            );
+            )->attributes([
+                'id' => 'input_images', // 💡 ID hozzáadása a JS miatt
+            ]);
 
-        CRUD::field('description')->type('summernote')->label('Részletes leírás')->tab('Base');
+        CRUD::field('image_preview_helper')
+            ->type('custom_html')
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>')
+            ->tab('Base'); // vagy bármi a tab neve
+
+        CRUD::field('description')
+            ->type('textarea')
+            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->label('Részletes leírás')
+            ->tab('Base');
 
         $propertyId = Route::current()->parameter('id');
         $property = \App\Models\Property::with('attributes')->findOrFail($propertyId);
@@ -468,7 +527,8 @@ class PropertyCrudController extends CrudController
                 'value' => $attribute->pivot->value,
                 'tab' => $attribute->category->name,
                 'prefix' => $attribute->prefix,
-                'suffix' => $attribute->suffix
+                'suffix' => $attribute->suffix,
+                'wrapperAttributes' => ['class' => 'col-4'], // wrapper div-hez
             ];
 
             // ha select, akkor a JSON értékek alapján adjunk meg opciókat
@@ -561,6 +621,19 @@ class PropertyCrudController extends CrudController
         $this->crud->setSaveAction();
 
         return $this->crud->performSaveAction($item->getKey());
+    }
+
+    public function findPropertyOrProject(string $unique_id) {
+        $property = Property::where('property_code', $unique_id)->first();
+
+        if (!$property) {
+            $project = Project::where('project_code', $unique_id)->first();
+
+            return redirect('/admin/project/' . $project->id . '/edit');
+
+        }
+
+        return redirect('/admin/property/' . $property->id . '/edit');
     }
 
 }

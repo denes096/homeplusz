@@ -44,18 +44,14 @@ class StaticPageCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(StaticPageRequest::class);
-        $this->crud->addFields([
-            [
-                'label' => "Slug",
-                'type' => 'text',
-                'name' => 'slug',
-            ],
-            [
-                'label' => "Tartalom",
-                'type' => 'summernote',
-                'name' => 'content',
-            ]
-        ]);
+        CRUD::field('slug')
+            ->type('text')
+            ->label('Url slug');
+
+        CRUD::field('content')
+            ->type('textarea')
+            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->label('Részletes leírás');
     }
 
     protected function setupUpdateOperation()

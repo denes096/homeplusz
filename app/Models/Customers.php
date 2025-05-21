@@ -5,9 +5,8 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PropertyType extends Model
+class Customers extends Model
 {
     use CrudTrait;
     use HasFactory;
@@ -18,10 +17,10 @@ class PropertyType extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'property_types';
-    // protected $primaryKey = 'id';
-     public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $table = 'customers';
+    protected $primaryKey = 'Id';
+    public $timestamps = false;
+    protected $guarded = ['Id'];
     // protected $fillable = [];
     // protected $hidden = [];
 
@@ -36,8 +35,9 @@ class PropertyType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function subtypes():HasMany{
-        return $this->hasMany(PropertySubtype::class);
+    public function referens()
+    {
+        return $this->belongsTo(User::class, 'refId');
     }
 
     /*

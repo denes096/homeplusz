@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class Project extends Model
 {
@@ -31,6 +33,72 @@ class Project extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+
+            $manager = new ImageManager(new Driver());
+            $disk = 'public';
+            $path = 'uploads';
+
+            $finalPaths = [];
+
+            $images = is_array($model->images) ? $model->images : json_decode($model->images, true);
+
+            foreach ($images as $imgPath) {
+                // Csak ha tényleges fájl elérési út (pl. uploads/kep.jpg)
+                if (Storage::disk($disk)->exists($imgPath)) {
+                    $fullPath = Storage::disk($disk)->path($imgPath);
+                    $image = $manager->read($fullPath)
+                        ->place(public_path('images/watermark.png'), 'center');
+
+                    // Felülírja a meglévő fájlt
+                    Storage::disk($disk)->put($imgPath, (string) $image->encode());
+
+                    $finalPaths[] = $imgPath;
+                } else {
+                    // Ha valamiért nem létező, csak hozzáadjuk
+                    $finalPaths[] = $imgPath;
+                }
+            }
+
+            // JSON-be visszarakjuk
+            $model->images = json_encode($finalPaths);
+        });
+
+        static::updating(function ($model) {
+            $manager = new ImageManager(new Driver());
+            $disk = 'public';
+            $path = 'uploads';
+
+            $finalPaths = [];
+
+            $images = is_array($model->images) ? $model->images : json_decode($model->images, true);
+
+            foreach ($images as $imgPath) {
+                // Csak ha tényleges fájl elérési út (pl. uploads/kep.jpg)
+                if (Storage::disk($disk)->exists($imgPath)) {
+                    $fullPath = Storage::disk($disk)->path($imgPath);
+                    $image = $manager->read($fullPath)
+                        ->place(public_path('images/watermark.png'), 'center', 0 , 0, 60);
+
+                    // Felülírja a meglévő fájlt
+                    Storage::disk($disk)->put($imgPath, (string) $image->encode());
+
+                    $finalPaths[] = $imgPath;
+                } else {
+                    // Ha valamiért nem létező, csak hozzáadjuk
+                    $finalPaths[] = $imgPath;
+                }
+            }
+
+            // JSON-be visszarakjuk
+            $model->images = json_encode($finalPaths);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------

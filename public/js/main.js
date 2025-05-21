@@ -48,4 +48,14 @@ $(document).ready(function () {
             window.location.href = '/ingatlan/kod/' + encodeURIComponent(code);
         }
     });
+
+    const input = document.getElementById('search-code');
+    const button = document.querySelector('.search-for-code');
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && input.value.trim() !== '') {
+            event.preventDefault(); // Megakadályozza az űrlap valódi submitját (ha van ilyen)
+            button.click();
+        }
+    });
 });

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PropertyCrudController;
+use App\Http\Controllers\Admin\PropertyImageDownloaderCrudController;
 use Illuminate\Support\Facades\Route;
 
 // --------------------------
@@ -32,6 +34,12 @@ Route::group([
     Route::crud('information', 'InformationCrudController');
     Route::crud('static-page', 'StaticPageCrudController');
     Route::crud('project', 'ProjectCrudController');
+    Route::crud('customer', 'CustomersCrudController');
+    Route::crud('property-image-downloader', 'PropertyImageDownloaderCrudController');
+
+    Route::get('find/{unique_id}', [PropertyCrudController::class, 'findPropertyOrProject'])->name('find');
+    Route::get('property-image-downloader/{unique_id}', [PropertyImageDownloaderCrudController::class, 'download'])->name('admin.property-image-downloader');
+    Route::crud('customers', 'CustomersCrudController');
 }); // this should be the absolute last line of this file
 
 /**
