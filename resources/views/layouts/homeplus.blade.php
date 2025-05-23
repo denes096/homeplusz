@@ -61,6 +61,9 @@
             object-fit: cover;
             height: 100%;
         }
+        .slick-slide{
+            height: auto !important;
+        }
     </style>
 
     <!-- Fix Internet Explorer ______________________________________-->

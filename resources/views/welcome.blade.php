@@ -33,8 +33,8 @@
     <div class="property-listing-four z-1 overflow-hidden pt-4 pb-5" style="background-color: #fbfbfb !important ;">
         <div class="container container-large">
             <div class="position-relative z-1">
-                <div class="title-one wow fadeInUp d-flex justify-content-between" style="margin-bottom: 2rem !important;">
-                    <p class="fs-2 ms-5 col-6">Ingatlan ajánlataink</p>
+                <div class="title-one wow fadeInUp d-md-flex justify-content-between" style="margin-bottom: 2rem !important;">
+                    <p class="fs-2 ms-md-5 col-6">Ingatlan ajánlataink</p>
                     <div class="col-3 d-flex justify-content-between">
                         @foreach($labels as $index => $label)
                             <a href="#"
@@ -76,7 +76,7 @@
     <div class="project-section-one pt-40">
         <div class="container mb-50">
             <div class="title-one wow fadeInUp">
-                <a href="project_04.html"><p class="fs-2 col-6 nav-item">Projektjeink</p></a>
+                <a href="project_04.html"><p class="fs-2 fw-bold col-6 nav-item">Projektjeink</p></a>
             </div>
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -93,22 +93,25 @@
                                     <div class="project-block-three mt-80 lg-mt-50">
                                         <div class="row gx-xxl-5 align-items-center">
 
-                                            <div class="col-lg-6 ms-auto">
+                                            <div class="col-lg-5 ms-auto">
                                                 <div class="caption ps-xxl-5">
                                                     <div class="tag fw-500 text-uppercase">{{ $project->project_code }}</div>
                                                     <h4 class="nav-item"><a href="/projekt/{{ $project->id }}">{{ $project->name }}</a></h4>
                                                     <p class="fs-24 ">
                                                         {{  $project->title }}
                                                     </p>
+                                                    <div class="d-flex justify-content-end">
+                                                        <a href="/projekt/{{ $project->id }}" class="btn-ten my-5" style="line-height: 40px;"><span>A projekt lakásai</span><i class="bi bi-chevron-right" style="color: #fff"></i></a>
+                                                    </div>
                                                 </div>
                                                 <!-- /.caption -->
                                             </div>
 
-                                            <div class="col-lg-6" style="max-height: 480px !important">
-                                                <figure class="image-wrapper position-relative z-1 overflow-hidden">
+                                            <div class="col-lg-6">
+                                                <figure class="position-relative z-1 overflow-hidden circle-1">
                                                    <div class="img-slider-btn">
                                                         <a href="{{ $project->getImageUrls()[0] }}"class="d-block position-relative" data-fancybox="{{ $project->id }}" data-caption="{{ $project->id }}">
-                                                            <img src="{{ $project->getImageUrls()[0] }}" alt="" class="w-100 tran5s img-fluid object-fit">
+                                                            <img src="{{ $project->getImageUrls()[0] }}" alt="" class="zoom tran5s img-fluid rounded-5">
                                                         </a>
                                                     </div>
                                                 </figure>
@@ -124,11 +127,8 @@
                 </div>
             </div>
         </div>
-
         <hr>
     </div>
-
-
     <div>
     </div>
     @include('includes/areas')
@@ -139,3 +139,15 @@
 ==============================================
 -->
 @endsection
+
+<style>
+.circle-1 {
+
+
+  mix-blend-mode: multiply;
+}
+.circle-1 {
+  background: transparent;
+  border-radius: 20% 31% 38% 54%/26% 47% 79% 52%;
+}
+</style>

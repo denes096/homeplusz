@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="inner-content">
-        <div class="top-header position-relative">
+        <div class="top-header position-relative ps-3">
             <div class="d-flex align-items-center">
                 <nav class="navbar navbar-expand-lg p0 ms-lg-5 order-lg-2">
                     <button class="navbar-toggler d-block d-lg-none" style="z-index: 100000000000000000000000000000000 !important;" type="button" data-bs-toggle="collapse"
