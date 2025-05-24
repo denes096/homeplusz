@@ -36,6 +36,7 @@ Route::get('/projekt/{id}', [ProjectController::class, 'list'])->name('project.l
 Route::get('/projekt/getNextPropertyId/{id}', [ProjectController::class, 'getNextPropertyId'])->name('project.getNextPropertyId');
 
 Route::get('/bemutatkozas', [AboutUsController::class, 'show'])->name('aboutUs.show');
+Route::get('/bemutatkozas/{id}', [AboutUsController::class, 'showAgentDetails'])->name('aboutUs.show-agent-details');
 
 Route::get('/{slug}', [StaticPageController::class, 'show']);
 

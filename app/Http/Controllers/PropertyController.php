@@ -36,6 +36,10 @@ class PropertyController extends Controller
     {
         $property = $this->propertyService->getById($id);
 
+        if (!$property) {
+            abort(404);
+        }
+
         return view('property.show', compact('property'));
     }
 
@@ -45,6 +49,10 @@ class PropertyController extends Controller
 
         if (!$property) {
             $project = $this->projectService->getByCode($code);
+
+            if (!$project) {
+                return back()->with('message', 'Nem található ilyen projekt/ingatlan');
+            }
             return view('project.show', compact('project'));
         }
 

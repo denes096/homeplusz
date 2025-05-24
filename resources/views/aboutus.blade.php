@@ -16,37 +16,30 @@
                     <div class="similar-property">
                         <h4 class="mb-40">Munkatársaink</h4>
                         <div class="similar-listing-slider-one">
-                            <div class="item zoom">
-                                <div class="listing-card-one shadow4 style-three border-30 mb-50">
-                                    <div class="img-gallery p-15">
-                                        <div class="position-relative border-20 overflow-hidden">
-                                            <img src="/images/listing/img_13.jpg" class="w-100 border-20" alt="...">
-                                            <a href="agent_details.html" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
-                                            <div class="img-slider-btn">
-                                                03 <i class="fa-regular fa-image"></i>
-                                                <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                            @foreach($users as $user)
+                                @php
+                                /** @var \App\Models\User $user */
+                                 @endphp
+                                <div class="item zoom">
+                                    <div class="listing-card-one shadow4 style-three border-30 mb-50">
+                                        <div class="img-gallery p-15">
+                                            <div class="position-relative border-20 overflow-hidden">
+                                                <img src="{{ $user->getProfilePicture() }}" class="w-100 border-20" alt="...">
+                                                <a href="{{ route('aboutUs.show-agent-details', [ 'id' => $user->id] ) }}" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="property-info pe-4 ps-4">
-                                        <a href="listing_01.html" class="title tran3s">Norbert</a>
-                                        <div class="address">Tulajdonos</div>
-                                        <div class="pl-footer top-border d-flex align-items-center justify-content-between">
-                                            <strong class="price fw-500 color-dark">Lorem Ipsum</strong>
+                                        <div class="property-info pe-4 ps-4">
+                                            <a href="{{ route('aboutUs.show-agent-details', [ 'id' => $user->id] ) }}" class="title tran3s">{{ $user->name }}</a>
+                                            <div class="address">{{ $user->position }}</div>
+                                            <!--
+                                            <div class="pl-footer top-border d-flex align-items-center justify-content-between">
+                                                <strong class="price fw-500 color-dark">{{ $user->desctiption ?? 'Leírás röviden' }}</strong>
+                                            </div>
+                                            -->
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="item">
-                            </div>
-                            <div class="item">
-                            </div>
-                            <div class="item">
-                            </div>
-                            <div class="item">
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -58,7 +51,7 @@
                         <div class="bg-white shadow4 border-20 p-30">
                             <div class="map-banner overflow-hidden border-15">
                                 <div class="gmap_canvas h-100 w-100">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83088.3595592641!2d-105.54557276330914!3d39.29302101722867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x874014749b1856b7%3A0xc75483314990a7ff!2sColorado%2C%20USA!5e0!3m2!1sen!2sbd!4v1699764452737!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100"></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2701.0803714100675!2d18.916212876607915!3d47.39086470284989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741e168219e903b%3A0x6dc0aa2d7e71c50a!2sOtthon%20Plusz%20Ingatlan!5e0!3m2!1shu!2shu!4v1747858785080!5m2!1shu!2shu" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -72,15 +65,14 @@
                             <div class="text-center mt-25">
                                 <h6 class="name">Vegye fel velünk a kapcsolatot!</h6>
                                 <ul class="style-none d-flex align-items-center justify-content-center social-icon">
-                                    <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                                    <li><a href="https://www.facebook.com/otthonplusz/?locale=hu_HU"><i class="fa-brands fa-facebook-f"></i></a></li>
                                 </ul>
                             </div>
                             <div class="divider-line mt-40 mb-45 pt-20">
                                 <ul class="style-none">
-                                    <li>Email: <span><a href="mailto:akabirr770@gmail.com">info@otthonplusz.hu</a></span></li>
-                                    <li>Phone: <span><a href="tel:+12347687565">+36301112233</a></span></li>
+                                    <li>Email: <span><a href="mailto:info@otthonplusz.hu">info@otthonplusz.hu</a></span></li>
+                                    <li>Telefon: <span><a href="tel:+36205829895">+36-20-582-9895 (Bakó Norbert)</a></span></li>
+                                    <li>Telefon: <span><a href="tel:+36209273828">+36-20-927-3828</a></span></li>
                                 </ul>
                             </div>
                             <div>
