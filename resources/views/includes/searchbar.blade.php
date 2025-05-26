@@ -132,7 +132,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-11 m-auto">
+					<div class="col-12 m-auto px-5">
 						<div class="search-wrapper-one layout-one position-relative wow fadeInUp" data-wow-delay="0.2s">
 							<div class="bg-wrapper" style="margin-bottom: 55px !important;">
                                 <form action="{{ route('property.list') }}">
@@ -154,7 +154,7 @@
 											</div>
 											<!-- /.input-box-one -->
 										</div>
-										<div class="col">
+										<div class="" style="width: 12% !important">
 											<div class="input-box-one border-left">
 												<div class="dropdown">
 													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
@@ -172,7 +172,7 @@
 											</div>
 											<!-- /.input-box-one -->
 										</div>
-										<div class="col">
+										<div class="" style="width: 9% !important">
 											<div class="input-box-one border-left">
 												<div class="dropdown">
 													<button type="button" class="d-flex justify-content-between w-100 align-items-center" data-bs-toggle="dropdown">
@@ -193,8 +193,13 @@
 										<div class="col">
 											<div class="input-box-one border-left">
 												<div class="d-flex justify-content-between align-items-center">
+<<<<<<< HEAD
 													<label for="roomNumber location">Szoba nappalival</label>
 													<img src="/images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+=======
+													<label for="roomNumber" class="fs-8">Szoba szám nappalival</label>
+													<img src="images/icon/rooms-icon.png" width="15" height="15" alt="rooms-icon">
+>>>>>>> frontend/0514
 												</div>
 												<div class="d-flex">
 													<input type="number" name="number_of_rooms_min" value="{{ request('number_of_rooms_min') }}" class="col-6">
@@ -207,8 +212,13 @@
 										<div class="col">
 											<div class="input-box-one border-left">
 												<div class="d-flex justify-content-between align-items-center">
+<<<<<<< HEAD
 													<label for="roomNumber location">Méret</label>
 													<img src="/images/icon/size-icon.png" width="15" height="15" alt="size-icon">
+=======
+													<label for="roomNumber">Méret</label>
+													<img src="images/icon/size-icon.png" width="15" height="15" alt="size-icon">
+>>>>>>> frontend/0514
 												</div>
 												<div class="d-flex">
 													<input type="number" name="property_area_min" value="{{ request('property_area_min') }}" class="col-6">

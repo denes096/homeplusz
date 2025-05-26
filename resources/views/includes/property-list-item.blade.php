@@ -3,7 +3,8 @@
         <div class="img-gallery p-15">
             <div class="position-relative border-20 overflow-hidden" style="height: 320px">
                 <div class="tag bg-white text-dark fw-500 border-20">{{$property->ad_type }}</div>
-                <img src="{{$property->getMainImageUrl()}}" class="w-100 border-20 object-fit" alt="...">
+                <img src="{{$property->getMainImageUrl()}}" class="w-100 border-20 object-fit-cover" alt="">
+                <a href="{{ route('property.show', ['id' => $property->id]) }}" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
                 <div class="img-slider-btn">
                     {{ count($property->getImageUrls()) }} <i class="fa-regular fa-image"></i>
                     @foreach($property->getImageUrls() as $url)
@@ -20,7 +21,8 @@
                 @foreach($property->attributes as $attribute)
                     @if($attribute->pivot->value)
                         <li class="d-flex align-items-center">
-                            <span class="fs-16"><strong class="fw-500 color-dark">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong> {{$attribute->short_label}}</span>
+                            <!--itt is kellenek az ingatlan periféria svg-k!  -->
+                            <span class="fs-16"><img src="" alt=""><strong class="fw-500 color-dark">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong> {{$attribute->short_label}}</span>
                         </li>
                     @endif
 

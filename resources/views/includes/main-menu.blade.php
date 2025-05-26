@@ -56,8 +56,8 @@
 
                             <li class="nav-item dropdown">
                                 <div class="input-group">
-                                        <input type="text" name="code" id="search-code" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                        <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="button" class="search-for-code">Keres<i class="bi bi-arrow-up-right"></i></button></span>
+                                    <input type="text" name="code" id="search-code" class="form-control" placeholder="Keresés Kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2" style="background-color: #96006B; color:#fff;"><button type="button" class="search-for-code">Keres<i class="bi bi-arrow-up-right"></i></button></span>
                                 </div>
                             </li>
 
