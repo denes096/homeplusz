@@ -243,9 +243,9 @@
                                                                         <label for="roomNumber location">Szobák (nappalival)</label>
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                         <span class="mx-1"> - </span>
-                                                                        <input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.input-box-one -->
@@ -256,9 +256,9 @@
                                                                         <label for="roomNumber location">Alapterület (m <sup>2</sup>)</label>
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                         -
-                                                                        <input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.input-box-one -->
@@ -269,9 +269,9 @@
                                                                         <label for="roomNumber location">Ár(millió Ft)</label>
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                         -
-                                                                        <input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 ps-2 py-1">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.input-box-one -->
@@ -433,9 +433,9 @@
                                                                         <label for="roomNumber location">Szobák (nappalival)</label>
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                         <span class="mx-1"> - </span>
-                                                                        <input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.input-box-one -->
@@ -446,9 +446,9 @@
                                                                         <label for="roomNumber location">Alapterület (m <sup>2</sup>)</label>
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                         -
-                                                                        <input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.input-box-one -->
@@ -459,9 +459,9 @@
                                                                         <label for="roomNumber location">Ár(millió Ft)</label>
                                                                     </div>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 ps-2 py-1">
                                                                         -
-                                                                        <input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 px-2 py-1">
+                                                                        <input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 ps-2 py-1">
                                                                     </div>
                                                                 </div>
                                                                 <!-- /.input-box-one -->
