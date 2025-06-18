@@ -2,7 +2,7 @@
     <div class="listing-card-one style-three border-30 mb-50 bg-light p-3">
         <div class="img-gallery ">
             <div class="position-relative border-20 overflow-hidden d-flex justify-content-center" style="height: 280px">
-                <div class="tag bg-white text-dark fw-500 border-20">{{$property->ad_type }}</div>
+                <div class="tag bg-white text-dark fw-500 border-20">{{$property->ad_type == 'sell' ? 'Eladó' : 'Kiadó' }}</div>
                 <a href="{{ route('property.show', ['id' => $property->id]) }}">
                     <img src="{{$property->getMainImageUrl()}}" class="w-100 border-20 object-fit" alt="...">
                 </a>
@@ -20,7 +20,7 @@
             <div class="address fs-8" style="margin-bottom: 0 !important;"><i class="bi bi-geo-alt pe-1"></i>{{$property->settlement?->name}} {{$property->settlementPart?->name}}</div>
             <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-between">
                 @foreach($property->attributes as $attribute)
-                    @if($attribute->pivot->value)
+                    @if($attribute->pivot->value && $attribute->show_in_list)
                         <li class="d-flex align-items-center border p-1">
                             <span class="fs-16"><strong class="fw-500 color-dark">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong> {{$attribute->short_label}}</span>
                         </li>
