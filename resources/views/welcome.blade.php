@@ -30,39 +30,33 @@
     Property Listing 2
 =====================================================
 -->
+    <style>
+        .item.slick-slide {
+            height: auto !important;
+        }
+    </style>
     <div class="property-listing-four z-1 overflow-hidden pt-4 pb-5" style="background-color: #fbfbfb !important ;">
         <div class="container container-large">
             <div class="position-relative z-1">
                 <div class="title-one wow fadeInUp d-md-flex justify-content-between" style="margin-bottom: 2rem !important;">
                     <p class="fs-2 ms-md-5 col-6">Ingatlan ajánlataink</p>
-                    <div class="col-3 d-flex justify-content-between">
-                        @foreach($labels as $index => $label)
-                            <a href="#"
-                               class="me-3 fw-bold btn-eleven label-button {{ $index === 0 ? 'active' : '' }}"
-                               data-label="{{ $label->name }}">
-                                <p>{{ $label->name }}</p>
-                            </a>
-                        @endforeach
-                    </div>
+
                 </div>
                 <!-- /.title-one -->
 
-                @foreach($labels as $index => $label)
-                    <div class="property-slider-container" data-label="{{ $label->name }}">
-                        
+                    <div class="property-slider-container">
                         <div class="listing-slider-one">
-                            @foreach($propertiesForLabels[$label->name] as $property)
+                            @foreach($randomProperties as $property)
                                 @include('includes/property-list-item')
                             @endforeach
                         </div>
                     </div>
-                @endforeach
 
             </div>
         </div>
         <div class="col text-center">
             <div class="input-box-one lg-mt-10">
-                <a href="#"><button class="fw-500 tran3s btn-five" >További ingatlanok</button></a>
+                <a href="/ingatlanok"><button class="fw-500 tran3s btn-five" >További ingatlanok</button></a>
             </div>
             <!-- /.input-box-one -->
         </div>

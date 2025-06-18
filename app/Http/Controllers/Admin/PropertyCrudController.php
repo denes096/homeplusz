@@ -294,8 +294,14 @@ class PropertyCrudController extends CrudController
 
         CRUD::field('description')
             ->type('textarea')
-            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Részletes leírás')
+            ->tab('Base');
+
+        CRUD::field('inner_comments')
+            ->type('textarea')
+            ->attributes(['class' => 'ckeditor'])
+            ->label('Belső komment')
             ->tab('Base');
 
 
@@ -334,8 +340,12 @@ class PropertyCrudController extends CrudController
                     ]);
                     break;
                 case 'select':
-                    $values = json_decode($attribute->values, false);
-                    $values = array_combine($values, $values);
+                    $values = (array)json_decode($attribute->values, true);
+                    if (isset($values[0]['id'])) {
+                        $values = array_combine(array_column($values, 'id'), array_column($values, 'label'));
+                    } else {
+                        $values = array_combine($values, $values);
+                    }
 
                     CRUD::addField([
                         'label' => $attribute->name,
@@ -512,8 +522,14 @@ class PropertyCrudController extends CrudController
 
         CRUD::field('description')
             ->type('textarea')
-            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Részletes leírás')
+            ->tab('Base');
+
+        CRUD::field('inner_comments')
+            ->type('textarea')
+            ->attributes(['class' => 'ckeditor'])
+            ->label('Belső komment')
             ->tab('Base');
 
         $propertyId = Route::current()->parameter('id');
@@ -533,8 +549,12 @@ class PropertyCrudController extends CrudController
 
             // ha select, akkor a JSON értékek alapján adjunk meg opciókat
             if (in_array($attribute->type, ['select', 'radio'])) {
-                $values = json_decode($attribute->values, false);
-                $values = array_combine($values, $values);
+                $values = (array)json_decode($attribute->values, true);
+                if (isset($values[0]['id'])) {
+                    $values = array_combine(array_column($values, 'id'), array_column($values, 'label'));
+                } else {
+                    $values = array_combine($values, $values);
+                }
 
                 $field['options'] = $values;
             }

@@ -44,3 +44,5 @@
 <x-backpack::menu-item title="Statikus oldalak" icon="la la-question" :link="backpack_url('static-page')" />
 <x-backpack::menu-item title="Projektek" icon="la la-question" :link="backpack_url('project')" />
 <x-backpack::menu-item title="Képletöltés" icon="la la-question" :link="backpack_url('property-image-downloader')" />
+
+<x-backpack::menu-item title="Slider images" icon="la la-question" :link="backpack_url('slider-images')" />

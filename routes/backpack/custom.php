@@ -40,6 +40,7 @@ Route::group([
     Route::get('find/{unique_id}', [PropertyCrudController::class, 'findPropertyOrProject'])->name('find');
     Route::get('property-image-downloader/{unique_id}', [PropertyImageDownloaderCrudController::class, 'download'])->name('admin.property-image-downloader');
     Route::crud('customers', 'CustomersCrudController');
+    Route::crud('slider-images', 'SliderImagesCrudController');
 }); // this should be the absolute last line of this file
 
 /**

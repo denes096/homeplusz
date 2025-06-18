@@ -73,7 +73,7 @@ class ProjectCrudController extends CrudController
         CRUD::field('title')->label("Összefoglaló");
         CRUD::field('description')
             ->type('textarea')
-            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Leírás');
 
         CRUD::field('deadline')->type('date')->label("Határidő");
@@ -126,7 +126,7 @@ class ProjectCrudController extends CrudController
         CRUD::field('title')->label("Összefoglaló");
         CRUD::field('description')
             ->type('textarea')
-            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Leírás');
 
         CRUD::field('deadline')->type('date')->label("Határidő");

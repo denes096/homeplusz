@@ -18,18 +18,29 @@ class PropertyController extends Controller
 
     }
 
-    public function list(Request $request) {
-        $labels = $this->labelService->getActiveLabels()->filter( fn($label) => $label->properties_count > 0);
+//    public function list(Request $request) {
+//        $labels = $this->labelService->getActiveLabels()->filter( fn($label) => $label->properties_count > 0);
+//
+//        $propertiesForLabels= [];
+//        foreach( $labels as $label) {
+//            $propertiesForLabels[$label->name] = $this->propertyService->getPropertiesWithFiltersForListByLabels($request, $label);
+//        }
+//
+//        return view('property.list', compact(
+//            'propertiesForLabels',
+//            'labels',
+//        ));
+//    }
 
-        $propertiesForLabels= [];
-        foreach( $labels as $label) {
-            $propertiesForLabels[$label->name] = $this->propertyService->getPropertiesWithFiltersForListByLabels($request, $label);
+    public function list(Request $request)
+    {
+        $properties = $this->propertyService->getPropertiesWithFilters($request, 10);
+
+        if ($request->ajax()) {
+            return view('includes.property-cards', compact('properties'))->render();
         }
 
-        return view('property.list', compact(
-            'propertiesForLabels',
-            'labels',
-        ));
+        return view('property.list', compact('properties'));
     }
 
     public function show(int $id, Request $request)

@@ -19,7 +19,7 @@ class PropertyAttributeSeeder extends Seeder
                 'label' => 'Állapot belül',
                 'property_attribute_category_id' => 1,
                 'type' => 'select',
-                'values' => json_encode(config('property.conditions'), JSON_UNESCAPED_UNICODE),
+                'values' => '[{"id":61,"label":"Új"},{"id":62,"label":"Felújított"},{"id":63,"label":"Jó"},{"id":64,"label":"Lakható"},{"id":65,"label":"Felújítandó"},{"id":66,"label":"Bontandó"}]',
                 'required' => true,
             ],
         );
@@ -29,7 +29,7 @@ class PropertyAttributeSeeder extends Seeder
                 'label' => 'Allapot kívülről',
                 'property_attribute_category_id' => 1,
                 'type' => 'select',
-                'values' => json_encode(config('property.conditions'), JSON_UNESCAPED_UNICODE),
+                'values' => '[{"id":61,"label":"Új"},{"id":62,"label":"Felújított"},{"id":63,"label":"Jó"},{"id":64,"label":"Lakható"},{"id":65,"label":"Felújítandó"},{"id":66,"label":"Bontandó"}]',
                 'required' => true,
             ],
         );

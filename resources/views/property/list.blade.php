@@ -21,32 +21,21 @@
                         <div class="position-relative z-1">
                             <div class="title-one mb-60 lg-mb-40 wow fadeInUp d-flex justify-content-between">
                                 <h2 class="font-garamond col-6">Ingatlan ajánlataink</h2>
-                                <div class="col-3 d-flex justify-content-between">
-                                    @foreach($labels as $label)
-                                        <a href="/label/change/{{$label->name}}"
-                                           class="fw-bold  btn-eleven">
-                                            <p>{{ $label->name }}</p>
-                                        </a>
-                                    @endforeach
-                                </div>
                             </div>
-                            <!-- /.title-one -->
-                            @foreach($propertiesForLabels as $label => $properties)
-                                <div class="asd">{{$label}}</div>
-                                <div class="listing-slider-one">
-                                    @include('property._partialList')
-                                </div>
 
-                            @endforeach
+                            <div class="row gx-xxl-5">
+                                    <!-- /.title-one -->
+                                    @foreach($properties as $property)
+                                    <div class="col-lg-4 col-md-6">
+                                        @include('includes/property-list-item')
+                                    </div>
+                                @endforeach
+                            </div>
 
                         </div>
                     </div>
                     <div class="col text-center">
-                        <div class="input-box-one lg-mt-10">
-                            <a href="#">
-                                <button class="fw-500 tran3s btn-five">További ingatlanok</button>
-                            </a>
-                        </div>
+                                {{ $properties->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
                         <!-- /.input-box-one -->
                     </div>
                 </div>

@@ -50,7 +50,7 @@ class StaticPageCrudController extends CrudController
 
         CRUD::field('content')
             ->type('textarea')
-            ->attributes(['id' => 'ckeditor']) // ID, hogy felismerje
+            ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Részletes leírás');
     }
 

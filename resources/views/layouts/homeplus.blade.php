@@ -62,7 +62,7 @@
             height: 100%;
         }
         .slick-slide{
-            height: auto !important;
+            height: 100% !important;
         }
     </style>
 

@@ -38,12 +38,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        if (document.getElementById('ckeditor')) {
-            CKEDITOR.replace('ckeditor', {
+        document.querySelectorAll('.ckeditor').forEach(function (el) {
+            CKEDITOR.replace(el, {
                 height: 300,
                 removePlugins: 'elementspath',
-                resize_enabled: false
+                resize_enabled: true
             });
-        }
+        });
     });
 </script>

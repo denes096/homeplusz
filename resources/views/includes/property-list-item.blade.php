@@ -9,7 +9,7 @@
                 <div class="img-slider-btn">
                     {{ count($property->getImageUrls()) }} <i class="fa-regular fa-image"></i>
                     @foreach($property->getImageUrls() as $url)
-                        <a href="{{ $url }}" class="d-block" data-fancybox="{{ $property->id }}" data-caption="{{ $property->id }}"></a>
+                        <a href="{{ $url }}" class="d-block" data-fancybox="property-{{ $property->id }}" data-caption="{{ $property->id }}"></a>
                     @endforeach
                 </div>
             </div>

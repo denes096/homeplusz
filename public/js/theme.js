@@ -35,7 +35,7 @@
         $('.nice-select').niceSelect();
       }
 
-      
+
       // ----------------------------- Lazy Load
         if($(".lazy-img").length) {
           $('.lazy-img').Lazy({
@@ -55,7 +55,7 @@
         }
 
         // ------------------------ Navigation Scroll
-        $(window).on('scroll', function (){   
+        $(window).on('scroll', function (){
           var sticky = $('.sticky-menu'),
           scroll = $(window).scrollTop();
           if (scroll >= 180) sticky.addClass('fixed');
@@ -72,14 +72,14 @@
             });
             $(this).on('focusout', function() {
                 $(this).attr('placeholder',$(this).data('holder'));
-            });     
+            });
         });
 
         // ---------------------- Filter More Review Button
-        if($(".load-more-review").length) { 
+        if($(".load-more-review").length) {
           $(".load-more-review").on("click", function() {
             let $more = $(this).siblings('.review-wrapper').toggleClass("show");
-            
+
             if ($more.hasClass('show')) {
               $(this).html('SHow less <i class="bi bi-arrow-up-right"></i>');
             } else {
@@ -176,7 +176,7 @@
               ]
             });
         }
-        
+
 
 
         // ------------------------ Location Slider
@@ -515,9 +515,9 @@
               $(".dash-aside-navbar").removeClass("show");
             });
           }
-      
 
-    
+
+
 $(window).on ('load', function (){ // makes sure the whole site is loaded
 
 // -------------------- Site Preloader
@@ -538,11 +538,11 @@ $(window).on ('load', function (){ // makes sure the whole site is loaded
             }
           );
           wow.init();
-        
+
 // ------------------------------------- Fancybox
         var fancy = $ ("[data-fancybox]");
         if(fancy.length) {
-          Fancybox.bind("[data-fancybox]", {
+          Fancybox.bind("[data-fancybox]:not(.slick-cloned a)", {
             // Your custom options
           });
         }
