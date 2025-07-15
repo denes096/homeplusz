@@ -120,11 +120,12 @@
                                     <li class="row gx-1">
                                         <div class="col-lg-4">
                                             <div class="address-block mt-50">
-                                                <h4 class="title pb-15">Elérhetőségünk</h4>
-                                                <p>2030 Érd<br>Riminyáki út 20.</p>
-                                                <p>Vagy hívjon: <br><a href="tel:310.841.5500">+36301234567</a></p>
+                                                <h4 class="title pb-15 fs-6">Elérhetőségünk</h4>
+                                                <p style="font-size: 14px !important;">2030 Érd<br>Riminyáki út 20.</p>
+                                                <p style="font-size: 14px !important;">Írjon nekünk: <br><a href="mailto:otthonplusz@otthonplusz.hu" class="fw-bold">otthonplusz@otthonplusz.hu</a></p>
+                                                <p style="font-size: 14px !important;">vagy hívjon: <br><a href="tel:310.841.5500" class="fw-bold">+36301234567</a></p>
                                             </div>
-                                            <div class="menu-column">
+                                            <div class="menu-column d-none">
                                                 <h6 class="mega-menu-title">Felirat?</h6>
                                                 <ul class="style-none mega-dropdown-list">
                                                     <li><a href="about_us_01.html" class="dropdown-item"><span>Rólunk</span></a></li>

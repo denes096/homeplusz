@@ -3,18 +3,18 @@
 @section('searchbar')@endsection
 
 @section('content')
-    <div class="listing-details-one theme-details-one bg-white pt-180 lg-pt-150 pb-150 xl-pb-120">
+    <div class="listing-details-one theme-details-one bg-white py-4">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8">
                     <div class="property-overview bg-white shadow4 border-20 p-40 mb-50">
-                        <h4 class="mb-20">Bemutatkozás</h4>
-                        <p class="fs-20 lh-lg">Lorem ipsum dolor sit amet consectetur. Et velit varius ipsum tempor vel dignissim tincidunt. Aliquam accumsan laoreet ultricies tincidunt faucibus fames augue in sociis. Nisl enim integer neque nec.</p>
+                        <h4 class="mb-4 fs-5">Bemutatkozás</h4>
+                        <p class="fs-6 lh-lg">Lorem ipsum dolor sit amet consectetur. Et velit varius ipsum tempor vel dignissim tincidunt. Aliquam accumsan laoreet ultricies tincidunt faucibus fames augue in sociis. Nisl enim integer neque nec.</p>
                     </div>
 
 
                     <div class="similar-property">
-                        <h4 class="mb-40">Munkatársaink</h4>
+                        <h4 class="mb-4 fs-5">Munkatársaink</h4>
                         <div class="similar-listing-slider-one">
                             @foreach($users as $user)
                                 @php
