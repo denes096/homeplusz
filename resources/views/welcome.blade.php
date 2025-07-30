@@ -16,7 +16,7 @@
                 </div>
                 <!-- /.title-one -->
 
-                <div id="carouselIndicators" class="carousel slide carousel-dark" data-bs-ride="carousel">
+                <div id="" class=" slide carousel-dark" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
                         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>

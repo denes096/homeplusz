@@ -1,8 +1,6 @@
-<div class="d-block d-md-none hero-banner-three position-relative z-  m-1 d-flex align-items-end justify-content-center pb-5" style="border-radius: 0 !important; min-height: 550px !important;">
+<div class="d-block d-md-none hero-banner-three position-relative z-0  m-1 d-flex align-items-end justify-content-center pb-5" style="border-radius: 0 !important; min-height: 550px !important;">
 	<div class="hero-slider-one m0">
-		<div class="item m0"><div class="hero-img" style="background-image: url(/images/assets/example-hero.jpg);"></div></div>
-		<div class="item m0"><div class="hero-img" style="background-image: url(/images/media/img_27.jpg);"></div></div>
-		<div class="item m0"><div class="hero-img" style="background-image: url(/images/media/img_28.jpg);"></div></div>
+		<div class="item m0"><div class="hero-img" style="background-image: url(/images/assets/example-hero.jpg);"></div></div> <!-- dinamikus kell legyen -->
 	</div>
 	<!-- /.hero-slider-one -->
 	<div class=" position-relative z-1" style="width:90%">
@@ -20,7 +18,7 @@
                                                         <input type="hidden" name="ad_type">
                                                         <input type="checkbox" id="ad_type" {{ request('ad_type') == 'rent' ? 'checked' : '' }}>
                                                         <span class="border">
-                                                            <span class="switch-button" data-value="sell" id="option1">Eladó</span>
+                                                            <span class="switch-button " data-value="sell" id="option1">Eladó</span>
                                                             <span class="switch-button" data-value="rent" id="option2">Kiadó</span>
                                                         </span>
                                                         <a class="btn bg-theme rounded-3"></a>
@@ -212,7 +210,7 @@
                                                         <input type="hidden" name="ad_type">
                                                         <input type="checkbox" id="ad_type" {{ request('ad_type') == 'rent' ? 'checked' : '' }}>
                                                         <span>
-                                                            <span class="switch-button" data-value="sell">Eladó</span>
+                                                            <span class="switch-button text-white" data-value="sell">Eladó</span>
                                                             <span class="switch-button" data-value="rent">Kiadó</span>
                                                         </span>
                                                         <a class="btn bg-theme rounded-3"></a>

@@ -21,7 +21,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <a href="{{ route('property.show', ['id' => $property->id]) }}" >
-                                <img src="{{$property->getMainImageUrl()}}" class="w-85 border-20 " alt="...">
+                                <img src="{{$property->getMainImageUrl()}}" class="w-85 border-20 d-flex justify-content-center align-items-center" alt="..."> <!-- automatikus alt -->
                             </a>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
-                    </div>
+                </div>
 
 
                 <div class="img-slider-btn">
@@ -46,14 +46,18 @@
         </div>
         <!-- /.img-gallery -->
         <div class="property-info mt-3 p-2 bg-white rounded-2">
-            <a href="{{ route('property.show', ['id' => $property->id]) }}" class="title tran3s fw-bold" style="font-size: 16px !important;" >{{$property->title}}</a>
+            <a href="{{ route('property.show', ['id' => $property->id]) }}" class="title tran3s fw-bold" style="font-size: 16px !important; min-height: 52px; max-height: 52px;" >{{$property->title}}</a>
             <div class="address" style="margin-bottom: 0 !important; font-size: 14px !important;"><i class="bi bi-geo-alt pe-1"></i>{{$property->settlement?->name}} {{$property->settlementPart?->name}}</div>
-            <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-evenly">
+            <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-evenly" style="min-height: 55px; max-height: 55px;">
                 @foreach($property->attributes as $attribute)
                     @if($attribute->pivot->value)
                         <li class="d-flex align-items-center border p-1">
                             <span><strong class="fw-500 color-dark" style="font-size: 14px !important;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong> {{$attribute->short_label}}</span>
                         </li>
+                        @else($attribute->pivot->value)
+                            <div class="d-block"  style="min-height: 55px; max-height: 55px;">
+                                <span><strong class="fw-500 color-dark">----------</strong></span>
+                            </div>
                     @endif
 
                 @endforeach
