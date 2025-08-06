@@ -2,43 +2,43 @@
 
 @section('content')
 
-
+        <!-- A Kereső sáv marad, de a bg nem kell! -->
     <!--
 		=====================================================
 			Property Listing Details
 		=====================================================
 		-->
-    <div class="listing-details-one theme-details-one bg-white pt-180 lg-pt-150 pb-150 xl-pb-120">
+    <div class="listing-details-one theme-details-one bg-white pt-4">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="labels-on-show">
                         @foreach($property->labels as $label)
-                            <div class="label-on-details" style="background-color: {{ $label->color }}; color: white"><strong>{{ $label->name }}</strong></div>
+                            <div class="label-on-details" style="background-color: {{ $label->color }}; color: white; font-size:14px !important;"><strong>{{ $label->name }}</strong></div>
                         @endforeach
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h3 class="property-titlee">{{$property->settlement?->name}} {{$property->settlementPart?->name}}</h3>
+                    <h5 class="property-titlee" style="font-size:16px !important;">{{$property->settlement?->name}} {{$property->settlementPart?->name}}</h5>
                     <div class="d-flex flex-wrap mt-10">
                         <div class="list-type text-uppercase border-20 mt-15 me-3">{{$property->getAdType() }}</div>
-                        <div class="address mt-15"><i class="bi bi-geo-alt"></i> CÍM:</div>
+                        <div class="address mt-15"><i class="bi bi-geo-alt"></i> CÍM:</div> <!-- Csak a belépett dolgozó láthatja a pontos címet! -->
                     </div>
                 </div>
                 <div class="col-lg-6 text-lg-end">
                     <div class="d-inline-block md-mt-40">
-                        <div class="price color-dark fw-500">ÁR: {{$property->price }}M FT.</div>
+                        <div class="price color-dark fw-bold" style="font-size:20px !important;">ÁR: {{$property->price }}M FT.</div>
                         <ul class="style-none d-flex align-items-center action-btns">
                             <li class="me-auto fw-500 color-dark"><i class="fa-sharp fa-regular fa-share-nodes me-2"></i> Megosztás</li>
-                            <li><a href="#" class="d-flex align-items-center justify-content-center rounded-circle tran3s"><i class="fa-light fa-heart"></i></a></li>
+                            <li><a href="#" class="d-flex align-items-center justify-content-center rounded-circle tran3s" style="width: 30px; height:30px;"><i class="fa-light fa-heart"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="media-gallery mt-100 xl-mt-80 lg-mt-60">
+            <div class="media-gallery pt-4">
                 <div id="media_slider" class="carousel slide row">
                     <div class="col-lg-10">
-                        <div class="bg-white shadow4 border-20 p-30 md-mb-20">
+                        <div class="bg-white shadow4 border-20 p-3">
                             <div class="position-relative z-1 overflow-hidden border-20">
                                 <div class="img-fancy-btn border-10 fw-500 fs-16 color-dark">
                                     {{ count($property->getImageUrls()) }} Kép<i class="fa-regular fa-image"></i>
@@ -60,7 +60,7 @@
                                 <div class="carousel-inner">
                                     @foreach($property->getImageUrls() as $url)
                                         <div class="carousel-item {{ $loop->index == 0 ? 'active' : '' }}">
-                                            <img src="{{ $url }}" alt="" class="border-20 w-100">
+                                            <img src="{{ $url }}" alt="" class="border-20 w-50">
                                         </div>
                                     @endforeach
                                 </div>
@@ -91,7 +91,7 @@
 
             </div>
             <div class="property-feature-list bg-white shadow4 border-20 p-40 mt-50 mb-60">
-                <h4 class="sub-title-one mb-40 lg-mb-20">Ingatlan adatai</h4>
+                <h4 class="sub-title-one mb-4 fs-5">Ingatlan adatai</h4>
                 <ul class="style-none d-flex flex-wrap align-items-center justify-content-between">
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_47.svg" alt="" class="lazy-img icon">
@@ -114,13 +114,13 @@
             <div class="row">
                 <div class="col-xl-8">
                     <div class="property-overview bg-white shadow4 border-20 p-40 mb-50">
-                        <h4 class="mb-20">Részletes ingatlan leírás</h4>
+                        <h4 class="mb-4 fs-5">Részletes ingatlan leírás</h4>
                         <p class="fs-20 lh-lg">{!! $property->description !!}</p>
                     </div>
 
 
                     <div class="similar-property">
-                        <h4 class="mb-40">Hasonló ingatlanok</h4>
+                        <h4 class="mb-4 fs-5">Hasonló ingatlanok</h4>
                         <div class="similar-listing-slider-one">
                             <div class="item">
                                 <div class="listing-card-one shadow4 style-three border-30 mb-50">
@@ -137,7 +137,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="property-info pe-4 ps-4">
+                                    <div class="property-info pe-4 ps-4"> <!-- Hasonló ingatlan tulajdonságokat megadtam, azokat kellene itt megjeleníteni -->
                                         <a href="listing_01.html" class="title tran3s">Eladó Családi ház</a>
                                         <div class="address">Érd Tusculanum</div>
                                         <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-between">

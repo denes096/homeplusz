@@ -64,6 +64,9 @@
         .slick-slide{
             height: 100% !important;
         }
+        .listing-card-one{
+            background-color: #f4f4f4 !important;
+        }
     </style>
 
     <!-- Fix Internet Explorer ______________________________________-->

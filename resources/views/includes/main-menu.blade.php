@@ -2,11 +2,11 @@
 @inject('infos', 'App\Services\InformationService')
 
 <header class="theme-main-menu menu-overlay menu-style-three sticky-menu">
-    <div class="d-flex pt-3 px-5">
+    <div class="d-flex pt-3 px-2">
         <!-- logo -->
         <div class="logo">
             <a href="/">
-                <img src="/images/icon/otthonplusz_logo_txt.png" style="width: 60%" alt="OtthonPlusz">
+                <img src="/images/icon/otthonplusz_logo_txt.png" style="width: 50%" alt="OtthonPlusz">
             </a>
         </div>
         <div class="right-widget ms-auto me-3 me-lg-0 order-lg-3">
@@ -35,9 +35,9 @@
         </div>
     </div>
     <div class="inner-content">
-        <div class="top-header position-relative ps-3">
+        <div class="top-header position-relative ps-1">
             <div class="d-flex align-items-center">
-                <nav class="navbar navbar-expand-lg p0 ms-lg-5 order-lg-2">
+                <nav class="navbar navbar-expand-lg p0 ms-lg-3 order-lg-2 w-100">
                     <button class="navbar-toggler d-block d-lg-none" style="z-index: 100000000000000000000000000000000 !important;" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -65,10 +65,10 @@
                                 <a href="/bemutatkozas" class="nav-link"><span>Bemutatkozás</span></a>
                             </li>
                             <li class="nav-item dropdown mega-dropdown-sm">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Szolgáltatások
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Szolgáltatások
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="row gx-1">
+                                    <li class="d-flex flex-column gx-1">
 
                                             @foreach($services->serviceCategories() as $serviceCategory)
                                                 @if($serviceCategory->services->count() > 0)
@@ -91,7 +91,7 @@
                             <li class="nav-item dropdown mega-dropdown-sm">
                                 <a href="#" class="nav-link"><span>Hasznos Informácók</span></a>
                                 <ul class="dropdown-menu">
-                                    <li class="row gx-1">
+                                    <li class="d-flex flex-column gx-1">
                                         @foreach($infos->informationCategories() as $informationCategory)
                                             @if($informationCategory->informations->count() > 0)
                                                 <div class="col-lg-4">
@@ -120,11 +120,12 @@
                                     <li class="row gx-1">
                                         <div class="col-lg-4">
                                             <div class="address-block mt-50">
-                                                <h4 class="title pb-15">Elérhetőségünk</h4>
-                                                <p>2030 Érd<br>Riminyáki út 20.</p>
-                                                <p>Vagy hívjon: <br><a href="tel:310.841.5500">+36301234567</a></p>
+                                                <h4 class="title pb-15 fs-6">Elérhetőségünk</h4>
+                                                <p style="font-size: 14px !important;">2030 Érd<br>Riminyáki út 20.</p>
+                                                <p style="font-size: 14px !important;">Írjon nekünk: <br><a href="mailto:otthonplusz@otthonplusz.hu" class="fw-bold">otthonplusz@otthonplusz.hu</a></p>
+                                                <p style="font-size: 14px !important;">vagy hívjon: <br><a href="tel:310.841.5500" class="fw-bold">+36301234567</a></p>
                                             </div>
-                                            <div class="menu-column">
+                                            <div class="menu-column d-none">
                                                 <h6 class="mega-menu-title">Felirat?</h6>
                                                 <ul class="style-none mega-dropdown-list">
                                                     <li><a href="about_us_01.html" class="dropdown-item"><span>Rólunk</span></a></li>
@@ -133,29 +134,21 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="nav-item dropdown mega-dropdown-sm">
-                                <a href="contact_us.html" class="nav-link joinIN" style="color: #96006B;"><span>Csatlakozz hozzánk!</span></a>
-                                <ul class="dropdown-menu">
-                                    <li class="row gx-1">
-                                        <div class="col-lg-4">
-                                            <div class="menu-column">
-                                                <h6 class="mega-menu-title">Felirat?</h6>
-                                                <ul class="style-none mega-dropdown-list">
-                                                    <li><a href="about_us_01.html" class="dropdown-item"><span>Rólunk</span></a></li>
-                                                </ul>
-                                            </div> <!--/.menu-column -->
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="d-md-none ps-2 pe-2 mt-20">
-                                <a href="dashboard/add-property.html" class="btn-ten w-100" target="_blank"><span>Kedvenceim</span><i class="fa-light fa-heart" style="color: #96006B;"></i></a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="nav-item">
+                        <a href="contact_us.html" class="nav-link joinIN px-3" style="color: #96006B; font-weight: 600;"><span>Csatlakozz hozzánk!</span></a>
                     </div>
                 </nav>
             </div>
         </div> <!--/.top-header-->
     </div> <!-- /.inner-content -->
 </header>
+
+<style>
+    .theme-main-menu .nav-item .nav-link{
+        margin: 0 5px;
+        font-size: 16px;
+    }
+</style>

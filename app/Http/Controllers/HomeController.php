@@ -39,20 +39,20 @@ class HomeController extends Controller
     }
 
     public function index(): View {
-        //$labels = $this->labelService->getActiveLabels()->filter( fn($label) => $label->properties_count > 0);
+        $labels = $this->labelService->getActiveLabels()->filter( fn($label) => $label->properties_count > 0);
         $settlementGroups = $this->settlementService->getSettlementGroups();
         $featuredProperties = $this->propertyService->getFeaturedProperties(5);
 
-        //$propertiesForLabels= [];
-        //foreach( $labels as $label) {
-        //    $propertiesForLabels[$label->name] = $this->propertyService->getPropertiesForListingByLabel($label, 5);
-        //}
+        $propertiesForLabels= [];
+        foreach( $labels as $label) {
+            $propertiesForLabels[$label->name] = $this->propertyService->getPropertiesForListingByLabel($label, 5);
+        }
         $randomProperties = $this->propertyService->getRandomPropertyList();
 
         return view('welcome', [
-          //  'labels' => $labels,
+            'labels' => $labels,
             'featuredProperties' => $featuredProperties,
-          //  'propertiesForLabels' => $propertiesForLabels,
+            'propertiesForLabels' => $propertiesForLabels,
             'settlementGroups' => $settlementGroups,
             'randomProperties' => $randomProperties,
             'projects' => $this->projectService->getAll(),

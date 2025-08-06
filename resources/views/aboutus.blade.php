@@ -3,18 +3,42 @@
 @section('searchbar')@endsection
 
 @section('content')
-    <div class="listing-details-one theme-details-one bg-white pt-180 lg-pt-150 pb-150 xl-pb-120">
+    <div class="listing-details-one theme-details-one bg-white py-4">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8">
                     <div class="property-overview bg-white shadow4 border-20 p-40 mb-50">
-                        <h4 class="mb-20">Bemutatkozás</h4>
-                        <p class="fs-20 lh-lg">Lorem ipsum dolor sit amet consectetur. Et velit varius ipsum tempor vel dignissim tincidunt. Aliquam accumsan laoreet ultricies tincidunt faucibus fames augue in sociis. Nisl enim integer neque nec.</p>
+                        <h4 class="mb-4 fs-5">Bemutatkozás</h4>
+
+                        <div class="mc_content"><div class="lilacim">Üdvözöljük az OTTHON PLUSZ INGATLANIRODA honlapján!</div>
+
+                            <br>
+
+                            <p><span class="hasab_alcim">Irodánk:</span></p>
+                            <p><span class="hasab">Irodánk Otthon Plusz Ingatlanközvetítő néven 2009-ben kezdte meg működését, de tevékenységünk 8 éves sikeres ingatlanközvetítői tapasztalaton és gyakorlaton alapul. Ezen idő alatt alaposan megismertük Érd és térsége ingatlanpiaci helyzetét, így nagy hatékonysággal tudunk eleget tenni ügyfeleink igényeinek, legyen szó akár ingatlan eladásról/vételről, akár ingatlan bérbeadásról/bérlésről.</span></p>
+
+                            <br>
+                            <p><span class="hasab_alcim">Kínálatunk:</span>   </p>
+                            <p><span class="hasab">Működési területünk főként Érdre, Tárnokra specializálódott, de kínálatunkban megtalálhatóak Diósdi, Százhalombattai, Törökbálinti, Sóskúti és egyéb környező városok, települések ingatlanjai is. Kínálatunkban megtalálhatóak építési telkek, új és használt lakóingatlanok (lakások, iker, társas, családi házak) az egyszerűtől a luxusig.</span></p>
+                            
+                            <br>  
+                            <p><span class="hasab_alcim">Csapatunk:</span></p>
+                            <p><span class="hasab">Munkánkat barátságos közvetlenség, ügyfélközpontúság, rugalmasság, nagyfokú helyismeret, szakmai hozzáértés és céltudatosság jellemzi, mely során igyekszünk megtalálni az Ön igényeinek megfelelő ingatlant. Célunk, hogy az ügyfeleinkkel kialakult bizalmas, diszkréción alapuló kapcsolat során - felmérve a keresett ingatlanra vonatkozó igényeket - az aktuális ingatlanpiaci kínálatban fellelhető legjobb ingatlant találjuk meg számukra, melyben otthonos otthonukat lelik meg.</span></p>
+                            <br>  
+                            <p><span class="hasab_alcim">Céljaink:</span></p>
+                            <p><span class="hasab">Az ingatlanközvetítő feladata az ügyfelek eligazítása, tájékoztatása és iránymutatása a mai ingatlanpiacon tapasztalható kínálati rengetegben fellelhető ingatlanok közötti választás során. Olyan pluszt nyújtani, ami a napi ingatlanpiacon történő mozzanatok ismeretén, a megfelelő helyismereten és szakmai hozzáértésen alapul, ismerve a piac helyi sajátosságait.</span></p>
+                            <p><span class="hasab">Érdeklődését szívesen fogadjuk akár eladási - vételi, akár bérbeadási - bérbe vételi szándékkal keres fel minket.</span></p> 
+                            
+                            <br>
+                            <p class="hasab_kozep">Köszönjük, hogy figyelmével megtisztelte irodánkat!</p>
+                            <p class="hasab_kozep"> Bakó Norbert<br>
+                            Otthon Plusz Ingatlanközvetítő Iroda</p>
+                        </div>
                     </div>
 
 
                     <div class="similar-property">
-                        <h4 class="mb-40">Munkatársaink</h4>
+                        <h4 class="mb-4 fs-5">Munkatársaink</h4>
                         <div class="similar-listing-slider-one">
                             @foreach($users as $user)
                                 @php
