@@ -21,8 +21,8 @@ class PropertySubtype extends Model
 
     protected $table = 'property_subtypes';
     // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    protected $guarded = ['id'];
+    public $timestamps = false;
+    protected $guarded = [];
     // protected $fillable = [];
     // protected $hidden = [];
 

@@ -80,10 +80,11 @@ class CustomersCrudController extends CrudController
             'Aktív' => 'Aktív',
             'Felfüggesztve' => 'Felfüggesztve',
             'Archív' => 'Archív',
-        ])->default('Aktív');
+        ])->default('Aktív')->tab('Alapadatok');
 
         CRUD::addField([
             'name' => 'refId',
+            'tab' => 'Alapadatok',
             'label' => 'Referens',
             'type' => 'select',
             'entity' => 'referens', // kapcsolódó függvény a modelben
@@ -98,23 +99,38 @@ class CustomersCrudController extends CrudController
             '3' => '***',
             '4' => '****',
             '5' => '*****',
-        ])->default('1');
+        ])->default('1')->tab('Alapadatok');
 
-        CRUD::field('ekod')->type('text');
-        CRUD::field('name_0')->type('text');
-        CRUD::field('phone_0')->type('text');
-        CRUD::field('azonosito1_0')->type('text');
-        CRUD::field('azonosito2_0')->type('text');
-        CRUD::field('name_1')->type('text');
-        CRUD::field('phone_1')->type('text');
-        CRUD::field('name_2')->type('text');
-        CRUD::field('phone_2')->type('text');
-        CRUD::field('name_3')->type('text');
-        CRUD::field('phone_3')->type('text');
-        CRUD::field('name_4')->type('text');
-        CRUD::field('phone_4')->type('text');
-        CRUD::field('email')->type('email');
-        CRUD::field('note')->type('textarea');
+        CRUD::field('ekod')->type('text')->tab('Alapadatok');
+        CRUD::field('name_0')->label('Név')->type('text')->tab('Alapadatok');
+        CRUD::field('phone_0')->label('Telefonszám')->type('text')->tab('Alapadatok');
+        CRUD::field('azonosito1_0')->label('Azonosító')->type('text')->tab('Alapadatok');
+        //CRUD::field('azonosito2_0')->type('text')->tab('Alapadatok');
+        //CRUD::field('name_1')->type('text')->tab('Alapadatok');
+        //CRUD::field('phone_1')->type('text')->tab('Alapadatok');
+        //CRUD::field('name_2')->type('text')->tab('Alapadatok');
+        //CRUD::field('phone_2')->type('text')->tab('Alapadatok');
+        //CRUD::field('name_3')->type('text')->tab('Alapadatok');
+        //CRUD::field('phone_3')->type('text')->tab('Alapadatok');
+//        CRUD::field('name_4')->type('text')->tab('Alapadatok');
+//        CRUD::field('phone_4')->type('text')->tab('Alapadatok');
+        CRUD::field('email')->type('email')->tab('Alapadatok');
+        CRUD::field('note')->type('textarea')->tab('Alapadatok');
+
+
+        CRUD::addField([
+            'label' => 'Min ár',
+            'type' => 'number',
+            'name' => "p[min_ar]",
+            'tab' => 'Keresési paraméterek',
+        ]);
+
+        CRUD::addField([
+            'label' => 'Max ár',
+            'name' => 'p[max_ar]',
+            'type' => 'number',
+            'tab' => 'Keresési paraméterek',
+        ]);
     }
 
     /**
@@ -126,5 +142,30 @@ class CustomersCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+    public function store()
+    {
+        $this->crud->hasAccessOrFail('create');
+
+        // execute the FormRequest authorization and validation, if one is required
+        $request = $this->crud->validateRequest();
+
+        // register any Model Events defined on fields
+        $this->crud->registerFieldEvents();
+
+        // insert item in the db
+        $itemAttributes = $this->crud->getStrippedSaveRequest($request);
+        $item = $this->crud->create($itemAttributes);
+
+        dd($request->get('p'));
+
+        // show a success message
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        // save the redirect choice for next time
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+
     }
 }

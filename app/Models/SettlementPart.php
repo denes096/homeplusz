@@ -23,7 +23,7 @@ class SettlementPart extends Model
     protected $table = 'settlement_parts';
     // protected $primaryKey = 'id';
     public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $guarded = [];
     // protected $fillable = [];
     // protected $hidden = [];
 

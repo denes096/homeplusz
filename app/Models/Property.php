@@ -27,7 +27,7 @@ class Property extends Model
     protected $table = 'properties';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $guarded = [];
     // protected $hidden = [];
 
     /*
@@ -40,6 +40,10 @@ class Property extends Model
         parent::boot();
 
         static::creating(function ($model) {
+            if (app()->runningInConsole()) {
+                return;
+            }
+
             $model->user_id = backpack_user()->id;
 
             $manager = new ImageManager(new Driver());
@@ -72,6 +76,10 @@ class Property extends Model
         });
 
         static::updating(function ($model) {
+            if (app()->runningInConsole()) {
+                return;
+            }
+
             $manager = new ImageManager(new Driver());
             $disk = 'public';
             $path = 'uploads';
@@ -127,20 +135,40 @@ class Property extends Model
 
     public function getMainImageUrl()
     {
-        $imeages = json_decode($this->images);
 
-        foreach ($imeages as $imeage) {
-            return Storage::url($imeage);
+        $images = json_decode($this->images);
+
+        if ($images != null) {
+            foreach ($images as $image) {
+                return Storage::url("uploads/{$this->id}/" . $image);
+            }
         }
         //TODO no image defauklt
-        return Storage::url('../images/defaultProperty.png');
+        return '/images/defaultProperty.png';
+    }
+
+    public function getFirstImageUrlAttribute()
+    {
+        $images = json_decode($this->images);
+
+        if (!empty($images)) {
+            return "uploads/{$this->id}/" . $images[0];
+        }
+        return 'images/defaultProperty.png'; // alapértelmezett kép
+    }
+
+    public function getCustomActionButton()
+    {
+        $url = url("admin/property/{$this->id}/custom-action");
+
+        return '<a class="btn btn-sm btn-success" href="'.$url.'">Aktiválás/Deaktiválás</a>';
     }
 
     public function getImageUrls()
     {
         $r = [];
         foreach (json_decode($this->images) as $image) {
-            $r[] = Storage::url($image);
+            $r[] = Storage::url("uploads/{$this->id}/" . $image);
         }
 
         if (empty($r)) {

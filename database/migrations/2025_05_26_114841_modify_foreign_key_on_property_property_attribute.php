@@ -20,7 +20,6 @@ return new class extends Migration
                 ->on('properties')
                 ->onDelete('cascade');
 
-            $table->text('inner_comments')->nullable();
         });
     }
 

@@ -24,7 +24,6 @@ class SettlementCrudController extends CrudController
     {
         CRUD::column('postal_code')->type('text')->label('Irányítószám');
         CRUD::column('name')->type('text')->label('Település neve');
-        CRUD::column('part')->type('text')->label('Település rész');
 
         $this->crud->query->withCount('parts');
         $this->crud->addColumn([
@@ -41,7 +40,6 @@ class SettlementCrudController extends CrudController
 
 
         CRUD::column('county')->type('text')->label('Megye');
-        CRUD::column('area')->type('text')->label('Járás');
 
     }
 
@@ -50,9 +48,7 @@ class SettlementCrudController extends CrudController
         CRUD::setValidation(SettlementRequest::class);
         CRUD::field('postal_code')->type('number')->label('Irányítószám');
         CRUD::field('name')->type('text')->label('Település neve');
-        CRUD::field('part')->type('text')->label('Település rész');
         CRUD::field('county')->type('text')->label('Megye');
-        CRUD::field('area')->type('text')->label('Járás');
     }
 
     protected function setupUpdateOperation()

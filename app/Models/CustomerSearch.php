@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customers extends Model
+class CustomerSearch extends Model
 {
     use CrudTrait;
     use HasFactory;
@@ -17,9 +17,9 @@ class Customers extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'customers';
-    protected $primaryKey = 'id';
-    public $timestamps = false;
+    protected $table = 'customer_search';
+    // protected $primaryKey = 'id';
+    // public $timestamps = false;
     protected $guarded = ['id'];
     // protected $fillable = [];
     // protected $hidden = [];
@@ -35,9 +35,9 @@ class Customers extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function referens()
+    public function customer()
     {
-        return $this->belongsTo(User::class, 'refId');
+        $this->belongsTo(Customers::class, 'customer_id');
     }
 
     /*

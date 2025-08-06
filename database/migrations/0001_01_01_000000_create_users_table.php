@@ -17,6 +17,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('phone2')->nullable();
+            $table->text('profile_picture')->default('../images/defaultUser.png')->nullable();
+            $table->text('position')->default('Referens')->nullable();
+            $table->dateTime('last_login_at')->nullable();
+            $table->dateTime('registered_at')->nullable();
+            $table->dateTime('previous_login_at')->nullable();
+            $table->integer('referer_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

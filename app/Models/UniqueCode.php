@@ -14,6 +14,8 @@ class UniqueCode extends Model
     public $incrementing = false;   // nem automatikusan növekvő
     protected $keyType = 'int';     // ha integer típusú
 
+    protected $guarded = [];
+
     public static function getNextCode()
     {
         return static::getCurrentCode() + 1;

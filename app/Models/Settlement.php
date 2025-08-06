@@ -22,8 +22,7 @@ class Settlement extends Model
     protected $table = 'settlements';
     protected $primaryKey = 'id';
     public $timestamps = false;
-    protected $guarded = ['id'];
-    protected $fillable = ['name', 'county', 'area', 'postal_code', 'part'];
+    protected $guarded = [];
 
     /*
     |--------------------------------------------------------------------------
@@ -56,10 +55,7 @@ class Settlement extends Model
     */
     public function getFullNameAttribute()
     {
-        return
-            strlen($this->part) > 0 ?
-                $this->postal_code . ' - ' . $this->name . ' (' . $this->part . ')' :
-                $this->postal_code . ' - ' . $this->name;
+        return $this->postal_code . ' - ' . $this->name;
     }
     /*
     |--------------------------------------------------------------------------

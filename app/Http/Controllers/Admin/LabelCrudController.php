@@ -25,6 +25,7 @@ class LabelCrudController extends CrudController
     {
         CRUD::column('name')->type('text')->label("Név");
         CRUD::column('color')->type('color')->label("Szín");
+        CRUD::column('filter')->type('checkbox')->label("Főoldalon megjelenik");
     }
 
     protected function setupCreateOperation()
@@ -32,6 +33,7 @@ class LabelCrudController extends CrudController
         CRUD::setValidation(LabelRequest::class);
         CRUD::field('name')->type('text')->label('Név');
         CRUD::field('color')->type('color')->label('Szín');
+        CRUD::field('filter')->type('checkbox')->label("Főoldalon megjelenik");
     }
 
     protected function setupUpdateOperation()

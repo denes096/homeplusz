@@ -39,18 +39,19 @@ class PropertyCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setValidation(PropertyRequest::class);
-
+        $this->crud->addButtonFromModelFunction('line', 'customAction', 'getCustomActionButton', 'beginning');
         $this->crud->addColumns([
+            [
+                'name' => 'first_image_url',
+                'label' => 'Kép',
+                'type' => 'image',
+                'prefix' => 'storage/', // mert az accessorban már nincs storage prefix
+                'height' => '200px',
+                'width' => '200px',
+            ],
             [
                 'name'  => 'is_active',
                 'label' => 'Aktív',
-                'type'  => 'checkbox',
-                'default' => false,
-                'tab' => 'Base'
-            ],
-            [
-                'name'  => 'featured',
-                'label' => 'Kiemelt',
                 'type'  => 'checkbox',
                 'default' => false,
                 'tab' => 'Base'
@@ -60,17 +61,13 @@ class PropertyCrudController extends CrudController
                 'label' => 'Ingatlan kód',
                 'type' => 'text'
             ],
-            [
-                'name' => 'title',
-                'label' => 'Cím',
-                'type' => 'text'
-            ],
+
             [
                 'name' => 'price',
                 'label' => 'Ár',
                 'type' => 'model_function',
                 'function_name' => 'getFormattedPrice',
-                'suffix' => ' M',
+                'suffix' => ' Ft',
             ],
             [
                 'name' => 'ad_type',
@@ -103,27 +100,7 @@ class PropertyCrudController extends CrudController
                 'group_by_relationship_back' => 'parts', // relationship from related model back to this model
                 'tab' => 'Base',
             ],
-            [   // select_grouped
-                'label' => 'Ingatlantípus',
-                'type' => 'select',
-                'name' => 'property_type_id',
-                'entity' => 'propertyType',
-                'attribute' => 'name',
-                'model' => PropertyType::class,
-                'tab' => 'Base',
-            ],
-            [   // select_grouped
-                'label' => 'Ingatlan altípus',
-                'type' => 'select_grouped', //https://github.com/Laravel-Backpack/CRUD/issues/502
-                'name' => 'property_subtype_id',
-                'entity' => 'propertySubtype',
-                'attribute' => 'name',
-                'model' => PropertySubtype::class,
-                'group_by' => 'propertyType', // the relationship to entity you want to use for grouping
-                'group_by_attribute' => 'name', // the attribute on related model, that you want shown
-                'group_by_relationship_back' => 'subtypes', // relationship from related model back to this model
-                'tab' => 'Base',
-            ],
+
         ]);
     }
 
@@ -149,7 +126,7 @@ class PropertyCrudController extends CrudController
             ]
         );
         CRUD::field('title')->type('text')->label('Cím')->tab('Base');
-        CRUD::field('price')->type('number')->label('Irányár')->suffix('M Ft')->tab('Base')->attributes([
+        CRUD::field('price')->type('number')->label('Irányár')->suffix('Ft')->tab('Base')->attributes([
             'step' => '0.01', // ez engedélyezi a tizedes számokat
             'min' => '0',     // opcionális
         ]);
@@ -355,6 +332,16 @@ class PropertyCrudController extends CrudController
                         'tab' => $attribute->category->name
                     ]);
                     break;
+                case 'select_multiple':
+                    CRUD::addField([
+                        'label' => $attribute->name,
+                        'type' => 'select_from_array',
+                        'name' => 'properties[' . $attribute->id . ']',
+                        'options' => (array)json_decode($attribute->values),
+                        'tab' => $attribute->category->name,
+                        'allows_multiple' => true
+                    ]);
+                    break;
                 default:
                     CRUD::addField([
                         'label' => $attribute->name,
@@ -390,8 +377,8 @@ class PropertyCrudController extends CrudController
             ]
         );
         CRUD::field('title')->type('text')->label('Cím')->tab('Base');
-        CRUD::field('price')->type('number')->label('Irányár')->suffix('M Ft')->tab('Base')->attributes([
-            'step' => '0.01', // ez engedélyezi a tizedes számokat
+        CRUD::field('price')->type('number')->label('Irányár')->suffix('Ft')->tab('Base')->attributes([
+            'step' => '1', // ez engedélyezi a tizedes számokat
             'min' => '0',     // opcionális
         ]);
 
@@ -468,15 +455,6 @@ class PropertyCrudController extends CrudController
             'group_by_relationship_back' => 'parts', // relationship from related model back to this model
             'tab' => 'Base',
         ]);
-        CRUD::addField([   // select_grouped
-            'label' => 'Ingatlantípus',
-            'type' => 'select',
-            'name' => 'property_type_id',
-            'entity' => 'propertyType',
-            'attribute' => 'name',
-            'model' => PropertyType::class,
-            'tab' => 'Teszt',
-        ]);
 
         CRUD::addField([   // select_grouped
             'label' => 'Ingatlan altípus',
@@ -538,7 +516,7 @@ class PropertyCrudController extends CrudController
         foreach ($property->attributes as $attribute) {
             $field = [
                 'name' => 'properties[' . $attribute->id . ']', // pl. attribute_5
-                'label' => $attribute->name,
+                'label' => $attribute->label,
                 'type' => $this->mapAttributeType($attribute->type),
                 'value' => $attribute->pivot->value,
                 'tab' => $attribute->category->name,
@@ -550,13 +528,32 @@ class PropertyCrudController extends CrudController
             // ha select, akkor a JSON értékek alapján adjunk meg opciókat
             if (in_array($attribute->type, ['select', 'radio'])) {
                 $values = (array)json_decode($attribute->values, true);
-                if (isset($values[0]['id'])) {
-                    $values = array_combine(array_column($values, 'id'), array_column($values, 'label'));
-                } else {
-                    $values = array_combine($values, $values);
+//                if (isset($values[0]['id'])) {
+//                    $values = array_combine(array_column($values, 'id'), array_column($values, 'label'));
+//                } else {
+//                    $values = array_combine($values, $values);
+//                }
+                foreach ($values as $k => $value) {
+                    $values[(string)$k] = (string)$value;
                 }
 
                 $field['options'] = $values;
+            }
+            if ($attribute->type == 'select_multiple') {
+                $values = (array)json_decode($attribute->values, true);
+//                if (isset($values[0]['id'])) {
+//                    $values = array_combine(array_column($values, 'id'), array_column($values, 'label'));
+//                } else {
+//                    $values = array_combine($values, $values);
+//                }
+                foreach ($values as $k => $value) {
+                    $values[(int)$k] = (string)$value;
+                }
+
+                $field['allows_multiple'] = true;
+                $field['attributes'] = ['multiple' => 'multiple'];
+                $field['options'] = $values;
+                $field['value'] = json_decode($attribute->pivot->value, true);
             }
 
             CRUD::addField($field);
@@ -572,6 +569,7 @@ class PropertyCrudController extends CrudController
             'checkbox' => 'checkbox',
             'select' => 'select_from_array',
             'radio' => 'radio',
+            'select_multiple' => 'select_from_array',
             default => 'text',
         };
     }
@@ -595,7 +593,17 @@ class PropertyCrudController extends CrudController
         UniqueCode::updateCode((int)explode('/', $itemAttributes['property_code'])[0]);
 
         foreach ($request->get('properties') as $attributeId => $attributeValue) {
-            $item->attributes()->attach($attributeId, ['value' => $attributeValue]);
+            $selectedValues = $request->input('properties.' . $attributeId);
+
+            if (is_array($selectedValues)) {
+                $valueToSave = json_encode($selectedValues);
+            } else {
+                $valueToSave = $selectedValues;
+            }
+
+            $item->attributes()->syncWithoutDetaching([
+                $attributeId => ['value' => $valueToSave]
+            ]);
         }
 
         $this->data['entry'] = $this->crud->entry = $item;

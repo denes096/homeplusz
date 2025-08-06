@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
             wrapper.style.position = 'relative';
 
             const img = document.createElement('img');
-            img.src = '/storage/' + filePath; // adjust this path if needed
+            img.src = '/storage/uploads/' + filePath.split('_')[0] + "/" + filePath; // adjust this path if needed
             img.style.maxWidth = '150px';
             img.style.maxHeight = '150px';
             img.style.border = '1px solid #ccc';

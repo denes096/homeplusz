@@ -15,10 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('postal_code');
             $table->string('name');
-            $table->string('part')->nullable();
             $table->string('county');
-            $table->string('area');
-            $table->unique('postal_code');
         });
     }
 

@@ -21,7 +21,7 @@ class PropertyType extends Model
     protected $table = 'property_types';
     // protected $primaryKey = 'id';
      public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $guarded = [];
     // protected $fillable = [];
     // protected $hidden = [];
 
