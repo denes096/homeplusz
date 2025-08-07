@@ -112,8 +112,6 @@
 @show
 <!-- /.theme-main-menu -->
 
-@section('searchbar')
-
 <!--
 =============================================
     Hero Banner
@@ -219,15 +217,96 @@
 <script src="{{asset("js/theme.js")}}"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="{{asset("js/main.js")}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         jQuery('.multiselect').select2({
             width: '100%'
         });
+
+        $('.listing-slider-one-owl').owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            navText:["<div class='nav-btn prev-slide'><i class='prev-slide fas fa-angle-left'></i></div>","<div class='nav-btn next-slide'><i class='next-slide fas fa-angle-right'></i></div>"],
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            smartSpeed: 600,
+            items: 1, // itt egyesével jön be
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 2
+                },
+                992: {
+                    items: 3
+                },
+                1200: {
+                    items: 4
+                }
+            }
+        });
     });
+    $('.listing-slider-one-static').owlCarousel({
+        loop: false,
+        margin: 20,
+        nav: false,
+        dots: false,
+        autoplay: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            768: {
+                items: 2
+            },
+            992: {
+                items: 3
+            },
+            1200: {
+                items: 4
+            }
+        }
+    })
 </script>
+
+<style>
+    .owl-carousel .nav-btn{
+        height: 47px;
+        position: absolute;
+        width: 26px;
+        cursor: pointer;
+        top: 100px !important;
+    }
+
+    .carousel-control-prev-icon, .carousel-control-nex-icon {
+        display: none;
+    }
+    .owl-carousel .owl-prev.disabled,
+    .owl-carousel .owl-next.disabled{
+        pointer-events: none;
+        opacity: 0.2;
+    }
+
+    .owl-carousel .prev-slide{
+        left: -33px;
+    }
+    .owl-carousel .next-slide{
+        right: -33px;
+    }
+    .owl-carousel .prev-slide:hover{
+        color: black;
+    }
+    .owl-carousel .next-slide:hover{
+        color: black;
+    }
+
+</style>
+
 @once
     @stack('javascript')
 @endonce

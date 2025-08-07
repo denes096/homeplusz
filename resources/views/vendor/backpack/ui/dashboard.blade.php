@@ -245,6 +245,107 @@
         });
     </script>
 
+
+    <style>
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+            padding-left: 40px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #96006B, #FF4081);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 20px;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #96006B;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            box-shadow: 0 0 8px rgba(150, 0, 107, 0.7);
+        }
+        .timeline-content {
+            background: #fff;
+            padding: 1rem 1.25rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgb(150 0 107 / 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+        .timeline-content:hover {
+            box-shadow: 0 8px 16px rgb(150 0 107 / 0.3);
+        }
+        .timeline-time {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        @media (max-width: 576px) {
+            .timeline {
+                padding-left: 25px;
+            }
+            .timeline-icon {
+                left: -10px;
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <div class="container my-4">
+        <h4 class="mb-4 text-primary">Legutóbbi események</h4>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon">📤</div>
+                <div class="timeline-content">
+                    <strong>XY</strong> feltöltött egy ingatlant
+                    <div class="timeline-time">2025-08-07 10:30</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">✏️</div>
+                <div class="timeline-content">
+                    <strong>XY</strong> ingatlan módosítva lett
+                    <div class="timeline-time">2025-08-07 12:15</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">🗑️</div>
+                <div class="timeline-content">
+                    <strong>AB</strong> törölt egy ingatlant
+                    <div class="timeline-time">2025-08-06 18:40</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">📸</div>
+                <div class="timeline-content">
+                    <strong>CD</strong> új képet töltött fel egy ingatlanhoz
+                    <div class="timeline-time">2025-08-05 09:20</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 

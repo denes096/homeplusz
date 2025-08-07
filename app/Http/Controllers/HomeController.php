@@ -45,7 +45,7 @@ class HomeController extends Controller
 
         $propertiesForLabels= [];
         foreach( $labels as $label) {
-            $propertiesForLabels[$label->name] = $this->propertyService->getPropertiesForListingByLabel($label, 5);
+            $propertiesForLabels[$label->name] = $this->propertyService->getPropertiesForListingByLabel($label, 8);
         }
         $randomProperties = $this->propertyService->getRandomPropertyList();
 

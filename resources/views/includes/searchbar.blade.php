@@ -320,133 +320,144 @@
                                         Újépítésű
                                     </label>
                                 </div>
-                                <div class="mega-dropdown-sm pt-1 w-90">
-                                    <button type="button" class="d-flex justify-content-between w-100 align-items-center text-black details-list overflow-auto rounded-3 py-1 px-2" style="border:1px solid #96006B !important;"  data-bs-toggle="dropdown" alt="">
-                                        Részletes kereső<i class="bi bi-funnel" style="padding-left: 0.6rem; font-size: 1.5rem !important; color: #96006B"></i>
+                                <div class=" pt-1 w-90">
+                                    <button
+                                        class="d-flex justify-content-between w-100 align-items-center text-black details-list overflow-auto rounded-3 py-1 px-2"
+                                        style="border:1px solid #96006B !important;"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#detailedSearchCollapse"
+                                        aria-expanded="false"
+                                        aria-controls="detailedSearchCollapse"
+                                    >
+                                        Részletes kereső
+                                        <i class="bi bi-funnel" style="padding-left: 0.6rem; font-size: 1.5rem !important; color: #96006B"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-lg-end details-box overflow-auto mx-md-5 p-3" style="width: 80vw !important;">
-                                        <div>
-                                            <div class="row g-1" id="dont-hide">
-                                                <div class="col-md-3">
-                                                    <label class="form-label" for="">Ingatlantípus</label>
-                                                    <select class="form-select multiselect" multiple name="property_types[]" id="">
-                                                        @foreach(\App\Models\PropertyType::all() as $type)
-                                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                </div>
+                            </div>
+                            <div class="collapse mt-2" id="detailedSearchCollapse">
+                                <div class=" mx-auto" style="width: 80vw !important;">
+                                    <div>
+                                        <div class="row g-1" id="dont-hide">
+                                            <div class="col-md-3">
+                                                <label class="form-label" for="">Ingatlantípus</label>
+                                                <select class="form-select multiselect" multiple name="property_types[]" id="">
+                                                    @foreach(\App\Models\PropertyType::all() as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label" for="">Település rész</label>
+                                                <select class="form-select multiselect" multiple name="settlement_parts[]" id="">
+                                                    @foreach(\App\Models\SettlementPart::all() as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <?php
+                                            $propAttrsCats = \App\Models\PropertyAttributeCategory::with('propertyAttributes')->get();
+                                            foreach ($propAttrsCats as $propAttrCat) {
+                                                echo "<hr>";
+                                                echo "<div class='text-center'><strong>$propAttrCat->description</strong></div>";
+                                                /**  @var $propAttrs \App\Models\PropertyAttribute[]  */
+                                                $propAttrs = $propAttrCat->propertyAttributes;
+                                            foreach ($propAttrs as $propAttr) {
+                                            if ($propAttr->type == 'number') { ?>
+                                            <div class="col-md-3">
+                                                <div>
+                                                    <label for="">{{ $propAttr->label }}</label>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <label class="form-label" for="">Település rész</label>
-                                                    <select class="form-select multiselect" multiple name="settlement_parts[]" id="">
-                                                        @foreach(\App\Models\SettlementPart::all() as $type)
-                                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <div style="display: flex">
+                                                    <div style="width: 40%">
+                                                        <input  style="width: 100%;"  type="number" name="{{ $propAttr->name }}_min" id="">
+                                                    </div>
+                                                    &nbsp;-&nbsp;
+                                                    <div style="width: 40%">
+                                                        <input style="width: 100%;"  type="number" name="{{ $propAttr->name }}_max" id="">
+                                                    </div>
                                                 </div>
+                                            </div>
                                                 <?php
-                                                $propAttrsCats = \App\Models\PropertyAttributeCategory::with('propertyAttributes')->get();
-                                                foreach ($propAttrsCats as $propAttrCat) {
-                                                    echo "<hr>";
-                                                    echo "<div class='text-center'><strong>$propAttrCat->description</strong></div>";
-                                                    /**  @var $propAttrs \App\Models\PropertyAttribute[]  */
-                                                    $propAttrs = $propAttrCat->propertyAttributes;
-                                                foreach ($propAttrs as $propAttr) {
-                                                if ($propAttr->type == 'number') { ?>
-                                                <div class="col-md-3">
-                                                    <div>
-                                                        <label for="">{{ $propAttr->label }}</label>
-                                                    </div>
-                                                    <div style="display: flex">
-                                                        <div style="width: 40%">
-                                                            <input  style="width: 100%;"  type="number" name="{{ $propAttr->name }}_min" id="">
-                                                        </div>
-                                                        &nbsp;-&nbsp;
-                                                        <div style="width: 40%">
-                                                            <input style="width: 100%;"  type="number" name="{{ $propAttr->name }}_max" id="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                    <?php
-                                                } else if ($propAttr->type == 'select' || $propAttr->$type == 'select_multiple') {
-                                                    ?>
-                                                <div class="col-md-3">
-                                                    <label class="form-label" for="">{{ $propAttr->label }}</label>
-                                                    <select class="form-select multiselect" multiple name="{{$propAttr->name}}[]" id="">
-                                                        @foreach(json_decode($propAttr->values, true) as $id => $name)
-                                                            <option value="{{ $id }}">{{ $name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <?php } else if ($propAttr->type == 'checkbox') { ?>
-                                                <div class="col-md-3">
-                                                    <div class="form-check">
-                                                        <input
-                                                            type="checkbox"
-                                                            class="form-check-input" name="{{ $propAttr->name }}" id="{{$propAttr->id}}">
-                                                        <label class="form-check-label" for="{{$propAttr->id}}">{{ $propAttr->label }}</label>
-                                                    </div>
-                                                </div>
-                                                    <?php
-                                                }
-                                                }
-                                                } ?>
-                                                <hr>
+                                            } else if ($propAttr->type == 'select' || $propAttr->$type == 'select_multiple') {
+                                                ?>
+                                            <div class="col-md-3">
+                                                <label class="form-label" for="">{{ $propAttr->label }}</label>
+                                                <select class="form-select multiselect" multiple name="{{$propAttr->name}}[]" id="">
+                                                    @foreach(json_decode($propAttr->values, true) as $id => $name)
+                                                        <option value="{{ $id }}">{{ $name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                                                                    <div class="col d-block d-md-none">
-                                                <div class="input-box-one">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <label for="roomNumber location">Szobák (nappalival)</label>
-                                                    </div>
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 px-2 py-1">
-                                                        <span class="mx-1"> - </span>
-                                                        <input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 px-2 py-1">
-                                                    </div>
+                                            <?php } else if ($propAttr->type == 'checkbox') { ?>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input
+                                                        type="checkbox"
+                                                        class="form-check-input" name="{{ $propAttr->name }}" id="{{$propAttr->id}}">
+                                                    <label class="form-check-label" for="{{$propAttr->id}}">{{ $propAttr->label }}</label>
                                                 </div>
-                                                <!-- /.input-box-one -->
                                             </div>
-                                            <div class="col d-block d-md-none">
-                                                <div class="input-box-one">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <label for="roomNumber location">Alapterület (m <sup>2</sup>)</label>
-                                                    </div>
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 px-2 py-1">
-                                                        -
-                                                        <input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 px-2 py-1">
-                                                    </div>
-                                                </div>
-                                                <!-- /.input-box-one -->
-                                            </div>
-                                            <div class="col d-block d-md-none">
-                                                <div class="input-box-one">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <label for="roomNumber location">Ár(millió Ft)</label>
-                                                    </div>
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 px-2 py-1">
-                                                        -
-                                                        <input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 px-2 py-1">
-                                                    </div>
-                                                </div>
-                                                <!-- /.input-box-one -->
-                                            </div>
+                                                <?php
+                                            }
+                                            }
+                                            } ?>
+                                            <hr>
                                         </div>
-                                        <ul class="d-flex flex-wrap list-unstyled">
-                                            <li class="p-2">
+                                        <div class="col d-block d-md-none">
+                                            <div class="input-box-one">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <label for="roomNumber location">Szobák (nappalival)</label>
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="number" name="number_of_rooms_min" placeholder="min" value="{{ request('number_of_rooms_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                    <span class="mx-1"> - </span>
+                                                    <input type="number" name="number_of_rooms_max" placeholder="max" value="{{ request('number_of_rooms_max') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                </div>
+                                            </div>
+                                            <!-- /.input-box-one -->
+                                        </div>
+                                        <div class="col d-block d-md-none">
+                                            <div class="input-box-one">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <label for="roomNumber location">Alapterület (m <sup>2</sup>)</label>
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="number" name="property_area_min" placeholder="min" value="{{ request('property_area_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                    -
+                                                    <input type="number" name="property_area_max" placeholder="max" value="{{ request('property_area_max') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                </div>
+                                            </div>
+                                            <!-- /.input-box-one -->
+                                        </div>
+                                        <div class="col d-block d-md-none">
+                                            <div class="input-box-one">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <label for="roomNumber location">Ár(millió Ft)</label>
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <input type="number" name="price_min" placeholder="min"  value="{{ request('price_min') }}" class="col-4 border rounded-4 px-2 py-1">
+                                                    -
+                                                    <input type="number" name="price_max" placeholder="max" value="{{ request('price_max') }}"  class="col-4 border rounded-4 px-2 py-1">
+                                                </div>
+                                            </div>
+                                            <!-- /.input-box-one -->
+                                        </div>
+                                    </div>
+                                    <ul class="d-flex flex-wrap list-unstyled">
+                                        <li class="p-2">
 
-                                            </li>
-                                        </ul>
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <button type="submit" style="background-color: #96006B !important;" class="fw-500 text-white tran3s rounded-3 py-1 px-2">
-                                                Keresés <i class="bi bi-search" style="adding-left: 0.6rem; font-size: 1.5rem !important; color: #fff"></i>
-                                            </button>
-                                        </div>
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <button type="submit" style="background-color: #96006B !important;" class="fw-500 text-white tran3s rounded-3 py-1 px-2">
+                                            Keresés <i class="bi bi-search" style="adding-left: 0.6rem; font-size: 1.5rem !important; color: #fff"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    </form>
+
+                        </form>
                 </div>
             </div>
             <!-- /.search-wrapper-one -->

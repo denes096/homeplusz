@@ -1,6 +1,8 @@
 @extends('layouts/homeplus')
 
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
     <!--
 =====================================================
@@ -8,37 +10,20 @@
 =====================================================
 -->
 
-    <div class="container container-large property-listing-four  overflow-hidden pt-2">
-        <div class="">
-            <div class="position-relative">
+    <div class="property-listing-four z-1 overflow-hidden pt-4">
+        <div class="container container-large">
+            <div class="position-relative z-1">
                 <div class="title-one lg-mb-40 wow fadeInUp">
-                <p class="fs-4 ms-md-5  mt-0">Kiemelet ajánlataink</p>
+                    <p class="fs-2 ms-5">Kiemelet ajánlataink</p>
                 </div>
                 <!-- /.title-one -->
 
-                <div id="carouselIndicators" class=" slide carousel-dark" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
-                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="listing-slider-one mb-5">
-                                @foreach($featuredProperties as $property)
-                                    @include('includes/property-list-item')
-                                @endforeach
-                            </div>
+                <div class="owl-carousel owl-theme listing-slider-one-owl">
+                    @foreach($featuredProperties as $property)
+                        <div class="item">
+                            @include('includes/property-list-item')
                         </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -56,10 +41,14 @@
                 <div class="title-one wow fadeInUp d-md-flex align-items-center justify-content-between">
                     <p class="fs-4 ms-md-5 col-6 mt-0">Ingatlan ajánlataink</p>
                     <div class=" d-flex justify-content-between text-decoration-none me-3">
-
+                        <a href="#"
+                           class="me-3 d-flex align-items-center justify-conent-center border rounded-3 px-3 fw-bold btn-tag label-button active"
+                           data-label="all" style="font-size: 14px !important;">
+                            <p class="m-0">Összes</p>
+                        </a>
                         @foreach($labels as $index => $label)
                             <a href="#"
-                               class="me-3 d-flex align-items-center justify-conent-center border rounded-3 px-3 fw-bold btn-tag label-button {{ $index === 0 ? 'active' : '' }}"
+                               class="me-3 d-flex align-items-center justify-conent-center border rounded-3 px-3 fw-bold btn-tag label-button"
                                data-label="{{ $label->name }}" style="font-size: 14px !important;">
                                 <p class="m-0">{{ $label->name }}</p>
                             </a>
@@ -68,35 +57,16 @@
                 </div>
                 <!-- /.title-one -->
 
-                <div id="carouselIndicators2" class="carousel slide carousel-dark" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselIndicators2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
-                        <button type="button" data-bs-target="#carouselIndicators2" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselIndicators2" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            @foreach($labels as $index => $label)
-                                <div class="property-slider-container" data-label="{{ $label->name }}">
-
-                                    <div class="listing-slider-one">
-                                        @foreach($propertiesForLabels[$label->name] as $property)
-                                            @include('includes/property-list-item')
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators2" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators2" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                <div class="row property-search">
+                @foreach($labels as $index => $label)
+                        @foreach($propertiesForLabels[$label->name] as $property)
+                            <div class="col-md-3 property-col" data-label="{{$label->name}}">
+                                @include('includes/property-list-item')
+                            </div>
+                        @endforeach
+                @endforeach
                 </div>
+
             </div>
         </div>
         <div class="col text-center">
