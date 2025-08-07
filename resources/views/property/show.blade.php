@@ -36,7 +36,9 @@
                 </div>
             </div>
             <div class="media-gallery pt-4">
-                <div id="media_slider" class="carousel slide row">
+                <div id="media_slider" class="carousel slide row"
+                    style="max-height: 500px; overflow: auto"
+                >
                     <div class="col-lg-10">
                         <div class="bg-white shadow4 border-20 p-3">
                             <div class="position-relative z-1 overflow-hidden border-20">
@@ -78,7 +80,7 @@
                     </div>
 
                     <!-- Thumbnailokat külön is megjelenítheted, de ne nevezd carousel-indicators-nak -->
-                    <div class="col-lg-2">
+                    <div class="col-lg-2" style="max-height: 500px; overflow:auto;">
                         <div class="border-15 bg-white shadow4 p-15 w-100 h-100">
                             @foreach($property->getImageUrls() as $url)
                                 <button type="button" data-bs-target="#media_slider" data-bs-slide-to="{{ $loop->index }}" class="d-block mb-2">
@@ -95,19 +97,21 @@
                 <ul class="style-none d-flex flex-wrap align-items-center justify-content-between">
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_47.svg" alt="" class="lazy-img icon">
-                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'property_area')->pivot->value }}m2</span>
+                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'epulet_lakotermeret')->pivot->value }}m2</span>
                     </li>
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_48.svg" alt="" class="lazy-img icon">
-                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'number_of_rooms')->pivot->value }}</span>
+                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'epulet_szobaszam')->pivot->value }}</span>
                     </li>
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_49.svg" alt="" class="lazy-img icon">
-                        <span class="fs-20 color-dark">{{ $property->attributes->firstWhere('name', 'number_of_bathrooms')->pivot->value }}</span>
+                        <span class="fs-20 color-dark">
+                            2
+                        </span>
                     </li>
                     <li>
                         <img src="/images/lazy.svg" data-src="/images/icon/icon_53.svg" alt="garázs" class="lazy-img icon">
-                        <span class="fs-20 color-dark">01</span>
+                        <span class="fs-20 color-dark">1</span>
                     </li>
                 </ul>
             </div>

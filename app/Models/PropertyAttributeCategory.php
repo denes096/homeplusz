@@ -36,6 +36,10 @@ class PropertyAttributeCategory extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function propertyAttributes()
+    {
+        return $this->hasMany(PropertyAttribute::class, 'property_attribute_category_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

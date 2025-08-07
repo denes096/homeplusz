@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -216,6 +214,20 @@ class Property extends Model
     public function getAdType(): string
     {
         return $this->ad_type == 'sell' ? 'eladó' : 'kiadó';
+    }
+
+    function formatHUFMillions( int $decimals = 1, bool $withSuffix = true): string
+    {
+        $millions = $this->price / 1_000_000;
+        $formatted = number_format($millions, $decimals, ',', ' ');
+        return $withSuffix ? $formatted . ' M Ft' : $formatted;
+    }
+
+    function formatHUFThousands( int $decimals = 1, bool $withSuffix = true): string
+    {
+        $millions = $this->price / 1_000;
+        $formatted = number_format($millions, $decimals, ',', ' ');
+        return $withSuffix ? $formatted . ' M Ft' : $formatted;
     }
     /*
     |--------------------------------------------------------------------------

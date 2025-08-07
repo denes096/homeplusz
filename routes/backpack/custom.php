@@ -42,6 +42,7 @@ Route::group([
     Route::crud('customers', 'CustomersCrudController');
     Route::crud('slider-images', 'SliderImagesCrudController');
     Route::crud('customer-search', 'CustomerSearchCrudController');
+    Route::get('offers', [\App\Http\Controllers\Admin\OffersConstoller::class, 'index'])->name('backpack.offers.index');
 }); // this should be the absolute last line of this file
 
 /**

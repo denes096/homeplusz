@@ -22,10 +22,11 @@ class PropertyAttributeCrudController extends CrudController
 
     protected function setupListOperation()
     {
-        CRUD::column('name')->label('Name')->type('text');
-        CRUD::column('label')->label('Label')->type('text');
+        CRUD::column('name')->label('Név')->type('text');
+        CRUD::column('label')->label('Leírás')->type('text');
+        CRUD::column('short_label')->label('Rövid leírás')->type('text');
         CRUD::addColumn([  // Select
-            'label'     => "Category",
+            'label'     => "Kategória",
             'type'      => 'select',
             'name'      => 'property_attribute_category_id', // the db column for the foreign key
             'entity'    => 'category',
@@ -57,8 +58,9 @@ class PropertyAttributeCrudController extends CrudController
     {
         CRUD::setValidation(PropertyAttributeRequest::class);
 
-        CRUD::field('name')->label('Name')->type('text');
+        CRUD::field('name')->label('Név')->type('text');
         CRUD::field('label')->label('Label')->type('text');
+        CRUD::field('short_label')->label('Rövid leírás')->type('text');
         CRUD::addField([  // Select
             'label'     => "Category",
             'type'      => 'select',

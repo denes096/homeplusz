@@ -1,4 +1,4 @@
-@basset('https://unpkg.com/jquery@3.6.1/dist/jquery.min.js')
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 @basset('https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js')
 @basset('https://unpkg.com/noty@3.2.0-beta-deprecated/lib/noty.min.js')
 @basset('https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js')
@@ -35,6 +35,8 @@
 
 
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

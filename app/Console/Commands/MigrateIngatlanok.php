@@ -79,7 +79,7 @@ class MigrateIngatlanok extends Command
 
 
         $oldIngatlanok = DB::connection('old')->table('ingatlanok')->orderBy('Id')
-            ->limit(20)
+            //->limit(20)
             ->get();
         $skipped = 0;
 
@@ -273,6 +273,12 @@ class MigrateIngatlanok extends Command
         UniqueCode::create([
             'code' => $lastCode
         ]);
+
+        PropertyAttribute::where('show_in_search', 1)->update([
+            'show_in_search' => 0,
+        ]);
+
+        PropertyAttribute::whereNotIn('name', ['epulet_lakotermeret'])->update(['show_in_search' => 1]);
 
         $this->info("Migráció kész. Kihagyott rekordok: $skipped db.");
     }

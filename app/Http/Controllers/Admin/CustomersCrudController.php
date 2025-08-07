@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CustomersRequest;
+use App\Models\CustomerSearch;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -123,6 +124,12 @@ class CustomersCrudController extends CrudController
             'type' => 'number',
             'name' => "p[min_ar]",
             'tab' => 'Keresési paraméterek',
+            'attributes' => [
+                'class'       => 'form-control',
+            ], // change the HTML attributes of your input
+            'wrapper'   => [
+                'class'      => 'form-group col-md-3'
+            ], //
         ]);
 
         CRUD::addField([
@@ -130,7 +137,15 @@ class CustomersCrudController extends CrudController
             'name' => 'p[max_ar]',
             'type' => 'number',
             'tab' => 'Keresési paraméterek',
+            'attributes' => [
+                'class'       => 'form-control',
+            ], // change the HTML attributes of your input
+            'wrapper'   => [
+                'class'      => 'form-group col-md-3'
+            ], //
         ]);
+
+
     }
 
     /**
@@ -157,7 +172,13 @@ class CustomersCrudController extends CrudController
         $itemAttributes = $this->crud->getStrippedSaveRequest($request);
         $item = $this->crud->create($itemAttributes);
 
-        dd($request->get('p'));
+        $searchParams = $request->get('p');
+        if (!empty($searchParams)) {
+            CustomerSearch::create([
+               'customer_id' => $item->id,
+               'search' => json_encode($searchParams),
+            ]);
+        }
 
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();

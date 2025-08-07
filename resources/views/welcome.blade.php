@@ -12,11 +12,11 @@
         <div class="">
             <div class="position-relative">
                 <div class="title-one lg-mb-40 wow fadeInUp">
-                    <p class="fs-4 ms-md-5  mt-0">Kiemelet ajánlataink</p>
+                <p class="fs-4 ms-md-5  mt-0">Kiemelet ajánlataink</p>
                 </div>
                 <!-- /.title-one -->
 
-                <div id="" class=" slide carousel-dark" data-bs-ride="carousel">
+                <div id="carouselIndicators" class=" slide carousel-dark" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
                         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -49,12 +49,14 @@
     Property Listing 2
 =====================================================
 -->
+
     <div class="property-listing-four overflow-hidden py-2" style="background-color: #fbfbfb !important ;">
         <div class="container container-large">
             <div class="position-relative">
                 <div class="title-one wow fadeInUp d-md-flex align-items-center justify-content-between">
                     <p class="fs-4 ms-md-5 col-6 mt-0">Ingatlan ajánlataink</p>
                     <div class=" d-flex justify-content-between text-decoration-none me-3">
+
                         @foreach($labels as $index => $label)
                             <a href="#"
                                class="me-3 d-flex align-items-center justify-conent-center border rounded-3 px-3 fw-bold btn-tag label-button {{ $index === 0 ? 'active' : '' }}"
@@ -99,7 +101,7 @@
         </div>
         <div class="col text-center">
             <div class="input-box-one lg-mt-10">
-                <a href="#"><button class="fw-500 tran3s btn-five" >További ingatlanok</button></a>
+                <a href="/ingatlanok"><button class="fw-500 tran3s btn-five" >További ingatlanok</button></a>
             </div>
             <!-- /.input-box-one -->
         </div>
@@ -116,11 +118,11 @@
                 <a href="project_04.html"><p class="fs-4 fw-bold col-6 nav-item">Projektjeink</p></a>
             </div>
             <div id="carouselIndicators3" class="carousel slide carousel-dark" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
-                    <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
+                        <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         @foreach($projects as $project)
