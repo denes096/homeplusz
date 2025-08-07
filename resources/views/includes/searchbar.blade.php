@@ -185,19 +185,24 @@
 {{--    </div>--}}
 {{--</div>--}}
 
-<div class="d-none d-md-block hero-banner-three position-relative z-1  m-1 d-flex align-items-end justify-content-center" style="border-radius: 0 !important; min-height: 550px !important;">
-    <div class="hero-slider-one m0">
-        <div class="item m0"><div class="hero-img" style="background-image: url(/images/assets/example-hero.jpg);"></div></div>
-        <div class="item m0"><div class="hero-img" style="background-image: url(/images/media/img_27.jpg);"></div></div>
-        <div class="item m0"><div class="hero-img" style="background-image: url(/images/media/img_28.jpg);"></div></div>
-    </div>
-    <!-- /.hero-slider-one -->
-    <div class=" position-relative z-1 w-100">
-        <div class="row">
-            <div class="col-11 m-auto text-white fs-1 fw-bold" style="text-shadow: 2px 2px 7px rgba(128,128,128,0.83);">
-                Találjuk meg együtt új <br> otthonát!
-            </div>
+    @if (request()->is('/'))
+        <div class="d-none d-md-block hero-banner-three position-relative z-1  m-1 d-flex align-items-end justify-content-center" style="border-radius: 0 !important; min-height: 550px !important;">
+        <div class="hero-slider-one m0">
+            <div class="item m0"><div class="hero-img" style="background-image: url(/images/assets/example-hero.jpg);"></div></div>
+            <div class="item m0"><div class="hero-img" style="background-image: url(/images/media/img_27.jpg);"></div></div>
+            <div class="item m0"><div class="hero-img" style="background-image: url(/images/media/img_28.jpg);"></div></div>
         </div>
+        <div class=" position-relative z-1 w-100">
+            <div class="row">
+                <div class="col-11 m-auto text-white fs-1 fw-bold" style="text-shadow: 2px 2px 7px rgba(128,128,128,0.83);">
+                    Találjuk meg együtt új <br> otthonát!
+                </div>
+            </div>
+    @else
+        <div class="d-none d-md-block position-relative z-1 mt-3 m-1 d-flex align-items-end justify-content-center" style="border-radius: 0 !important; min-height: 200px !important;">
+            <div class=" position-relative z-1 w-100">
+    @endif
+    <!-- /.hero-slider-one -->
         <div class="row">
             <div class="col-11 m-auto">
                 <div class="search-wrapper-one layout-one position-relative wow fadeInUp" data-wow-delay="0.2s">
