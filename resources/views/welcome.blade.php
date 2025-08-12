@@ -12,7 +12,7 @@
         <div class="">
             <div class="position-relative">
                 <div class="title-one lg-mb-40 wow fadeInUp">
-                    <p class="fs-4 ms-md-5  mt-0">Kiemelet ajánlataink</p>
+                    <p class="fs-4 ms-md-5  mt-0">Kiemelet ajánlataink</p> <!-- változat -->
                 </div>
                 <!-- /.title-one -->
 
