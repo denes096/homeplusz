@@ -87,7 +87,7 @@
 ==================================================== -->
 <div id="preloader">
     <div id="ctn-preloader" class="ctn-preloader">
-        <div class="icon"><img src="{{asset("/images/loader.gif")}}" alt="" class="m-auto d-block" width="64"></div>
+        <div class="icon"><img src="{{asset("/images/icon/otthonplusz_logo_txt.png")}}" alt="" class="m-auto d-block" width="64"></div>
     </div>
 </div>
 
@@ -229,10 +229,10 @@
             loop: true,
             margin: 20,
             nav: true,
-            navText:["<div class='nav-btn prev-slide'><i class='prev-slide fas fa-angle-left'></i></div>","<div class='nav-btn next-slide'><i class='next-slide fas fa-angle-right'></i></div>"],
+            navText:["<div class='nav-btn prev-slide'><i class='prev-slide fa-thin fa-angle-left fa-5x'></i></div>","<div class='nav-btn next-slide'><i class='next-slide fa-thin fa-angle-right fa-5x'></i></div>"],
             dots: true,
             autoplay: true,
-            autoplayTimeout: 3000,
+            autoplayTimeout: 5000,
             smartSpeed: 600,
             items: 1, // itt egyesével jön be
             responsive: {
@@ -284,7 +284,7 @@
     }
 
     .carousel-control-prev-icon, .carousel-control-nex-icon {
-        display: none;
+        display: block;
     }
     .owl-carousel .owl-prev.disabled,
     .owl-carousel .owl-next.disabled{
@@ -293,10 +293,19 @@
     }
 
     .owl-carousel .prev-slide{
-        left: -33px;
+        left: -50px;
+        height: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .owl-carousel .next-slide{
-        right: -33px;
+        right: -50px;
+        height: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
     }
     .owl-carousel .prev-slide:hover{
         color: black;

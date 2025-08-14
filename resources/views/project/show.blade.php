@@ -11,7 +11,7 @@
     <div class="project-details-one mt-150 xl-mt-100 mb-170 xl-mb-100">
         <div class="container">
             <div class="row gx-xxl-5">
-                <div class="col-lg-6 order-lg-first">
+                <div class="col-lg-6 order-lg-first"> <!-- Képek és szöveg !-->
                     <figure class="/image-wrapper">
                         <img src="/images/lazy.svg" data-src="/images/project/img_27.jpg" alt="" class="lazy-img w-100">
                     </figure>
@@ -25,36 +25,36 @@
                 <div class="col-lg-6">
                     <div class="details-text ps-xxl-5 md-mt-40">
                         <div class="tag fw-500 text-uppercase">Project Lakás</div>
-                        <h3>xxxxxxxxxxxxxxxxxx</h3>
-                        <p class="fs-24 pt-45 xl-pt-30 pb-45 xl-pb-30">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx </p>
+                        <h3>xxxxxxxxxxxxxxxxxx</h3> <!-- szöveg !-->
+                        <p class="fs-24 pt-45 xl-pt-30 pb-45 xl-pb-30">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx </p> <!--szöveg !-->
                         <h4 class="mb-40">Project Details</h4>
                         <div class="project-info-outline">
                             <div class="main-bg">
                                 <ul class="style-none">
                                     <li class="position-relative z-1">
-                                        <div class="num fw-light">01</div>
+                                        <div class="num fw-light">01</div> <!-- ID!-->
                                         <img src="/images/lazy.svg" data-src="/images/icon/icon_43.svg" alt="" class="lazy-img icon">
                                         <strong>Dátum</strong>
-                                        <span>2025.10.15</span>
+                                        <span>2025.10.15</span> <!-- feltöltés dátuma? !-->
                                     </li>
                                     <li class="position-relative z-1">
-                                        <div class="num fw-light">ütem szám:</div>
+                                        <div class="num fw-light">ütem szám:</div> <!-- utem!-->
                                         <img src="/images/lazy.svg" data-src="/images/icon/icon_44.svg" alt="" class="lazy-img icon">
-                                        <strong>Kivitelező</strong>
-                                        <span>Terület</span>
+                                        <strong>Kivitelező</strong> <!-- Kivitelező neve-->
+                                        <span>Terület</span> <!-- ingatlan méret !-->
                                     </li>
                                     <li class="position-relative z-1">
-                                        <div class="num fw-light">03</div>
+                                        <div class="num fw-light">03</div> <!-- Képe?-->
                                         <img src="/images/lazy.svg" data-src="/images/icon/icon_45.svg" alt="" class="lazy-img icon">
                                         <strong>Leírás:</strong>
-                                        <span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+                                        <span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span> <!-- szöveg !-->
                                     </li>
                                 </ul>
                             </div>
                             <!-- /.main-bg -->
                         </div>
                         <!-- /.project-info-outline -->
-                        <p class="fs-20 pt-50 pb-35">Hosszú leírás: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+                        <p class="fs-20 pt-50 pb-35">Hosszú leírás: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p> <!--szöveg !-->
                         <ul class="style-none d-flex align-items-center social-icon">
                             <li>Megosztás :</li>
                             <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>

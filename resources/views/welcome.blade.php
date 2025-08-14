@@ -14,11 +14,11 @@
         <div class="container container-large">
             <div class="position-relative z-1">
                 <div class="title-one lg-mb-40 wow fadeInUp">
-                    <p class="fs-2 ms-5">Kiemelet ajánlataink</p>
+                    <p class="fs-4 ms-5">Kiemelet ajánlataink</p>
                 </div>
                 <!-- /.title-one -->
 
-                <div class="owl-carousel owl-theme listing-slider-one-owl">
+                <div class="container owl-carousel owl-theme listing-slider-one-owl">
                     @foreach($featuredProperties as $property)
                         <div class="item">
                             @include('includes/property-list-item')
@@ -177,5 +177,8 @@
         color: #fff !important;
         text-decoration: none !important;
         padding: 0.2rem 1.5rem 0.2rem 1.5rem;
+    }
+    .owl-carousel .owl-item img{
+        height: 100% !important;
     }
 </style>

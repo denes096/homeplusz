@@ -1,5 +1,5 @@
 <div class="item zoom">
-    <div class="listing-card-one style-three border-30 mb-3 bg-light p-3">
+    <div class="listing-card-one style-three border-30 mb-3 bg-light p-2">
         <div class="img-gallery ">
             <div class="position-relative border-20 overflow-hidden d-flex justify-content-center" style="height: 280px">
 
@@ -17,20 +17,20 @@
                     </div>
                 </div>
 
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <a href="{{ route('property.show', ['id' => $property->id]) }}" >
-                                <img src="{{$property->getMainImageUrl()}}" class="w-85 border-20 d-flex justify-content-center align-items-center" alt="..."> <!-- automatikus alt -->
+                                <img src="http://dev.otthonplusz.hu/storage/uploads/3365/3365_1747815319_otcxz40u.jpg" class="w-100 h-100 border-20 d-flex justify-content-center align-items-center" alt="/storage/uploads/3364/3364_1747743623_6lmf5b8o.jpg"> <!-- automatikus alt --> 
                             </a>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
                         <span class="visually-hidden p-2">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
@@ -45,15 +45,15 @@
             </div>
         </div>
         <!-- /.img-gallery -->
-        <div class="property-info mt-3 p-2 bg-white rounded-2">
+        <div class="property-info mt-3 p-2 bg-white rounded-4">
             <a href="{{ route('property.show', ['id' => $property->id]) }}" class="title tran3s fw-bold" style="font-size: 16px !important; min-height: 52px; max-height: 52px;" >{{ucfirst($property->getAdType()) . " " . $property->propertyType->name}}</a>
             <div class="address" style="margin-bottom: 0 !important; font-size: 14px !important;"><i class="bi bi-geo-alt pe-1"></i>{{$property->settlement?->name}} {{$property->settlementPart?->name}}</div>
-            <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-evenly" style="min-height: 55px; max-height: 55px;">
+            <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-between px-2" style="min-height: 55px; max-height: 55px; font-size: 14px;">
                 @foreach($property->attributes as $attribute)
                     @if($attribute->pivot->value)
                         <div class="d-block"  style="min-height: 55px; max-height: 55px;">
                             <span>{{$attribute->short_label}}</span><br>
-                            <span><strong style="font-weight: 600" class="fw-500 color-dark">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
+                            <span><strong style="font-size: 16px !important;" class="fw-500 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/icon_48.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
                         </div>
                     @endif
 
