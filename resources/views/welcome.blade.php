@@ -39,7 +39,7 @@
         <div class="container container-large">
             <div class="position-relative">
                 <div class="title-one wow fadeInUp d-md-flex align-items-center justify-content-between">
-                    <p class="fs-4 ms-md-5 col-6 mt-0">Ingatlan ajánlataink</p>
+                    <p class="fs-4 ms-5">Ingatlan ajánlataink</p>
                     <div class=" d-flex justify-content-between text-decoration-none me-3">
                         <a href="#"
                            class="me-3 d-flex align-items-center justify-conent-center border rounded-3 px-3 fw-bold btn-tag label-button active"
@@ -57,7 +57,7 @@
                 </div>
                 <!-- /.title-one -->
 
-                <div class="row property-search">
+                <div class="row property-search px-5">
                 @foreach($labels as $index => $label)
                         @foreach($propertiesForLabels[$label->name] as $property)
                             <div class="col-md-3 property-col" data-label="{{$label->name}}">
@@ -85,10 +85,11 @@
     <div class="project-section-one pt-2">
         <div class="container mb-50">
             <div class="title-one wow fadeInUp">
-                <a href="project_04.html"><p class="fs-4 fw-bold col-6 nav-item">Projektjeink</p></a>
+                <a href="project_04.html"><p class="fs-4 ms-5 nav-item">Projektjeink</p></a>
             </div>
             <div id="carouselIndicators3" class="carousel slide carousel-dark" data-bs-ride="carousel">
                     <div class="carousel-indicators">
+                        <!-- PROJECT LAKÁSOK ELSŐ KÉPEI-->
                         <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slider"></button>
                         <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="1" aria-label="Slide 2"></button>
                         <button type="button" data-bs-target="#carouselIndicators3" data-bs-slide-to="2" aria-label="Slide 3"></button>

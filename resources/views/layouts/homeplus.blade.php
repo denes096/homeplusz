@@ -229,7 +229,7 @@
             loop: true,
             margin: 20,
             nav: true,
-            navText:["<div class='nav-btn prev-slide'><i class='prev-slide fa-thin fa-angle-left fa-5x'></i></div>","<div class='nav-btn next-slide'><i class='next-slide fa-thin fa-angle-right fa-5x'></i></div>"],
+            navText:["<div class='nav-btn prev-slide'><i class='prev-slide fa-thin fa-angle-left fa-4x'></i></div>","<div class='nav-btn next-slide'><i class='next-slide fa-thin fa-angle-right fa-4x'></i></div>"],
             dots: true,
             autoplay: true,
             autoplayTimeout: 5000,

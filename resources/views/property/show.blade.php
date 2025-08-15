@@ -8,26 +8,27 @@
 			Property Listing Details
 		=====================================================
 		-->
-    <div class="listing-details-one theme-details-one bg-white pt-4">
+    <div class="listing-details-one theme-details-one bg-white">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="labels-on-show">
-                        @foreach($property->labels as $label)
-                            <div class="label-on-details" style="background-color: {{ $label->color }}; color: white; font-size:14px !important;"><strong>{{ $label->name }}</strong></div>
-                        @endforeach
-                    </div>
+                <div class="p-3 col-12">
+                    <h5>Rövidleírás</h5> <!-- TITLE -->
                 </div>
-                <div class="col-lg-6">
-                    <h5 class="property-titlee" style="font-size:16px !important;">{{$property->settlement?->name}} {{$property->settlementPart?->name}}</h5>
-                    <div class="d-flex flex-wrap mt-10">
+                <div class="col-lg-7 d-flex">
+                    <div class="d-flex flex-wrap mt-10 align-items-center">
+                        <div class="address mt-15 d-flex align-items-center pe-4"><i class="bi bi-geo-alt"></i><h5 class="property-titlee ps-1 m-0" style="font-size:20px !important;">{{$property->settlement?->name}} {{$property->settlementPart?->name}}</h5></div>
+                        <div class="text-uppercase border-1 roundes-pill mt-15 mb-0 ms-0 me-3"><p class="m-0" styele="font-size: 16px;">ID: XXXXX</p></div> <!-- hiányos-->
                         <div class="list-type text-uppercase border-20 mt-15 me-3">{{$property->getAdType() }}</div>
-                        <div class="address mt-15"><i class="bi bi-geo-alt"></i> CÍM:</div> <!-- Csak a belépett dolgozó láthatja a pontos címet! -->
+                        <div class="labels-on-show d-flex align-items-center mt-15">
+                            @foreach($property->labels as $label)
+                                <div class="label-on-details" style="background-color: {{ $label->color }}; color: white; font-size:14px !important;"><strong>{{ $label->name }}</strong></div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6 text-lg-end">
+                <div class="col-lg-5 text-lg-end">
                     <div class="d-inline-block md-mt-40">
-                        <div class="price color-dark fw-bold" style="font-size:20px !important;">ÁR: {{$property->price }}M FT.</div>
+                        <div class="price color-dark fw-500" style="font-size:20px !important;">ÁR: {{$property->price }}M FT.</div>
                         <ul class="style-none d-flex align-items-center action-btns">
                             <li class="me-auto fw-500 color-dark"><i class="fa-sharp fa-regular fa-share-nodes me-2"></i> Megosztás</li>
                             <li><a href="#" class="d-flex align-items-center justify-content-center rounded-circle tran3s" style="width: 30px; height:30px;"><i class="fa-light fa-heart"></i></a></li>
@@ -92,7 +93,7 @@
                 </div>
 
             </div>
-            <div class="property-feature-list bg-white shadow4 border-20 p-40 mt-50 mb-60">
+            <div class="property-feature-list bg-white shadow4 border-20 p-40 my-5">
                 <h4 class="sub-title-one mb-4 fs-5">Ingatlan adatai</h4>
                 <ul class="style-none d-flex flex-wrap align-items-center justify-content-between">
                     <li>
@@ -117,9 +118,9 @@
             </div>
             <div class="row">
                 <div class="col-xl-8">
-                    <div class="property-overview bg-white shadow4 border-20 p-40 mb-50">
+                    <div class="property-overview bg-white shadow4 border-20 py-4" style="font-size: 0.8rem !important;">
                         <h4 class="mb-4 fs-5">Részletes ingatlan leírás</h4>
-                        <p class="fs-20 lh-lg">{!! $property->description !!}</p>
+                        <p>{!! $property->description !!}</p>
                     </div>
 
 
