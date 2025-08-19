@@ -46,14 +46,14 @@
         </div>
         <!-- /.img-gallery -->
         <div class="property-info mt-3 p-2 bg-white rounded-4">
-            <a href="{{ route('property.show', ['id' => $property->id]) }}" class="title tran3s fw-bold" style="font-size: 16px !important; min-height: 52px; max-height: 52px;" >{{ucfirst($property->getAdType()) . " " . $property->propertyType->name}}</a>
+            <a href="{{ route('property.show', ['id' => $property->id]) }}" class="title tran3s fw-bold overflow-auto" style="font-size: 16px !important; min-height: 52px; max-height: 52px; over" >{{ucfirst($property->getAdType()) . " " . $property->propertyType->name}}</a>
             <div class="address" style="margin-bottom: 0 !important; font-size: 14px !important;"><i class="bi bi-geo-alt pe-1"></i>{{$property->settlement?->name}} {{$property->settlementPart?->name}}</div>
             <ul class="style-none feature d-flex flex-wrap align-items-center p2" style="min-height: 55px; max-height: 55px; font-size: 14px;">
                 @foreach($property->attributes as $attribute)
                     @if($attribute->pivot->value)
-                        <div class="d-block ps-2 pe-3"  style="min-height: 55px; max-height: 55px;">
-                            <span>{{$attribute->short_label}}</span><br>
-                            <span><strong style="font-size: 16px !important;" class="fw-500 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/icon_48.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
+                        <div class="d-block ps-2 pe-3"  style="min-height: 50px; max-height: 50px;">
+                            
+                            <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/icon_48.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
                         </div>
                     @endif
 
