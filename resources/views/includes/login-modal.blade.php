@@ -80,7 +80,7 @@
                                         <div class="agreement-checkbox d-flex justify-content-between align-items-center">
                                             <div>
                                                 <input type="checkbox" id="remember2" required>
-                                                <label for="remember2">A regisztrációval elfogadom az <a href="#">Adatkezelési tájékoztatót</a></label>
+                                                <label for="remember2">A regisztrációval elfogadom az <a href="aszf.html">Adatkezelési tájékoztatót</a></label>
                                             </div>
                                         </div> <!-- /.agreement-checkbox -->
                                     </div>

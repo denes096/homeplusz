@@ -7,6 +7,7 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+    <!-- EZ HOL VAN?-->
     <div class="wrapper mt-60">
         <div class="d-flex flex-column h-100">
             <div class="property-block">
