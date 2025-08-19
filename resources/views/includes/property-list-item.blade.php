@@ -21,7 +21,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <a href="{{ route('property.show', ['id' => $property->id]) }}" >
-                                <img src="http://dev.otthonplusz.hu/storage/uploads/3365/3365_1747815319_otcxz40u.jpg" class="w-100 h-100 border-20 d-flex justify-content-center align-items-center" alt="/storage/uploads/3364/3364_1747743623_6lmf5b8o.jpg"> <!-- automatikus alt --> 
+                                <img src="{{$property->getMainImageUrl()}}" class="w-100 h-100 border-20 d-flex justify-content-center align-items-center" alt="/storage/uploads/3364/3364_1747743623_6lmf5b8o.jpg"> <!-- automatikus alt -->
                             </a>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                 @foreach($property->attributes as $attribute)
                     @if($attribute->pivot->value)
                         <div class="d-block ps-2 pe-3"  style="min-height: 50px; max-height: 50px;">
-                            
+
                             <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/icon_48.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
                         </div>
                     @endif
