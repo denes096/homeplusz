@@ -3,7 +3,6 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformationController;
-use App\Http\Controllers\LabelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PropertyController;
@@ -15,6 +14,11 @@ Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 Route::get('/kornyek/{settlementAreaId}-{name}-es-kornyeke', [HomeController::class, 'searchBySettlementGroup'])
     ->where('settlementAreaId', '[0-9]+')
     ->where('name', '[A-Za-z]+');
+
+// Admin API routes
+Route::prefix('admin/api')->middleware('auth')->group(function () {
+    Route::get('/property-search', [PropertyController::class, 'searchForDropdown']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,6 +35,7 @@ Route::get('/informaciok/{informationId}-{name}', [InformationController::class,
 Route::get('/ingatlanok', [PropertyController::class, 'list'])->name('property.list');
 Route::get('/ingatlan/kod/{code}', [PropertyController::class, 'getByCode'])->name('property.get-by-code');
 Route::get('/ingatlan/{id}', [PropertyController::class, 'show'])->name('property.show');
+Route::match(['get', 'post'], '/kedvenceim', [PropertyController::class, 'favorites'])->name('property.favorites');
 
 Route::get('/projekt/{id}', [ProjectController::class, 'list'])->name('project.list');
 Route::get('/projekt/getNextPropertyId/{id}', [ProjectController::class, 'getNextPropertyId'])->name('project.getNextPropertyId');
@@ -39,5 +44,3 @@ Route::get('/bemutatkozas', [AboutUsController::class, 'show'])->name('aboutUs.s
 Route::get('/bemutatkozas/{id}', [AboutUsController::class, 'showAgentDetails'])->name('aboutUs.show-agent-details');
 
 Route::get('/{slug}', [StaticPageController::class, 'show']);
-
-

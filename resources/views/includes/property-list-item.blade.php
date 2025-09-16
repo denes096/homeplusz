@@ -62,7 +62,7 @@
             <div class="pl-footer d-flex align-items-center justify-content-between py-0" style="margin-top: 15px !important;" >
                 <strong class="price fw-bold" style="color: #96006B; font-size: 16px !important;">{{$property->ad_type == 'sell' ? $property->formatHUFMillions() : $property->formatHUFThousands() }}</strong>
                 <ul class="style-none d-flex action-icons">
-                    <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
+                    <li><a href="#" class="favorite-toggle" data-property-id="{{ $property->id }}"><i class="fa-light fa-heart favorite-heart" data-property-id="{{ $property->id }}"></i></a></li>
                     <li><a href="{{ route('property.show', ['id' => $property->id]) }}" class="btn-four inverse rounded-circle" style="width: 30px; height:30px;"><i class="bi bi-chevron-right" style="color: #fff"></i></a></li>
                 </ul>
             </div>

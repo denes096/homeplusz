@@ -2,6 +2,17 @@
 
 @php
     $user = \Illuminate\Support\Facades\Auth::user();
+    $activityLogService = new \App\Services\ActivityLogService();
+    $recentActivities = $activityLogService->getRecentActivities(10);
+    
+    // Real statistics
+    $totalProperties = \App\Models\Property::count();
+    $totalCustomers = \App\Models\Customers::count(); // Customers table doesn't have timestamps
+    $totalImages = \App\Models\Property::get()->sum(function($property) {
+        $images = json_decode($property->images, true);
+        return is_array($images) ? count($images) : 0;
+    });
+    
     Widget::add([
         'type'        => 'jumbotron',
         'heading'     => "Üdvözöllek $user->name!",
@@ -67,6 +78,46 @@
         .action-icon {
             margin-right: 10px;
         }
+
+        .property-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .property-dropdown-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+        }
+
+        .property-dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .property-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .property-code {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .property-title {
+            color: #666;
+            font-size: 0.9em;
+        }
     </style>
 
     <div class="container my-4">
@@ -78,8 +129,11 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="search-container">
-                            <input type="text" id="property-search" class="form-control search-input" placeholder="Keresés...">
+                            <input type="text" id="property-search" class="form-control search-input" placeholder="Keresés ingatlan kód vagy cím alapján..." value="">
                             <i class="fas fa-search search-icon"></i>
+                            <div id="property-dropdown" class="property-dropdown" style="display: none;">
+                                <!-- Dropdown tartalom -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,7 +202,7 @@
                 <div class="card text-white bg-primary shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Összes ingatlan</h5>
-                        <h2 class="card-text">126</h2>
+                        <h2 class="card-text">{{ $totalProperties }}</h2>
                         <p class="mb-0"><i class="fas fa-home me-2"></i>Frissítve: ma</p>
                     </div>
                 </div>
@@ -156,9 +210,9 @@
             <div class="col-md-4">
                 <div class="card text-white bg-success shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Új vevők</h5>
-                        <h2 class="card-text">24</h2>
-                        <p class="mb-0"><i class="fas fa-user-plus me-2"></i>Az elmúlt 7 napban</p>
+                        <h5 class="card-title">Összes vevő</h5>
+                        <h2 class="card-text">{{ $totalCustomers }}</h2>
+                        <p class="mb-0"><i class="fas fa-users me-2"></i>Az adatbázisban</p>
                     </div>
                 </div>
             </div>
@@ -166,7 +220,7 @@
                 <div class="card text-white bg-secondary shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Feltöltött képek</h5>
-                        <h2 class="card-text">532</h2>
+                        <h2 class="card-text">{{ $totalImages }}</h2>
                         <p class="mb-0"><i class="fas fa-image me-2"></i>Az adatbázisban</p>
                     </div>
                 </div>
@@ -200,6 +254,107 @@
 
     <!-- Chart.js script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Property search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('property-search');
+            const dropdown = document.getElementById('property-dropdown');
+            let searchTimeout;
+            
+            // Clear any existing search value on page load
+            searchInput.value = '';
+            dropdown.style.display = 'none';
+            
+            // Clear any URL search parameters that might cause issues
+            if (window.location.search.includes('search=')) {
+                const url = new URL(window.location);
+                url.searchParams.delete('search');
+                window.history.replaceState({}, document.title, url.pathname);
+            }
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                
+                // Clear previous timeout
+                clearTimeout(searchTimeout);
+                
+                if (query.length < 2) {
+                    dropdown.style.display = 'none';
+                    return;
+                }
+
+                // Debounce search
+                searchTimeout = setTimeout(() => {
+                    searchProperties(query);
+                }, 300);
+            });
+
+            // Hide dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+
+            function searchProperties(query) {
+                fetch(`/admin/api/property-search?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        displayResults(data);
+                    })
+                    .catch(error => {
+                        console.error('Search error:', error);
+                        dropdown.innerHTML = '<div class="property-dropdown-item">Hiba történt a keresés során</div>';
+                        dropdown.style.display = 'block';
+                    });
+            }
+
+            function displayResults(properties) {
+                if (properties.length === 0) {
+                    dropdown.innerHTML = '<div class="property-dropdown-item">Nincs találat</div>';
+                    dropdown.style.display = 'block';
+                    return;
+                }
+
+                dropdown.innerHTML = properties.map(property => {
+                    const code = property.property_code.replace(/'/g, "\\'");
+                    const title = property.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                    return `
+                        <div class="property-dropdown-item" onclick="selectProperty('${code}', '${title}')">
+                            <div class="property-code">${property.property_code}</div>
+                            <div class="property-title">${property.title}</div>
+                        </div>
+                    `;
+                }).join('');
+
+                dropdown.style.display = 'block';
+            }
+
+            // Make selectProperty globally available
+            window.selectProperty = function(code, title) {
+                searchInput.value = `${code} - ${title}`;
+                dropdown.style.display = 'none';
+                
+                // Find the property by code and redirect to edit page
+                fetch(`/admin/api/property-search?q=${encodeURIComponent(code)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            // Redirect to the first matching property's edit page
+                            window.location.href = `/admin/property/${data[0].id}/edit`;
+                        } else {
+                            // If not found, go to property list and let user search manually
+                            window.location.href = `/admin/property`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error finding property:', error);
+                        // Fallback to property list
+                        window.location.href = `/admin/property`;
+                    });
+            };
+        });
+    </script>
     <script>
         // Ingatlan chart (oszlopdiagram)
         const propertyChart = new Chart(document.getElementById('propertyChart'), {
@@ -315,34 +470,26 @@
     <div class="container my-4">
         <h4 class="mb-4 text-primary">Legutóbbi események</h4>
         <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-icon">📤</div>
-                <div class="timeline-content">
-                    <strong>XY</strong> feltöltött egy ingatlant
-                    <div class="timeline-time">2025-08-07 10:30</div>
+            @forelse($recentActivities as $activity)
+                <div class="timeline-item">
+                    <div class="timeline-icon">{{ $activityLogService->getActivityIcon($activity->event) }}</div>
+                    <div class="timeline-content">
+                        <strong>{{ $activityLogService->formatActivityDescription($activity) }}</strong>
+                        @if($activityLogService->getChangedFields($activity))
+                            <br><small class="text-muted">Módosított mezők: {{ $activityLogService->getChangedFields($activity) }}</small>
+                        @endif
+                        <div class="timeline-time">{{ $activity->created_at->format('Y-m-d H:i') }}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-icon">✏️</div>
-                <div class="timeline-content">
-                    <strong>XY</strong> ingatlan módosítva lett
-                    <div class="timeline-time">2025-08-07 12:15</div>
+            @empty
+                <div class="timeline-item">
+                    <div class="timeline-icon">📝</div>
+                    <div class="timeline-content">
+                        <strong>Még nincsenek események</strong>
+                        <div class="timeline-time">-</div>
+                    </div>
                 </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-icon">🗑️</div>
-                <div class="timeline-content">
-                    <strong>AB</strong> törölt egy ingatlant
-                    <div class="timeline-time">2025-08-06 18:40</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-icon">📸</div>
-                <div class="timeline-content">
-                    <strong>CD</strong> új képet töltött fel egy ingatlanhoz
-                    <div class="timeline-time">2025-08-05 09:20</div>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
 

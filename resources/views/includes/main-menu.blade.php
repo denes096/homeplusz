@@ -12,7 +12,7 @@
         <div class="right-widget ms-auto me-3 me-lg-0 order-lg-3">
             <ul class="d-flex align-items-center style-none">
                     <li class="d-none d-md-inline-block ms-3 ms-xl-4 me-xl-4 w-85">
-                        <a href="dashboard/add-property.html" class="btn-ten" style="line-height: 40px;" target="_blank"><span>Kedvenceim</span><i class="fa-light fa-heart" style="color: #96006B;"></i></a>
+                        <a href="{{ route('property.favorites') }}" class="btn-ten" style="line-height: 40px;"><span>Kedvenceim</span><i class="fa-light fa-heart" style="color: #96006B;"></i></a>
                     </li>
                     @if (Auth::guest())
                     <li class="d-flex align-items-center login-btn-one">

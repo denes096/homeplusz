@@ -25,7 +25,8 @@ class CustomerSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'customer_id' => 'required|exists:customers,id',
+            'search' => 'required|json',
         ];
     }
 
@@ -37,7 +38,8 @@ class CustomerSearchRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
+            'customer_id' => 'vevő',
+            'search' => 'keresési paraméterek',
         ];
     }
 
@@ -49,7 +51,10 @@ class CustomerSearchRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'customer_id.required' => 'A vevő kiválasztása kötelező.',
+            'customer_id.exists' => 'A kiválasztott vevő nem létezik.',
+            'search.required' => 'A keresési paraméterek megadása kötelező.',
+            'search.json' => 'A keresési paramétereknek érvényes JSON formátumban kell lenniük.',
         ];
     }
 }

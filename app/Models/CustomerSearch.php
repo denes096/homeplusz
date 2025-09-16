@@ -18,8 +18,10 @@ class CustomerSearch extends Model
     */
 
     protected $table = 'customer_search';
+
     // protected $primaryKey = 'id';
     public $timestamps = false;
+
     protected $guarded = ['id'];
     // protected $fillable = [];
     // protected $hidden = [];
@@ -37,7 +39,7 @@ class CustomerSearch extends Model
     */
     public function customer()
     {
-        $this->belongsTo(Customers::class, 'customer_id');
+        return $this->belongsTo(Customers::class, 'customer_id');
     }
 
     /*

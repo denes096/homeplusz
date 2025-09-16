@@ -39,7 +39,15 @@ Route::group([
 
     Route::get('find/{unique_id}', [PropertyCrudController::class, 'findPropertyOrProject'])->name('find');
     Route::get('property-image-downloader/{unique_id}', [PropertyImageDownloaderCrudController::class, 'download'])->name('admin.property-image-downloader');
+    Route::post('property/{id}/toggle-active', [PropertyCrudController::class, 'toggleActive'])->name('admin.property.toggle-active');
+    Route::get('property/{id}/matching-searches', [PropertyCrudController::class, 'showMatchingSearches'])->name('admin.property.matching-searches');
+    Route::post('property/{propertyId}/send-to-search/{searchId}', [PropertyCrudController::class, 'sendToMatchingSearch'])->name('admin.property.send-to-search');
     Route::crud('customers', 'CustomersCrudController');
+    Route::get('customers/{id}/execute-search/{searchId}', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'executeSearch']);
+    Route::post('customers/{id}/send-property-email', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendPropertyEmail']);
+    Route::post('customers/{id}/send-offer', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendOffer']);
+    Route::get('customers/{id}/offers/{searchId}', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOffers']);
+    Route::get('offers/{id}/details', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOfferDetails']);
     Route::crud('slider-images', 'SliderImagesCrudController');
     Route::crud('customer-search', 'CustomerSearchCrudController');
     Route::get('offers', [\App\Http\Controllers\Admin\OffersConstoller::class, 'index'])->name('backpack.offers.index');

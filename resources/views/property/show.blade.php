@@ -124,40 +124,42 @@
                     </div>
 
 
+                    @if($similarProperties->count() > 0)
                     <div class="similar-property">
                         <h4 class="mb-4 fs-5">Hasonló ingatlanok</h4>
                         <div class="similar-listing-slider-one">
+                            @foreach($similarProperties as $similarProperty)
                             <div class="item">
                                 <div class="listing-card-one shadow4 style-three border-30 mb-50">
                                     <div class="img-gallery p-15">
                                         <div class="position-relative border-20 overflow-hidden">
-                                            <div class="tag bg-white text-dark fw-500 border-20">ELADÓ</div>
-                                            <img src="/images/listing/img_13.jpg" class="w-100 border-20" alt="...">
-                                            <a href="listing_details_06.html" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
+                                            <div class="tag bg-white text-dark fw-500 border-20">{{ $similarProperty->getAdType() }}</div>
+                                            <img src="{{ $similarProperty->getImageUrls()[0] ?? '/images/defaultProperty.png' }}" class="w-100 border-20" alt="{{ $similarProperty->title }}">
+                                            <a href="{{ route('property.show', $similarProperty->id) }}" class="btn-four inverse rounded-circle position-absolute"><i class="bi bi-arrow-up-right"></i></a>
                                             <div class="img-slider-btn">
-                                                03 <i class="fa-regular fa-image"></i>
-                                                <a href="/images/listing/img_large_01.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="/images/listing/img_large_02.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
-                                                <a href="/images/listing/img_large_03.jpg" class="d-block" data-fancybox="img1" data-caption="ÉRD"></a>
+                                                {{ count($similarProperty->getImageUrls()) }} <i class="fa-regular fa-image"></i>
+                                                @foreach($similarProperty->getImageUrls() as $url)
+                                                    <a href="{{ $url }}" class="d-block" data-fancybox="similar{{ $similarProperty->id }}" data-caption="{{ $similarProperty->title }}"></a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="property-info pe-4 ps-4"> <!-- Hasonló ingatlan tulajdonságokat megadtam, azokat kellene itt megjeleníteni -->
-                                        <a href="listing_01.html" class="title tran3s">Eladó Családi ház</a>
-                                        <div class="address">Érd Tusculanum</div>
+                                    <div class="property-info pe-4 ps-4">
+                                        <a href="{{ route('property.show', $similarProperty->id) }}" class="title tran3s">{{ ucfirst($similarProperty->getAdType()) . " " . $similarProperty->propertyType->name }}</a>
+                                        <div class="address">{{ $similarProperty->getFullAddress() }}</div>
                                         <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-between">
                                             <li class="d-flex align-items-center">
-                                                <span class="fs-16"><strong class="fw-500 color-dark">334</strong>㎡</span>
+                                                <span class="fs-16"><strong class="fw-500 color-dark">{{ $similarProperty->attributes->firstWhere('name', 'epulet_lakotermeret')->pivot->value ?? 'N/A' }}</strong>㎡</span>
                                             </li>
                                             <li class="d-flex align-items-center">
-                                                <span class="fs-16"><strong class="fw-500 color-dark">10</strong> szoba</span>
+                                                <span class="fs-16"><strong class="fw-500 color-dark">{{ $similarProperty->attributes->firstWhere('name', 'epulet_szobaszam')->pivot->value ?? 'N/A' }}</strong> szoba</span>
                                             </li>
                                             <li class="d-flex align-items-center">
-                                                <span class="fs-16"><strong class="fw-500 color-dark">02</strong> fürdőszoba</span>
+                                                <span class="fs-16"><strong class="fw-500 color-dark">{{ $similarProperty->attributes->firstWhere('name', 'area')->pivot->value ?? '- ' }}</strong>m²</span>
                                             </li>
                                         </ul>
                                         <div class="pl-footer top-border d-flex align-items-center justify-content-between">
-                                            <strong class="price fw-500 color-dark">157,70M Ft.</strong>
+                                            <strong class="price fw-500 color-dark">{{ $similarProperty->formatHUFMillions(1) }}</strong>
                                             <ul class="style-none d-flex action-icons">
                                                 <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
                                             </ul>
@@ -165,16 +167,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                            </div>
-                            <div class="item">
-                            </div>
-                            <div class="item">
-                            </div>
-                            <div class="item">
-                            </div>
+                            @endforeach
                         </div>
                     </div>
+                    @endif
 
                     <div class="property-score bg-white shadow4 border-20 p-40 mb-50">
 
@@ -182,11 +178,26 @@
 
                     <div class="property-location mb-50">
                         <div class="bg-white shadow4 border-20 p-30">
+                            <h4 class="mb-4 fs-5">Ingatlan helye</h4>
                             <div class="map-banner overflow-hidden border-15">
                                 <div class="gmap_canvas h-100 w-100">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83088.3595592641!2d-105.54557276330914!3d39.29302101722867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x874014749b1856b7%3A0xc75483314990a7ff!2sColorado%2C%20USA!5e0!3m2!1sen!2sbd!4v1699764452737!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100"></iframe>
+                                    @if($property->hasCoordinates())
+                                        <div id="property-map" style="height: 450px; width: 100%;"></div>
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center" style="height: 450px; background-color: #f8f9fa;">
+                                            <div class="text-center">
+                                                <i class="bi bi-geo-alt" style="font-size: 3rem; color: #6c757d;"></i>
+                                                <p class="mt-3 text-muted">A térkép koordinátái nem állnak rendelkezésre</p>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
+                            @if($property->address)
+                                <div class="mt-3">
+                                    <p class="mb-1"><strong>Cím:</strong> {{ $property->address }}</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -195,10 +206,10 @@
                 <div class="col-xl-4 col-lg-8 me-auto ms-auto">
                     <div class="theme-sidebar-one dot-bg p-30 ms-xxl-3 lg-mt-80">
                         <div class="agent-info bg-white border-20 p-30 mb-40">
-                            <img src="{{ $property->user->getProfilePicture() }}" data-src="{{ $property->user->getProfilePicture() }}" alt="" class="lazy-img rounded-circle ms-auto me-auto mt-3 avatar">
+                            <img src="{{ $property?->user?->getProfilePicture() ?? '/images/defaultUser.png' }}" data-src="{{ $property?->user?->getProfilePicture() ?? '/images/defaultUser.png' }}" alt="" class="lazy-img rounded-circle ms-auto me-auto mt-3 avatar">
                             <div class="text-center mt-25">
-                                <h6 class="name">{{ $property->user->name }}</h6>
-                                <p class="fs-16">{{ $property->user->position }}</p>
+                                <h6 class="name">{{ $property?->user?->name ?? 'Otthonplusz' }}</h6>
+                                <p class="fs-16">{{ $property?->user?->position ?? 'Referens' }}</p>
                                 <ul class="style-none d-flex align-items-center justify-content-center social-icon">
                                     <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
                                     <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
@@ -207,8 +218,8 @@
                             </div>
                             <div class="divider-line mt-40 mb-45 pt-20">
                                 <ul class="style-none">
-                                    <li>Email: <span><a href="mailto:akabirr770@gmail.com">{{ $property->user->email }}</a></span></li>
-                                    <li>Phone: <span><a href="tel:+12347687565">+36301112233</a></span></li>
+                                    <li>Email: <span><a href="mailto:akabirr770@gmail.com">{{ $property?->user?->email ?? 'info@otthonplusz.hu' }}</a></span></li>
+                                    <li>Phone: <span><a href="tel:+12347687565">{{ $property?->user?->phone ?? '+36301112233' }}</a></span></li>
                                 </ul>
                             </div>
                             <div>
@@ -253,3 +264,44 @@
     </div>
 
 @endsection
+
+@if($property->hasCoordinates())
+@push('javascript')
+<script>
+    function initPropertyMap() {
+        const propertyLocation = [{{ $property->latitude }}, {{ $property->longitude }}];
+
+        // Térkép inicializálása
+        const map = L.map("property-map").setView(propertyLocation, 15);
+
+        // OpenStreetMap tile layer hozzáadása
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "© OpenStreetMap contributors",
+            maxZoom: 19
+        }).addTo(map);
+
+        // Marker létrehozása
+        const marker = L.marker(propertyLocation).addTo(map);
+
+        // Popup létrehozása
+        const popupContent = `
+            <div style="padding: 10px; min-width: 200px;">
+                <h6 style="margin: 0 0 5px 0; font-weight: bold;">{{ $property->title }}</h6>
+                <p style="margin: 0; font-size: 14px; color: #666;">{{ $property->getFullAddress() }}</p>
+                @if($property->price)
+                    <p style="margin: 5px 0 0 0; font-size: 16px; font-weight: bold; color: #007bff;">{{ number_format($property->price, 0, ',', ' ') }} Ft</p>
+                @endif
+            </div>
+        `;
+
+        // Popup hozzáadása a marker-hez
+        marker.bindPopup(popupContent).openPopup();
+    }
+
+    // DOM betöltés után inicializálás
+    document.addEventListener("DOMContentLoaded", function() {
+        initPropertyMap();
+    });
+</script>
+@endpush
+@endif

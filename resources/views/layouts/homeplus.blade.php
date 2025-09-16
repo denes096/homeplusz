@@ -21,6 +21,7 @@
     <meta name="msapplication-navbutton-color" content="#0D1A1C">
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#0D1A1C">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>OtthonPlusz Ingatlaniroda</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="56x56" href="{{asset("/images/fav-icon/icon.png")}}">
@@ -30,6 +31,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset("css/style.css")}}" media="all">
     <!-- responsive style sheet -->
     <link rel="stylesheet" type="text/css" href="{{asset("css/responsive.css")}}" media="all">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <style>
         ::-webkit-scrollbar {
             width: 10px;
@@ -293,6 +296,123 @@
             }
         }
     })
+
+    // Favorites functionality
+    function loadFavorites() {
+        const favorites = JSON.parse(localStorage.getItem('propertyFavorites') || '[]');
+        
+        // Update heart icons based on favorites
+        document.querySelectorAll('.favorite-heart').forEach(heart => {
+            const propertyId = parseInt(heart.dataset.propertyId);
+            if (favorites.includes(propertyId)) {
+                heart.classList.remove('fa-light');
+                heart.classList.add('fa-solid');
+                heart.style.color = '#96006B';
+            } else {
+                heart.classList.remove('fa-solid');
+                heart.classList.add('fa-light');
+                heart.style.color = '';
+            }
+        });
+    }
+
+    function toggleFavorite(propertyId) {
+        let favorites = JSON.parse(localStorage.getItem('propertyFavorites') || '[]');
+        const index = favorites.indexOf(propertyId);
+        
+        if (index > -1) {
+            // Remove from favorites
+            favorites.splice(index, 1);
+        } else {
+            // Add to favorites
+            favorites.push(propertyId);
+        }
+        
+        localStorage.setItem('propertyFavorites', JSON.stringify(favorites));
+        loadFavorites();
+    }
+
+    // Simple favorites functionality
+    function initFavorites() {
+        // Load existing favorites
+        loadFavorites();
+        
+        // Add click handlers to all heart icons
+        const heartIcons = document.querySelectorAll('.favorite-heart');
+        
+        heartIcons.forEach(function(heart) {
+            // Remove any existing listeners to prevent duplicates
+            if (heart.clickHandler) {
+                heart.removeEventListener('click', heart.clickHandler);
+            }
+            
+            // Create new click handler
+            heart.clickHandler = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const propertyId = parseInt(heart.dataset.propertyId);
+                toggleFavorite(propertyId);
+            };
+            
+            // Add the event listener
+            heart.addEventListener('click', heart.clickHandler);
+        });
+    }
+
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initFavorites();
+            
+            // If we're on the favorites page, load the properties
+            if (window.location.pathname.includes('/kedvenceim')) {
+                loadFavoritesPage();
+            }
+        });
+    } else {
+        initFavorites();
+        
+        // If we're on the favorites page, load the properties
+        if (window.location.pathname.includes('/kedvenceim')) {
+            loadFavoritesPage();
+        }
+    }
+    
+    // Function to load favorites page
+    function loadFavoritesPage() {
+        // Load favorites from localStorage and send to server
+        const favorites = JSON.parse(localStorage.getItem('propertyFavorites') || '[]');
+        
+        if (favorites.length > 0) {
+            // Send favorites to server to get property data
+            fetch('/kedvenceim', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ favorites: favorites })
+            })
+            .then(response => response.text())
+            .then(html => {
+                // Replace the content with the updated properties
+                const container = document.querySelector('#favorites-container');
+                if (container) {
+                    container.innerHTML = html;
+                    
+                    // Re-initialize favorites for the new content
+                    if (typeof initFavorites === 'function') {
+                        initFavorites();
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error loading favorites:', error);
+            });
+        }
+    }
 </script>
 
 <style>
@@ -336,6 +456,9 @@
     }
 
 </style>
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 @once
     @stack('javascript')

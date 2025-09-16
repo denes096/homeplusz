@@ -1,0 +1,271 @@
+/* Admin Panel Custom Styles */
+
+/* Hide the Images field label and list, but keep upload functionality */
+.form-group:has(input[id="input_images"]) {
+    /* Don't hide completely, just minimize */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Hide the Images field label */
+label[for="input_images"] {
+    display: none !important;
+}
+
+/* Hide the file list display but keep the input functional */
+.form-group:has(input[id="input_images"]) .file-preview,
+.form-group:has(input[id="input_images"]) .file-list {
+    display: none !important;
+}
+
+/* Keep the input functional but invisible */
+input[id="input_images"] {
+    opacity: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+}
+
+/* Image upload area styling */
+.image-upload-area {
+    margin-top: 15px;
+}
+
+.image-upload-area .btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.image-upload-area .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.image-upload-area .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.image-upload-area .btn i {
+    margin-right: 5px;
+}
+
+/* Upload button focus state */
+.image-upload-area .btn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Upload button disabled state */
+.image-upload-area .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Upload button loading state */
+.image-upload-area .btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.image-upload-area .btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Image preview styling */
+#image_preview {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    padding: 15px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    min-height: 100px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#image_preview:hover {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Upload placeholder styling */
+.upload-placeholder {
+    text-align: center;
+    width: 100%;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+#image_preview:not(:empty) .upload-placeholder {
+    display: none;
+}
+
+/* Simple upload hint */
+#image_preview:empty::after {
+    content: "Kattintson a 'Képek feltöltése' gombra a képek hozzáadásához";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    width: 80%;
+}
+
+#image_preview:not(:empty)::after {
+    opacity: 0;
+}
+
+/* Image preview items */
+#image_preview > div {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin: 5px;
+}
+
+#image_preview > div:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+#image_preview img {
+    max-width: 150px;
+    max-height: 150px;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+#image_preview img:hover {
+    opacity: 0.8;
+}
+
+/* Delete button styling */
+#image_preview button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#image_preview button:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+/* Backpack image field styling */
+.backpack-image-field img,
+.file-preview img {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.backpack-image-field img:hover,
+.file-preview img:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+}
+
+/* Fancybox custom styling for admin panel */
+.fancybox__container {
+    z-index: 9999;
+}
+
+.fancybox__content {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.fancybox__image {
+    border-radius: 8px;
+}
+
+/* Image upload field styling */
+.upload-field {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-field:hover {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Property image preview in list */
+.property-image-preview {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.property-image-preview:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+/* Custom button styling for admin actions */
+.btn-custom-action {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}

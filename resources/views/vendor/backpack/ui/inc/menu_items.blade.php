@@ -46,5 +46,4 @@
 <x-backpack::menu-item title="Képletöltés" icon="la la-question" :link="backpack_url('property-image-downloader')" />
 
 <x-backpack::menu-item title="Slider images" icon="la la-question" :link="backpack_url('slider-images')" />
-<x-backpack::menu-item title="Customer searches" icon="la la-question" :link="backpack_url('customer-search')" />
-<li class="nav-item"><a class="nav-link" href="{{ route('backpack.offers.index') }}"><i class="la la-star"></i> <span>Kiajánlások</span></a></li>
+<x-backpack::menu-item title="Kiajánlások" icon="la la-question" :link="backpack_url('customer-search')" />
