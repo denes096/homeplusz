@@ -313,7 +313,7 @@ class PropertyService
                 ->with('settlementPart')
                 ->with('propertyType')
                 ->with('propertySubtype')
-
+                ->where('is_active', 1)
                 ->get();
         } catch (\Exception $e) {
             \Log::error('Error in getPropertiesByIds', ['error' => $e->getMessage(), 'ids' => $ids]);

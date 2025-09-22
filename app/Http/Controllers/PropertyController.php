@@ -85,7 +85,7 @@ class PropertyController extends Controller
             } else {
                 try {
                     $properties = $this->propertyService->getPropertiesByIds($favoriteIds);
-                    dd($properties);
+
                 } catch (\Exception $e) {
                     \Log::error('Error getting properties', ['error' => $e->getMessage()]);
                     $properties = collect();
