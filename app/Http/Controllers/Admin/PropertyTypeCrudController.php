@@ -8,16 +8,16 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 class PropertyTypeCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 
     public function setup()
     {
         CRUD::setModel(\App\Models\PropertyType::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/property-type');
-        CRUD::setEntityNameStrings('property type', 'property types');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/property-type');
+        CRUD::setEntityNameStrings('ingatlan típus', 'ingatlan típusok');
     }
 
     protected function setupListOperation()
@@ -30,10 +30,10 @@ class PropertyTypeCrudController extends CrudController
             'name' => 'subtypes_count',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('property-subtype?property-type-id=' . $entry->getKey());
+                    return backpack_url('property-subtype?property-type-id='.$entry->getKey());
                 },
             ],
-            'suffix' => ' ' . strtolower(trans('altípus')),
+            'suffix' => ' '.strtolower(trans('altípus')),
         ]);
     }
 

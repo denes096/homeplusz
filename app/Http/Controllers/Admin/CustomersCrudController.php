@@ -34,7 +34,7 @@ class CustomersCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Customers::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/customers');
-        CRUD::setEntityNameStrings('customers', 'customers');
+        CRUD::setEntityNameStrings('vevő', 'vevők');
     }
 
     /**
@@ -46,7 +46,7 @@ class CustomersCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+        CRUD::setFromDb(); // oszlopok beállítása az adatbázis oszlopok alapján
 
         /**
          * Columns can be defined using the fluent syntax:
@@ -151,7 +151,7 @@ class CustomersCrudController extends CrudController
             ], //
         ]);
 
-        // Ad type (Eladó / Kiadó / Minden)
+        // Hirdetés típusa (Eladó / Kiadó / Minden)
         CRUD::addField([
             'label' => 'Típus',
             'name' => 'p[ad_type]',
@@ -165,7 +165,7 @@ class CustomersCrudController extends CrudController
             'wrapper' => ['class' => 'form-group col-md-3'],
         ]);
 
-        // Property types / subtypes / settlements / settlement parts (multiselects)
+        // Ingatlan típusok / altípusok / települések / településrészek (többszörös választás)
         CRUD::addField([
             'label' => 'Ingatlantípus',
             'name' => 'p[property_types]',
@@ -206,7 +206,7 @@ class CustomersCrudController extends CrudController
             'wrapper' => ['class' => 'form-group col-md-3'],
         ]);
 
-        // Dynamic property attributes (numbers, selects, checkboxes)
+        // Dinamikus ingatlan attribútumok (számok, választók, jelölőnégyzetek)
         $propAttrsCats = \App\Models\PropertyAttributeCategory::with('propertyAttributes')->get();
         foreach ($propAttrsCats as $propAttrCat) {
             $propAttrs = $propAttrCat->propertyAttributes;
@@ -262,7 +262,7 @@ class CustomersCrudController extends CrudController
     {
         $this->setupCreateOperation();
 
-        // Prefill the p[...] fields from the saved CustomerSearch if present
+        // A p[...] mezők előtöltése a mentett CustomerSearch alapján, ha van
         $entry = $this->crud->getCurrentEntry();
         if ($entry) {
             $search = CustomerSearch::where('customer_id', $entry->id)->first();
@@ -350,15 +350,15 @@ class CustomersCrudController extends CrudController
 
         $properties = Property::whereIn('id', $propertyIds)->get();
 
-        // simple mail — use a Mailable in real app; here we'll send a basic email
+        // egyszerű email — valódi alkalmazásban Mailable használj; itt egy alapvető emailt küldünk
         $to = $customer->email;
         if (empty($to)) {
-            return back()->with('error', 'Customer has no email set');
+            return back()->with('error', 'A vevőnek nincs beállítva email cím');
         }
 
         Mail::to($to)->send(new PropertiesForCustomer($customer, $properties));
 
-        return back()->with('success', 'Email sent');
+        return back()->with('success', 'Email elküldve');
     }
 
     public function store()

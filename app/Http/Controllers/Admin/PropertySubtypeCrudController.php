@@ -9,22 +9,22 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 class PropertySubtypeCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 
     public function setup()
     {
         CRUD::setModel(\App\Models\PropertySubtype::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/property-subtype');
-        CRUD::setEntityNameStrings('property subtype', 'property subtypes');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/property-subtype');
+        CRUD::setEntityNameStrings('ingatlan altípus', 'ingatlan altípusok');
     }
 
     protected function setupListOperation()
     {
         CRUD::addColumn([
-            'label' => "Főtípus",
+            'label' => 'Főtípus',
             'type' => 'select',
             'name' => 'property_type_id',
 
@@ -41,7 +41,7 @@ class PropertySubtypeCrudController extends CrudController
     {
         CRUD::setValidation(PropertySubtypeRequest::class);
         CRUD::addField([
-            'label' => "Főtípus",
+            'label' => 'Főtípus',
             'type' => 'select',
             'name' => 'property_type_id',
 

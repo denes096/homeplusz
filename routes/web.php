@@ -20,6 +20,12 @@ Route::prefix('admin/api')->middleware('auth')->group(function () {
     Route::get('/property-search', [PropertyController::class, 'searchForDropdown']);
 });
 
+// Property document routes
+Route::prefix('admin/property')->middleware('auth')->group(function () {
+    Route::post('/{propertyId}/upload-document', [\App\Http\Controllers\Admin\PropertyCrudController::class, 'uploadDocument']);
+    Route::delete('/{propertyId}/document/{documentId}', [\App\Http\Controllers\Admin\PropertyCrudController::class, 'deleteDocument']);
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

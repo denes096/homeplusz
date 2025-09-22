@@ -8,8 +8,9 @@
 </x-backpack::menu-dropdown>
 
 <x-backpack::menu-dropdown title="Ingatlanok" icon="la la-home">
-    <x-backpack::menu-dropdown-header title="Ingatlanok" />
-    <x-backpack::menu-dropdown-item title="Ingatlanok kezelése" icon="la la-question" :link="backpack_url('property')" />
+    <x-backpack::menu-dropdown-item title="Ingatlanok" icon="la la-home" :link="backpack_url('property')" />
+    <x-backpack::menu-dropdown-item title="Inaktív ingatlanok" icon="la la-home" :link="backpack_url('property-inactive')" />
+    <x-backpack::menu-dropdown-item title="Saját ingatlanok" icon="la la-home" :link="backpack_url('property-sajat')" />    
     <x-backpack::menu-dropdown-header title="Mezők" />
     <x-backpack::menu-dropdown-item title="Tulajdonság kategóriák" icon="la la-folder-open" :link="backpack_url('property-attribute-category')" />
     <x-backpack::menu-dropdown-item title="Tulajdonságok" icon="la la-file-alt" :link="backpack_url('property-attribute')" />

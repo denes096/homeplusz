@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ProjectRequest;
 use App\Models\UniqueCode;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -10,16 +9,16 @@ use Illuminate\Support\Facades\Route;
 
 /**
  * Class ProjectCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
 class ProjectCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,14 +28,15 @@ class ProjectCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\Project::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/project');
-        CRUD::setEntityNameStrings('project', 'projects');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/project');
+        CRUD::setEntityNameStrings('projekt', 'projektek');
     }
 
     /**
      * Define what happens when the List operation is loaded.
      *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
+     *
      * @return void
      */
     protected function setupListOperation()
@@ -51,6 +51,7 @@ class ProjectCrudController extends CrudController
      * Define what happens when the Create operation is loaded.
      *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
+     *
      * @return void
      */
     protected function setupCreateOperation()
@@ -64,22 +65,22 @@ class ProjectCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'label' => "Projekt azonosító",
+            'label' => 'Projekt azonosító',
             'type' => 'number',
             'name' => 'project_code',
-            'value' => UniqueCode::getNextCode()
+            'value' => UniqueCode::getNextCode(),
         ]);
-        CRUD::field('name')->label("Név");
-        CRUD::field('title')->label("Összefoglaló");
+        CRUD::field('name')->label('Név');
+        CRUD::field('title')->label('Összefoglaló');
         CRUD::field('description')
             ->type('textarea')
             ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Leírás');
 
-        CRUD::field('deadline')->type('date')->label("Határidő");
-        CRUD::field('contractor')->type('text')->label("Kivitelező");
+        CRUD::field('deadline')->type('date')->label('Határidő');
+        CRUD::field('contractor')->type('text')->label('Kivitelező');
         CRUD::field('images')
-            ->label("Képek")
+            ->label('Képek')
             ->type('upload_multiple')
             ->withFiles(
                 [
@@ -92,8 +93,7 @@ class ProjectCrudController extends CrudController
 
         CRUD::field('image_preview_helper')
             ->type('custom_html')
-            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>')
-            ; // vagy bármi a tab neve;
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>'); // vagy bármi a tab neve;
 
         /**
          * Fields can be defined using the fluent syntax:
@@ -105,6 +105,7 @@ class ProjectCrudController extends CrudController
      * Define what happens when the Update operation is loaded.
      *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
+     *
      * @return void
      */
     protected function setupUpdateOperation()
@@ -118,21 +119,21 @@ class ProjectCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'label' => "Projekt azonosító",
+            'label' => 'Projekt azonosító',
             'type' => 'number',
-            'name' => 'project_code'
+            'name' => 'project_code',
         ]);
-        CRUD::field('name')->label("Név");
-        CRUD::field('title')->label("Összefoglaló");
+        CRUD::field('name')->label('Név');
+        CRUD::field('title')->label('Összefoglaló');
         CRUD::field('description')
             ->type('textarea')
             ->attributes(['class' => 'ckeditor']) // ID, hogy felismerje
             ->label('Leírás');
 
-        CRUD::field('deadline')->type('date')->label("Határidő");
-        CRUD::field('contractor')->type('text')->label("Kivitelező");
+        CRUD::field('deadline')->type('date')->label('Határidő');
+        CRUD::field('contractor')->type('text')->label('Kivitelező');
         CRUD::field('images')
-            ->label("Képek")
+            ->label('Képek')
             ->type('upload_multiple')
             ->withFiles(
                 [
@@ -145,8 +146,7 @@ class ProjectCrudController extends CrudController
 
         CRUD::field('image_preview_helper')
             ->type('custom_html')
-            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>')
-        ; // vagy bármi a tab neve;
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>'); // vagy bármi a tab neve;
 
     }
 
@@ -165,7 +165,7 @@ class ProjectCrudController extends CrudController
         $itemAttributes = $this->crud->getStrippedSaveRequest($request);
         $item = $this->crud->create($itemAttributes);
 
-        UniqueCode::updateCode((int)$itemAttributes['project_code']);
+        UniqueCode::updateCode((int) $itemAttributes['project_code']);
 
         $this->data['entry'] = $this->crud->entry = $item;
 
@@ -191,7 +191,7 @@ class ProjectCrudController extends CrudController
             $itemAttributes
         );
 
-        UniqueCode::updateCode((int)$itemAttributes['project_code']);
+        UniqueCode::updateCode((int) $itemAttributes['project_code']);
 
         $this->data['entry'] = $this->crud->entry = $item;
 

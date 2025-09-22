@@ -7,11 +7,13 @@ use App\Models\Label;
 use App\Models\Project;
 use App\Models\Property;
 use App\Models\PropertyAttribute;
+use App\Models\PropertyDocument;
 use App\Models\PropertySubtype;
 use App\Models\PropertyType;
 use App\Models\Settlement;
 use App\Models\SettlementPart;
 use App\Models\UniqueCode;
+use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
@@ -27,18 +29,31 @@ class PropertyCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 
     public function setup()
     {
         CRUD::setModel(\App\Models\Property::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/property');
-        CRUD::setEntityNameStrings('property', 'properties');
+        CRUD::setEntityNameStrings('ingatlan', 'ingatlanok');
     }
 
-    protected function setupListOperation()
+    protected function setupFaszOperation()
     {
         CRUD::setValidation(PropertyRequest::class);
+
+        // Filter to show only active properties
+        $this->crud->addClause('where', 'is_active', false);
+
+        // Remove default buttons
+        $this->crud->removeButton('show');
+        $this->crud->removeButton('edit');
+        $this->crud->removeButton('delete'); // Remove delete button from listing
+
+        // Add custom buttons
+        $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'editProperty', 'getEditButton', 'end');
         $this->crud->addButtonFromModelFunction('line', 'toggleActive', 'getToggleActiveButton', 'end');
         $this->crud->addButtonFromModelFunction('line', 'matchingSearches', 'getMatchingSearchesButton', 'end');
 
@@ -50,23 +65,410 @@ class PropertyCrudController extends CrudController
                 'name' => 'first_image_url',
                 'label' => 'Kép',
                 'type' => 'image',
-                'prefix' => 'storage/', // mert az accessorban már nincs storage prefix
-                'height' => '200px',
-                'width' => '200px',
+                'prefix' => 'storage/',
+                'height' => '120px',
+                'width' => '160px',
+                'orderable' => false,
+                'searchLogic' => false,
+            ],
+            [
+                'name' => 'property_code',
+                'label' => 'Ingatlan kód',
+                'type' => 'text',
+                'searchLogic' => 'like',
+                'orderable' => true,
+            ],
+            [
+                'name' => 'title',
+                'label' => 'Cím',
+                'type' => 'text',
+                'searchLogic' => 'like',
+                'orderable' => true,
+                'limit' => 50,
+            ],
+            [
+                'name' => 'price',
+                'label' => 'Ár',
+                'type' => 'model_function',
+                'function_name' => 'getFormattedPrice',
+                'suffix' => ' Ft',
+                'orderable' => true,
+                'searchLogic' => false,
+            ],
+            [
+                'name' => 'ad_type',
+                'label' => 'Típus',
+                'type' => 'radio',
+                'options' => [
+                    'sell' => 'Eladó',
+                    'rent' => 'Kiadó',
+                ],
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'settlement.fullName',
+                'label' => 'Település',
+                'type' => 'text',
+                'entity' => 'settlement',
+                'attribute' => 'fullName',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'settlementPart.name',
+                'label' => 'Településrész',
+                'type' => 'text',
+                'entity' => 'settlementPart',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'propertyType.name',
+                'label' => 'Ingatlantípus',
+                'type' => 'text',
+                'entity' => 'propertyType',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
             ],
             [
                 'name' => 'is_active',
                 'label' => 'Aktív',
                 'type' => 'checkbox',
                 'default' => false,
-                'tab' => 'Base',
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'featured',
+                'label' => 'Kiemelt',
+                'type' => 'checkbox',
+                'default' => false,
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'user.name',
+                'label' => 'Referens',
+                'type' => 'text',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'created_at',
+                'label' => 'Létrehozva',
+                'type' => 'datetime',
+                'format' => 'Y-m-d H:i',
+                'orderable' => true,
+                'searchLogic' => false,
+            ],
+        ]);
+    }
+
+    protected function setupFasztOperation()
+    {
+        CRUD::setValidation(PropertyRequest::class);
+
+        // Filter to show only active properties
+        $this->crud->addClause('where', 'user_id', auth()->user()->id);
+
+        // Remove default buttons
+        $this->crud->removeButton('show');
+        $this->crud->removeButton('edit');
+        $this->crud->removeButton('delete'); // Remove delete button from listing
+
+        // Add custom buttons
+        $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'editProperty', 'getEditButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'toggleActive', 'getToggleActiveButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'matchingSearches', 'getMatchingSearchesButton', 'end');
+
+        // Backpack CRUD handles search automatically via searchableTable
+        // No need for custom search logic here
+
+        $this->crud->addColumns([
+            [
+                'name' => 'first_image_url',
+                'label' => 'Kép',
+                'type' => 'image',
+                'prefix' => 'storage/',
+                'height' => '120px',
+                'width' => '160px',
+                'orderable' => false,
+                'searchLogic' => false,
+            ],
+            [
+                'name' => 'property_code',
+                'label' => 'Ingatlan kód',
+                'type' => 'text',
+                'searchLogic' => 'like',
+                'orderable' => true,
+            ],
+            [
+                'name' => 'title',
+                'label' => 'Cím',
+                'type' => 'text',
+                'searchLogic' => 'like',
+                'orderable' => true,
+                'limit' => 50,
+            ],
+            [
+                'name' => 'price',
+                'label' => 'Ár',
+                'type' => 'model_function',
+                'function_name' => 'getFormattedPrice',
+                'suffix' => ' Ft',
+                'orderable' => true,
+                'searchLogic' => false,
+            ],
+            [
+                'name' => 'ad_type',
+                'label' => 'Típus',
+                'type' => 'radio',
+                'options' => [
+                    'sell' => 'Eladó',
+                    'rent' => 'Kiadó',
+                ],
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'settlement.fullName',
+                'label' => 'Település',
+                'type' => 'text',
+                'entity' => 'settlement',
+                'attribute' => 'fullName',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'settlementPart.name',
+                'label' => 'Településrész',
+                'type' => 'text',
+                'entity' => 'settlementPart',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'propertyType.name',
+                'label' => 'Ingatlantípus',
+                'type' => 'text',
+                'entity' => 'propertyType',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'is_active',
+                'label' => 'Aktív',
+                'type' => 'checkbox',
+                'default' => false,
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'featured',
+                'label' => 'Kiemelt',
+                'type' => 'checkbox',
+                'default' => false,
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'user.name',
+                'label' => 'Referens',
+                'type' => 'text',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'created_at',
+                'label' => 'Létrehozva',
+                'type' => 'datetime',
+                'format' => 'Y-m-d H:i',
+                'orderable' => true,
+                'searchLogic' => false,
+            ],
+        ]);
+    }
+
+    protected function setupListOperation()
+    {
+        CRUD::setValidation(PropertyRequest::class);
+
+        // Filter to show only active properties
+        $this->crud->addClause('where', 'is_active', true);
+
+        // Remove default buttons
+        $this->crud->removeButton('show');
+        $this->crud->removeButton('edit');
+        $this->crud->removeButton('delete'); // Remove delete button from listing
+
+        // Add custom buttons
+        $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'editProperty', 'getEditButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'toggleActive', 'getToggleActiveButton', 'end');
+        $this->crud->addButtonFromModelFunction('line', 'matchingSearches', 'getMatchingSearchesButton', 'end');
+
+        // Backpack CRUD handles search automatically via searchableTable
+        // No need for custom search logic here
+
+        $this->crud->addColumns([
+            [
+                'name' => 'first_image_url',
+                'label' => 'Kép',
+                'type' => 'image',
+                'prefix' => 'storage/',
+                'height' => '120px',
+                'width' => '160px',
+                'orderable' => false,
+                'searchLogic' => false,
+            ],
+            [
+                'name' => 'property_code',
+                'label' => 'Ingatlan kód',
+                'type' => 'text',
+                'searchLogic' => 'like',
+                'orderable' => true,
+            ],
+            [
+                'name' => 'title',
+                'label' => 'Cím',
+                'type' => 'text',
+                'searchLogic' => 'like',
+                'orderable' => true,
+                'limit' => 50,
+            ],
+            [
+                'name' => 'price',
+                'label' => 'Ár',
+                'type' => 'model_function',
+                'function_name' => 'getFormattedPrice',
+                'suffix' => ' Ft',
+                'orderable' => true,
+                'searchLogic' => false,
+            ],
+            [
+                'name' => 'ad_type',
+                'label' => 'Típus',
+                'type' => 'radio',
+                'options' => [
+                    'sell' => 'Eladó',
+                    'rent' => 'Kiadó',
+                ],
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'settlement.fullName',
+                'label' => 'Település',
+                'type' => 'text',
+                'entity' => 'settlement',
+                'attribute' => 'fullName',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'settlementPart.name',
+                'label' => 'Településrész',
+                'type' => 'text',
+                'entity' => 'settlementPart',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'propertyType.name',
+                'label' => 'Ingatlantípus',
+                'type' => 'text',
+                'entity' => 'propertyType',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'is_active',
+                'label' => 'Aktív',
+                'type' => 'checkbox',
+                'default' => false,
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'featured',
+                'label' => 'Kiemelt',
+                'type' => 'checkbox',
+                'default' => false,
+                'orderable' => true,
+                'searchLogic' => 'exact',
+            ],
+            [
+                'name' => 'user.name',
+                'label' => 'Referens',
+                'type' => 'text',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'orderable' => true,
+                'searchLogic' => 'like',
+            ],
+            [
+                'name' => 'created_at',
+                'label' => 'Létrehozva',
+                'type' => 'datetime',
+                'format' => 'Y-m-d H:i',
+                'orderable' => true,
+                'searchLogic' => false,
+            ],
+        ]);
+    }
+
+    protected function setupShowOperation()
+    {
+        // Use custom view for property show
+        $this->crud->set('show.view', 'vendor.backpack.crud.property_show');
+
+        // Load all necessary relationships for the show view
+        $this->crud->set('show.setFromDb', false);
+
+        // Load relationships for the show view
+        $this->crud->set('show.entry', function ($entry) {
+            return $entry->load([
+                'settlement',
+                'settlementPart',
+                'propertyType',
+                'propertySubtype',
+                'project',
+                'labels',
+                'attributes.category',
+            ]);
+        });
+
+        $this->crud->addColumns([
+            [
+                'name' => 'first_image_url',
+                'label' => 'Kép',
+                'type' => 'image',
+                'prefix' => 'storage/',
+                'height' => '300px',
+                'width' => '400px',
             ],
             [
                 'name' => 'property_code',
                 'label' => 'Ingatlan kód',
                 'type' => 'text',
             ],
-
+            [
+                'name' => 'title',
+                'label' => 'Cím',
+                'type' => 'text',
+            ],
             [
                 'name' => 'price',
                 'label' => 'Ár',
@@ -78,34 +480,90 @@ class PropertyCrudController extends CrudController
                 'name' => 'ad_type',
                 'label' => 'Típus',
                 'type' => 'radio',
-                // optional, specify the enum options with custom display values
                 'options' => [
                     'sell' => 'Eladó',
                     'rent' => 'Kiadó',
                 ],
             ],
-            [   // select_grouped
-                'label' => 'Település',
-                'type' => 'select',
-                'name' => 'settlement_id',
-                'entity' => 'settlement',
-                'attribute' => 'fullName',
-                'model' => Settlement::class,
-                'tab' => 'Base',
+            [
+                'name' => 'is_active',
+                'label' => 'Aktív',
+                'type' => 'checkbox',
             ],
-            [   // select_grouped
-                'label' => 'Településrész',
-                'type' => 'select_grouped', // https://github.com/Laravel-Backpack/CRUD/issues/502
-                'name' => 'settlement_part_id',
-                'entity' => 'settlementPart',
+            [
+                'name' => 'featured',
+                'label' => 'Kiemelt',
+                'type' => 'checkbox',
+            ],
+            [
+                'name' => 'user.name',
+                'label' => 'Referens',
+                'type' => 'text',
+                'entity' => 'user',
                 'attribute' => 'name',
-                'model' => SettlementPart::class,
-                'group_by' => 'settlement', // the relationship to entity you want to use for grouping
-                'group_by_attribute' => 'fullName', // the attribute on related model, that you want shown
-                'group_by_relationship_back' => 'parts', // relationship from related model back to this model
-                'tab' => 'Base',
             ],
-
+            [
+                'name' => 'settlement.fullName',
+                'label' => 'Település',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'settlementPart.name',
+                'label' => 'Településrész',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'propertyType.name',
+                'label' => 'Ingatlantípus',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'propertySubtype.name',
+                'label' => 'Ingatlan altípus',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'project.name',
+                'label' => 'Projekt',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'address',
+                'label' => 'Cím (térkép)',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'latitude',
+                'label' => 'Szélesség',
+                'type' => 'number',
+                'decimals' => 8,
+            ],
+            [
+                'name' => 'longitude',
+                'label' => 'Hosszúság',
+                'type' => 'number',
+                'decimals' => 8,
+            ],
+            [
+                'name' => 'description',
+                'label' => 'Részletes leírás',
+                'type' => 'textarea',
+            ],
+            [
+                'name' => 'inner_comments',
+                'label' => 'Belső komment',
+                'type' => 'textarea',
+            ],
+            [
+                'name' => 'created_at',
+                'label' => 'Létrehozva',
+                'type' => 'datetime',
+            ],
+            [
+                'name' => 'updated_at',
+                'label' => 'Módosítva',
+                'type' => 'datetime',
+            ],
         ]);
     }
 
@@ -115,7 +573,7 @@ class PropertyCrudController extends CrudController
 
         CRUD::addField([
             'name' => 'is_active',
-            'label' => 'aktív',
+            'label' => 'Aktív',
             'type' => 'checkbox',
             'default' => true,
             'tab' => 'Base',
@@ -155,6 +613,18 @@ class PropertyCrudController extends CrudController
             'model' => Project::class,
             'allows_null' => true, // This option allows no selection by default
             'default' => null,     // Explicitly sets the default value to null (optional)
+            'tab' => 'Base',
+        ]);
+
+        CRUD::addField([
+            'label' => 'Referens',
+            'type' => 'select',
+            'name' => 'user_id',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => User::class,
+            'allows_null' => true,
+            'default' => backpack_user()->id, // Default to current user
             'tab' => 'Base',
         ]);
         CRUD::addField([
@@ -331,6 +801,14 @@ class PropertyCrudController extends CrudController
             'tab' => 'Base',
         ]);
 
+        // Documents tab
+        CRUD::addField([
+            'name' => 'documents',
+            'type' => 'custom_html',
+            'value' => $this->getDocumentsWidget(),
+            'tab' => 'Dokumentumok',
+        ]);
+
         foreach (PropertyAttribute::all() as $attribute) {
             switch ($attribute->type) {
                 case 'checkbox':
@@ -410,7 +888,7 @@ class PropertyCrudController extends CrudController
         CRUD::setValidation(PropertyRequest::class);
         CRUD::addField([
             'name' => 'is_active',
-            'label' => 'aktív',
+            'label' => 'Aktív',
             'type' => 'checkbox',
             'default' => true,
             'tab' => 'Base',
@@ -477,6 +955,17 @@ class PropertyCrudController extends CrudController
             }
         });
     </script>',
+            'tab' => 'Base',
+        ]);
+
+        CRUD::addField([
+            'label' => 'Referens',
+            'type' => 'select',
+            'name' => 'user_id',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => User::class,
+            'allows_null' => true,
             'tab' => 'Base',
         ]);
 
@@ -614,6 +1103,14 @@ class PropertyCrudController extends CrudController
             'tab' => 'Base',
         ]);
 
+        // Documents tab
+        CRUD::addField([
+            'name' => 'documents',
+            'type' => 'custom_html',
+            'value' => $this->getDocumentsWidget(),
+            'tab' => 'Dokumentumok',
+        ]);
+
         $propertyId = Route::current()->parameter('id');
         $property = \App\Models\Property::with('attributes')->findOrFail($propertyId);
 
@@ -680,78 +1177,110 @@ class PropertyCrudController extends CrudController
 
     public function store()
     {
+        try {
+            $this->crud->hasAccessOrFail('create');
 
-        $this->crud->hasAccessOrFail('create');
+            // execute the FormRequest authorization and validation, if one is required
+            $request = $this->crud->validateRequest();
 
-        // execute the FormRequest authorization and validation, if one is required
-        $request = $this->crud->validateRequest();
+            // register any Model Events defined on fields
+            $this->crud->registerFieldEvents();
 
-        // register any Model Events defined on fields
-        $this->crud->registerFieldEvents();
+            // insert item in the db
+            $itemAttributes = $this->crud->getStrippedSaveRequest($request);
+            $item = $this->crud->create($itemAttributes);
 
-        // insert item in the db
-        $itemAttributes = $this->crud->getStrippedSaveRequest($request);
-        $item = $this->crud->create($itemAttributes);
+            UniqueCode::updateCode((int) explode('/', $itemAttributes['property_code'])[0]);
 
-        UniqueCode::updateCode((int) explode('/', $itemAttributes['property_code'])[0]);
+            $properties = $request->get('properties', []);
+            foreach ($properties as $attributeId => $attributeValue) {
+                $selectedValues = $request->input('properties.'.$attributeId);
 
-        foreach ($request->get('properties') as $attributeId => $attributeValue) {
-            $selectedValues = $request->input('properties.'.$attributeId);
+                if (is_array($selectedValues)) {
+                    $valueToSave = json_encode($selectedValues);
+                } else {
+                    $valueToSave = $selectedValues;
+                }
 
-            if (is_array($selectedValues)) {
-                $valueToSave = json_encode($selectedValues);
-            } else {
-                $valueToSave = $selectedValues;
+                $item->attributes()->syncWithoutDetaching([
+                    $attributeId => ['value' => $valueToSave],
+                ]);
             }
 
-            $item->attributes()->syncWithoutDetaching([
-                $attributeId => ['value' => $valueToSave],
+            $this->data['entry'] = $this->crud->entry = $item;
+
+            // show a success message
+            \Alert::success(trans('vendor.backpack.crud.insert_success'))->flash();
+
+            // save the redirect choice for next time
+            $this->crud->setSaveAction();
+
+            return $this->crud->performSaveAction($item->getKey());
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Re-throw validation exceptions to show proper error messages
+            throw $e;
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Property creation error: '.$e->getMessage(), [
+                'exception' => $e,
+                'request_data' => request()->all(),
             ]);
+
+            // Return to form with error message
+            \Alert::error('Hiba történt az ingatlan létrehozása során: '.$e->getMessage())->flash();
+
+            return redirect()->back()->withInput();
         }
-
-        $this->data['entry'] = $this->crud->entry = $item;
-
-        // show a success message
-        \Alert::success(trans('backpack::crud.insert_success'))->flash();
-
-        // save the redirect choice for next time
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($item->getKey());
     }
 
     public function update()
     {
-        $this->crud->hasAccessOrFail('update');
+        try {
+            $this->crud->hasAccessOrFail('update');
 
-        $request = $this->crud->validateRequest();
+            $request = $this->crud->validateRequest();
 
-        // frissítés maga
-        $itemAttributes = $this->crud->getStrippedSaveRequest($request);
-        $item = $this->crud->update(
-            Route::current()->parameter($this->crud->getModel()->getRouteKeyName()),
-            $itemAttributes
-        );
+            // frissítés maga
+            $itemAttributes = $this->crud->getStrippedSaveRequest($request);
+            $item = $this->crud->update(
+                Route::current()->parameter($this->crud->getModel()->getRouteKeyName()),
+                $itemAttributes
+            );
 
-        UniqueCode::updateCode((int) explode('/', $itemAttributes['property_code'])[0]);
+            UniqueCode::updateCode((int) explode('/', $itemAttributes['property_code'])[0]);
 
-        // attributumok frissítése
-        $propertyAttributes = $request->get('properties', []);
+            // attributumok frissítése
+            $propertyAttributes = $request->get('properties', []);
 
-        foreach ($propertyAttributes as $attributeId => $value) {
-            // Ellenőrizzük, hogy már létezik-e a pivotban
-            $item->attributes()->syncWithoutDetaching([
-                $attributeId => ['value' => $value],
+            foreach ($propertyAttributes as $attributeId => $value) {
+                // Ellenőrizzük, hogy már létezik-e a pivotban
+                $item->attributes()->syncWithoutDetaching([
+                    $attributeId => ['value' => $value],
+                ]);
+            }
+
+            $this->data['entry'] = $this->crud->entry = $item;
+
+            \Alert::success(trans('vendor.backpack.crud.update_success'))->flash();
+
+            $this->crud->setSaveAction();
+
+            return $this->crud->performSaveAction($item->getKey());
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Re-throw validation exceptions to show proper error messages
+            throw $e;
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Property update error: '.$e->getMessage(), [
+                'exception' => $e,
+                'request_data' => request()->all(),
             ]);
+
+            // Return to form with error message
+            \Alert::error('Hiba történt az ingatlan frissítése során: '.$e->getMessage())->flash();
+
+            return redirect()->back()->withInput();
         }
-
-        $this->data['entry'] = $this->crud->entry = $item;
-
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-
-        $this->crud->setSaveAction();
-
-        return $this->crud->performSaveAction($item->getKey());
     }
 
     public function findPropertyOrProject(string $unique_id)
@@ -765,7 +1294,83 @@ class PropertyCrudController extends CrudController
 
         }
 
-        return redirect('/admin/property/'.$property->id.'/edit');
+        return redirect('/admin/property/'.$property->id.'/show');
+    }
+
+    protected function setupPropertyInactiveRoutes($segment, $routeName, $controller)
+    {
+
+        Route::get('/property-inactive', [
+            'as'        => $routeName.'.propertyInactive',
+            'uses'      => $controller.'@listInactive',
+            'operation' => 'fasz',
+        ]);
+
+        Route::post('/property-inactive/search', [
+            'as'        => $routeName.'.propertyInactivePost',
+            'uses'      => $controller.'@listInactivePost',
+            'operation' => 'fasz',
+        ]);
+
+        Route::get('/property-sajat', [
+            'as'        => $routeName.'.propertySajat',
+            'uses'      => $controller.'@listSajat',
+            'operation' => 'faszt',
+        ]);
+
+        Route::post('/property-sajat/search', [
+            'as'        => $routeName.'.propertySajatPost',
+            'uses'      => $controller.'@listSajatPost',
+            'operation' => 'faszt',
+        ]);
+    }
+
+    public function listInactive()
+    {    
+        $this->crud->loadDefaultOperationSettingsFromConfig('backpack.operations.list');
+
+
+        $this->crud->setRoute("admin/property-inactive");
+
+        // Get the entries
+        $this->data['crud'] = $this->crud;
+        $this->data['title'] = 'Inaktív ingatlanok';
+        $this->data['entries'] = $this->crud->getEntries();
+
+
+        // Load the list view
+        return view('vendor.backpack.crud.list', $this->data);
+    }
+
+    public function listInactivePost()
+    {
+        $this->crud->loadDefaultOperationSettingsFromConfig('backpack.operations.list');
+
+        return $this->search();
+    }
+
+    public function listSajat()
+    {    
+        $this->crud->loadDefaultOperationSettingsFromConfig('backpack.operations.list');
+
+
+        $this->crud->setRoute("admin/property-sajat");
+
+        // Get the entries
+        $this->data['crud'] = $this->crud;
+        $this->data['title'] = 'Saját ingatlanok';
+        $this->data['entries'] = $this->crud->getEntries();
+
+
+        // Load the list view
+        return view('vendor.backpack.crud.list', $this->data);
+    }
+
+    public function listSajatPost()
+    {
+        $this->crud->loadDefaultOperationSettingsFromConfig('backpack.operations.list');
+
+        return $this->search();
     }
 
     private function getLeafletMapWidget(): string
@@ -929,6 +1534,280 @@ class PropertyCrudController extends CrudController
             return response()->json(['success' => true, 'message' => 'Ajánlat sikeresen elküldve']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Hiba történt az email küldése során: '.$e->getMessage()], 500);
+        }
+    }
+
+    private function getDocumentsWidget(): string
+    {
+        $propertyId = request()->route('id') ?? 'new';
+        $documents = $propertyId !== 'new' ? \App\Models\PropertyDocument::where('property_id', $propertyId)->get() : collect();
+
+        return '
+        <div id="documents-widget">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Dokumentumok kezelése</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Upload Form -->
+                    <div class="mb-4">
+                        <div id="document-upload-form">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="document-name" class="form-label">Dokumentum neve <small class="text-muted">(opcionális)</small></label>
+                                    <input type="text" class="form-control" id="document-name" name="name" placeholder="Ha üres, a fájl neve lesz használva">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="document-category" class="form-label">Kategória <small class="text-muted">(opcionális)</small></label>
+                                    <select class="form-select" id="document-category" name="category">
+                                        <option value="">Válassz kategóriát</option>
+                                        <option value="contract">Szerződés</option>
+                                        <option value="order">Megrendelő</option>
+                                        <option value="purchase">Vételi</option>
+                                        <option value="inspection">Szemle</option>
+                                        <option value="other">Egyéb</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="document-file" class="form-label">Fájl <small class="text-danger">*</small></label>
+                                    <input type="file" class="form-control" id="document-file" name="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button type="button" id="upload-document-btn" class="btn btn-primary d-block w-100">Feltöltés</button>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <label for="document-description" class="form-label">Leírás (opcionális)</label>
+                                    <textarea class="form-control" id="document-description" name="description" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Documents List -->
+                    <div id="documents-list">
+                        '.$this->renderDocumentsList($documents).'
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const uploadBtn = document.getElementById("upload-document-btn");
+            const documentsList = document.getElementById("documents-list");
+            
+            if (uploadBtn) {
+                uploadBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Get form values
+                    const name = document.getElementById("document-name").value;
+                    const category = document.getElementById("document-category").value;
+                    const file = document.getElementById("document-file").files[0];
+                    
+                    // If no file is selected, show message and return
+                    if (!file) {
+                        alert("Kérjük, válasszon ki egy fájlt a feltöltéshez!");
+                        return;
+                    }
+                    
+                    // If file is selected but no name or category, use defaults
+                    const finalName = name || file.name;
+                    const finalCategory = category || "other";
+                    
+                    // Disable button during upload
+                    uploadBtn.disabled = true;
+                    uploadBtn.textContent = "Feltöltés...";
+                    
+                    // Create FormData manually
+                    const formData = new FormData();
+                    formData.append("name", finalName);
+                    formData.append("category", finalCategory);
+                    formData.append("file", file);
+                    formData.append("description", document.getElementById("document-description").value);
+                    formData.append("_token", document.querySelector(\'meta[name="csrf-token"]\').getAttribute("content"));
+                    
+                    fetch("/admin/property/'.$propertyId.'/upload-document", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Dokumentum sikeresen feltöltve!");
+                            // Reload documents list
+                            location.reload();
+                        } else {
+                            alert("Hiba: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("Hiba történt a feltöltés során");
+                    })
+                    .finally(() => {
+                        // Re-enable button
+                        uploadBtn.disabled = false;
+                        uploadBtn.textContent = "Feltöltés";
+                    });
+                });
+            }
+            
+            // Debug: Check if property form is working
+            console.log("Document widget loaded, property form should work normally");
+        });
+        
+        function deleteDocument(documentId) {
+            if (confirm("Biztosan törölni szeretnéd ezt a dokumentumot?")) {
+                fetch("/admin/property/'.$propertyId.'/document/" + documentId, {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector(\'meta[name="csrf-token"]\').getAttribute("content"),
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert("Hiba: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Hiba történt a törlés során");
+                });
+            }
+        }
+        </script>';
+    }
+
+    private function renderDocumentsList($documents): string
+    {
+        if ($documents->isEmpty()) {
+            return '<p class="text-muted">Még nincsenek feltöltött dokumentumok.</p>';
+        }
+
+        $html = '<div class="table-responsive"><table class="table table-striped">';
+        $html .= '<thead><tr><th>Név</th><th>Kategória</th><th>Fájl</th><th>Méret</th><th>Feltöltve</th><th>Műveletek</th></tr></thead><tbody>';
+
+        foreach ($documents as $document) {
+            $html .= '<tr>';
+            $html .= '<td>'.htmlspecialchars($document->name).'</td>';
+            $html .= '<td><span class="badge bg-secondary">'.$document->category_name.'</span></td>';
+            $html .= '<td><a href="'.$document->file_url.'" target="_blank">'.htmlspecialchars($document->original_name).'</a></td>';
+            $html .= '<td>'.$document->file_size_human.'</td>';
+            $html .= '<td>'.$document->created_at->format('Y-m-d H:i').'</td>';
+            $html .= '<td>';
+            $html .= '<button class="btn btn-sm btn-danger" onclick="deleteDocument('.$document->id.')">Törlés</button>';
+            $html .= '</td>';
+            $html .= '</tr>';
+        }
+
+        $html .= '</tbody></table></div>';
+
+        return $html;
+    }
+
+    /**
+     * Upload a document for a property
+     */
+    public function uploadDocument(Request $request, $propertyId)
+    {
+        try {
+            \Log::info('Document upload attempt', [
+                'property_id' => $propertyId,
+                'request_data' => $request->all(),
+                'files' => $request->files->all(),
+            ]);
+
+            $request->validate([
+                'name' => 'nullable|string|max:255',
+                'category' => 'nullable|in:contract,order,purchase,inspection,other',
+                'file' => 'required|file|max:10240', // 10MB max
+                'description' => 'nullable|string|max:1000',
+            ]);
+
+            $property = Property::findOrFail($propertyId);
+            $file = $request->file('file');
+
+            // Generate unique filename
+            $filename = time().'_'.$file->getClientOriginalName();
+            $path = $file->storeAs('property-documents/'.$propertyId, $filename, 'public');
+
+            \Log::info('File stored', ['path' => $path]);
+
+            // Create document record with defaults for optional fields
+            $document = PropertyDocument::create([
+                'property_id' => $propertyId,
+                'name' => $request->name ?: $file->getClientOriginalName(),
+                'category' => $request->category ?: 'other',
+                'file_path' => $path,
+                'original_name' => $file->getClientOriginalName(),
+                'file_type' => $file->getMimeType(),
+                'file_size' => $file->getSize(),
+                'description' => $request->description,
+            ]);
+
+            \Log::info('Document created', ['document_id' => $document->id]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Dokumentum sikeresen feltöltve',
+                'document' => $document,
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation error', ['errors' => $e->errors()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Validációs hiba',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('Document upload error: '.$e->getMessage(), [
+                'exception' => $e,
+                'property_id' => $propertyId,
+                'request_data' => $request->all(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Hiba történt a feltöltés során: '.$e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete a document
+     */
+    public function deleteDocument(Request $request, $propertyId, $documentId)
+    {
+        try {
+            $document = PropertyDocument::where('property_id', $propertyId)
+                ->where('id', $documentId)
+                ->firstOrFail();
+
+            $document->delete(); // This will also delete the file due to the model's boot method
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Dokumentum sikeresen törölve',
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Document deletion error: '.$e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Hiba történt a törlés során: '.$e->getMessage(),
+            ], 500);
         }
     }
 }

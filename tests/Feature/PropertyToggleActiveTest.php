@@ -6,24 +6,37 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('shows activation button for inactive property', function () {
+it('does not show inactive properties in listing', function () {
     $user = User::factory()->admin()->create();
-    $property = Property::factory()->create(['is_active' => false]);
+    $activeProperty = Property::factory()->create(['is_active' => true]);
+    $inactiveProperty = Property::factory()->create(['is_active' => false]);
 
     $this->actingAs($user)
         ->get('/admin/property')
-        ->assertSee('Aktiválás')
-        ->assertDontSee('Deaktiválás');
+        ->assertSee($activeProperty->title)
+        ->assertDontSee($inactiveProperty->title);
 });
 
-it('shows deactivation button for active property', function () {
+it('shows only active properties in listing', function () {
     $user = User::factory()->admin()->create();
-    $property = Property::factory()->create(['is_active' => true]);
+    $activeProperty = Property::factory()->create(['is_active' => true]);
+    $inactiveProperty = Property::factory()->create(['is_active' => false]);
 
     $this->actingAs($user)
         ->get('/admin/property')
-        ->assertSee('Deaktiválás')
-        ->assertDontSee('Aktiválás');
+        ->assertSee($activeProperty->title)
+        ->assertDontSee($inactiveProperty->title);
+});
+
+it('shows only inactive properties in inactive listing', function () {
+    $user = User::factory()->admin()->create();
+    $activeProperty = Property::factory()->create(['is_active' => true]);
+    $inactiveProperty = Property::factory()->create(['is_active' => false]);
+
+    $this->actingAs($user)
+        ->get('/admin/property-inactive')
+        ->assertSee($inactiveProperty->title)
+        ->assertDontSee($activeProperty->title);
 });
 
 it('toggles property from inactive to active', function () {

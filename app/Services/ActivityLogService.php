@@ -16,6 +16,16 @@ class ActivityLogService
             ->get();
     }
 
+    public function getPropertyActivities(int $propertyId, int $limit = 10): \Illuminate\Database\Eloquent\Collection
+    {
+        return Activity::with(['causer', 'subject'])
+            ->where('subject_type', 'App\Models\Property')
+            ->where('subject_id', $propertyId)
+            ->latest()
+            ->limit($limit)
+            ->get();
+    }
+
     public function getActivityIcon(string $event): string
     {
         return match ($event) {

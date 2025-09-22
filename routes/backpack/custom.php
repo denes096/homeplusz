@@ -42,6 +42,11 @@ Route::group([
     Route::post('property/{id}/toggle-active', [PropertyCrudController::class, 'toggleActive'])->name('admin.property.toggle-active');
     Route::get('property/{id}/matching-searches', [PropertyCrudController::class, 'showMatchingSearches'])->name('admin.property.matching-searches');
     Route::post('property/{propertyId}/send-to-search/{searchId}', [PropertyCrudController::class, 'sendToMatchingSearch'])->name('admin.property.send-to-search');
+
+    // Inactive properties route
+    //Route::get('property-inactive', [PropertyCrudController::class, 'listInactive'])->name('admin.property.inactive');
+
+    // Property listing routes
     Route::crud('customers', 'CustomersCrudController');
     Route::get('customers/{id}/execute-search/{searchId}', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'executeSearch']);
     Route::post('customers/{id}/send-property-email', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendPropertyEmail']);

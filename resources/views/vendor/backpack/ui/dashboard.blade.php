@@ -7,11 +7,11 @@
     
     // Real statistics
     $totalProperties = \App\Models\Property::count();
+    $activeProperties = \App\Models\Property::where('is_active', true)->count();
+    $inactiveProperties = \App\Models\Property::where('is_active', false)->count();
+    $sajatProperties = \App\Models\Property::where('user_id', $user->id)->count();
+    $newPropertiesLast7Days = \App\Models\Property::where('created_at', '>=', now()->subDays(7))->count();
     $totalCustomers = \App\Models\Customers::count(); // Customers table doesn't have timestamps
-    $totalImages = \App\Models\Property::get()->sum(function($property) {
-        $images = json_decode($property->images, true);
-        return is_array($images) ? count($images) : 0;
-    });
     
     Widget::add([
         'type'        => 'jumbotron',
@@ -20,7 +20,7 @@
         'content'     => '',
         'content_class' => backpack_theme_config('layout') === 'horizontal_overlap' ? 'text-white' : '',
         'button_link' => backpack_url('logout'),
-        'button_text' => trans('Kejelentkezés'),
+        'button_text' => trans('Kijelentkezés'),
     ]);
 
 @endphp
@@ -176,7 +176,7 @@
             <div class="col-md-4 offset-md-2">
                 <div class="card action-card">
                     <div class="card-body p-3">
-                        <a href="#" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center">
+                        <a href="{{ backpack_url('customer/create') }}" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center">
                             <i class="fas fa-user-plus action-icon"></i> Új vevő felvitele
                         </a>
                     </div>
@@ -185,7 +185,7 @@
             <div class="col-md-4">
                 <div class="card action-card">
                     <div class="card-body p-3">
-                        <a href="#" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center">
+                        <a href="{{ backpack_url('customer') }}" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center">
                             <i class="fas fa-user-cog action-icon"></i> Vevő karbantartás
                         </a>
                     </div>
@@ -198,7 +198,7 @@
     <div class="container my-5">
         <!-- Statisztikai kártyák -->
         <div class="row g-4 mb-4">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card text-white bg-primary shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Összes ingatlan</h5>
@@ -207,21 +207,62 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card text-white bg-success shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Aktív ingatlanok</h5>
+                        <h2 class="card-text">{{ $activeProperties }}</h2>
+                        <p class="mb-0"><i class="fas fa-check-circle me-2"></i>Jelenleg aktív</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Inaktív ingatlanok</h5>
+                        <h2 class="card-text">{{ $inactiveProperties }}</h2>
+                        <p class="mb-0"><i class="fas fa-pause-circle me-2"></i>Jelenleg inaktív</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Saját ingatlanok</h5>
+                        <h2 class="card-text">{{ $sajatProperties }}</h2>
+                        <p class="mb-0"><i class="fas fa-pause-circle me-2"></i>Saját ingatlanok</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Új ingatlanok</h5>
+                        <h2 class="card-text">{{ $newPropertiesLast7Days }}</h2>
+                        <p class="mb-0"><i class="fas fa-plus-circle me-2"></i>Az elmúlt 7 napban</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- További statisztikák -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card text-white bg-secondary shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Összes vevő</h5>
                         <h2 class="card-text">{{ $totalCustomers }}</h2>
                         <p class="mb-0"><i class="fas fa-users me-2"></i>Az adatbázisban</p>
+                        <small class="text-light">*Új vevők számlálása nem elérhető (nincs időbélyeg)</small>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-secondary shadow-sm">
+            <div class="col-md-6">
+                <div class="card text-white bg-dark shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Feltöltött képek</h5>
-                        <h2 class="card-text">{{ $totalImages }}</h2>
-                        <p class="mb-0"><i class="fas fa-image me-2"></i>Az adatbázisban</p>
+                        <h5 class="card-title">Aktív/Inaktív arány</h5>
+                        <h2 class="card-text">{{ $totalProperties > 0 ? round(($activeProperties / $totalProperties) * 100, 1) : 0 }}%</h2>
+                        <p class="mb-0"><i class="fas fa-chart-pie me-2"></i>Aktív ingatlanok aránya</p>
                     </div>
                 </div>
             </div>
@@ -335,13 +376,13 @@
                 searchInput.value = `${code} - ${title}`;
                 dropdown.style.display = 'none';
                 
-                // Find the property by code and redirect to edit page
+                // Find the property by code and redirect to show page
                 fetch(`/admin/api/property-search?q=${encodeURIComponent(code)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.length > 0) {
-                            // Redirect to the first matching property's edit page
-                            window.location.href = `/admin/property/${data[0].id}/edit`;
+                            // Redirect to the first matching property's show page
+                            window.location.href = `/admin/property/${data[0].id}/show`;
                         } else {
                             // If not found, go to property list and let user search manually
                             window.location.href = `/admin/property`;

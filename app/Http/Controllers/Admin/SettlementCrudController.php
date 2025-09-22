@@ -8,16 +8,16 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 class SettlementCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 
     public function setup()
     {
         CRUD::setModel(\App\Models\Settlement::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/settlement');
-        CRUD::setEntityNameStrings('settlement', 'settlements');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/settlement');
+        CRUD::setEntityNameStrings('település', 'települések');
     }
 
     protected function setupListOperation()
@@ -32,12 +32,11 @@ class SettlementCrudController extends CrudController
             'name' => 'parts_count',
             'wrapper' => [
                 'href' => function ($crud, $column, $entry, $related_key) {
-                    return backpack_url('settlement-part?settlement=' . $entry->getKey());
+                    return backpack_url('settlement-part?settlement='.$entry->getKey());
                 },
             ],
-            'suffix' => ' ' . strtolower(trans('városrész')),
+            'suffix' => ' '.strtolower(trans('városrész')),
         ]);
-
 
         CRUD::column('county')->type('text')->label('Megye');
 
