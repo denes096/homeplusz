@@ -57,24 +57,6 @@ class Service extends Model
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Get the formatted icon class
-     */
-    public function getFormattedIconAttribute()
-    {
-        if (!$this->icon) {
-            return null;
-        }
-
-        // If icon doesn't contain 'fa-', add default Font Awesome classes
-        if (strpos($this->icon, 'fa-') === false) {
-            return 'fas ' . $this->icon;
-        }
-
-        // If icon already contains 'fa-', return as is
-        return $this->icon;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

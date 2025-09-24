@@ -3,5 +3,7 @@
 @section('searchbar')@endsection
 
 @section('content')
-    {!! $content !!}
+    <div class="container fs-6 py-4">
+        {!! $content !!}
+    </div>
 @endsection

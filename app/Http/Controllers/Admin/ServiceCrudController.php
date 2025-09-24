@@ -55,21 +55,12 @@ class ServiceCrudController extends CrudController
         CRUD::column('description')
             ->label('Leírás')
             ->type('text')
-            ->limit(100);
+            ->limit(100)
+            ->escaped(false);
 
         CRUD::column('featured')
             ->label('Kiemelt')
             ->type('boolean');
-
-        CRUD::column('formatted_icon')
-            ->label('Ikon')
-            ->type('closure')
-            ->function(function ($entry) {
-                if ($entry->formatted_icon) {
-                    return '<i class="' . $entry->formatted_icon . '"></i> ' . $entry->icon;
-                }
-                return '-';
-            });
 
         CRUD::column('created_at')
             ->label('Létrehozva')
@@ -100,17 +91,14 @@ class ServiceCrudController extends CrudController
 
         CRUD::field('description')
             ->label('Leírás')
-            ->type('textarea');
+            ->type('textarea')
+            ->attributes(['class' => 'ckeditor form-control'])
+            ->wrapperAttributes(['class' => 'col-12 col-md-12']);
 
         CRUD::field('featured')
             ->label('Kiemelt')
             ->type('boolean');
 
-        CRUD::field('icon')
-            ->label('Ikon')
-            ->type('text')
-            ->hint('Font Awesome ikon osztály (pl: fas fa-home)')
-            ->placeholder('fas fa-home');
     }
 
     /**

@@ -27,9 +27,8 @@ class ServiceRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'service_category_id' => 'required|exists:service_categories,id',
-            'description' => 'required|string',
+            'description' => 'required',
             'featured' => 'boolean',
-            'icon' => 'nullable|string|max:255',
         ];
     }
 
