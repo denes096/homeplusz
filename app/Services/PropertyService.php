@@ -51,6 +51,7 @@ class PropertyService
             ->with('settlement')
             ->with('settlementPart')
             ->with('propertyType')
+            ->with('labels')
             ->with('propertySubtype')
             ->with(['attributes' => function ($query) {
                 $query->where('show_in_list', true);

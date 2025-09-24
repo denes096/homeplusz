@@ -10,7 +10,13 @@
                             {{ $property->getAdType() }}
                         </div>
                     </div>
-                
+                    @if(isset($property->labels) && $property->labels->where('filter', 1)->count())
+                        @foreach($property->labels->where('filter', 1)->take(3) as $label)
+                            <div class="text-white fw-bold rounded-3 mx-1 px-3 py-1 small" style="white-space: nowrap; background-color: {{ $label->color }} !important;">
+                                {{ $label->name }}
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
 
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
