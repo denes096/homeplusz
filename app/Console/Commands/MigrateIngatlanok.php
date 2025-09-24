@@ -77,7 +77,7 @@ class MigrateIngatlanok extends Command
         $this->info('Ingatlanok migráció indítása...');
 
         $oldIngatlanok = DB::connection('old')->table('ingatlanok')->orderBy('Id')
-            ->limit(20)
+            //->limit(20)
             ->get();
         $skipped = 0;
 
