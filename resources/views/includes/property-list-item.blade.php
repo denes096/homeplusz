@@ -10,11 +10,7 @@
                             {{ $property->getAdType() }}
                         </div>
                     </div>
-                    <div class="text-dark fw-bold rounded-3 w-100 mx-1 px-3">
-                        <div>
-                            egyéb
-                        </div>
-                    </div>
+                
                 </div>
 
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
