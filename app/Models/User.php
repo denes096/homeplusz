@@ -28,7 +28,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $guarded = ['password_confirmation'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -60,7 +60,8 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value)
     {
-        if (! empty($value)) {
+        // Only hash the password if a value is provided
+        if (! empty($value) && ! empty(trim($value))) {
             $this->attributes['password'] = bcrypt($value);
         }
     }

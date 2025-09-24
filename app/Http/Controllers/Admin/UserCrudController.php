@@ -114,6 +114,23 @@ class UserCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    /**
+     * Handle the update operation.
+     */
+    public function update()
+    {
+        $request = $this->crud->getRequest();
+
+        // If password is empty or not provided, remove it from the request
+        // so it doesn't get included in the mass assignment
+        if (empty($request->input('password'))) {
+            $request->request->remove('password');
+            $request->request->remove('password_confirmation');
+        }
+
+        return parent::update();
+    }
+
     protected function addUserFields()
     {
         $this->crud->addFields([
