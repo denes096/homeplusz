@@ -77,7 +77,12 @@
                                                             <h6 class="mega-menu-title">{{$serviceCategory->name}}</h6>
                                                             <ul class="style-none mega-dropdown-list">
                                                                 @foreach($serviceCategory->services as $service)
-                                                                    <li><a href="/szolgaltatasok/{{$service->id}}-{{\Illuminate\Support\Str::slug($service->name)}}" class="dropdown-item"><span>{{$service->name}}</span></a></li>
+                                                                    <li><a href="/szolgaltatasok/{{$service->id}}-{{\Illuminate\Support\Str::slug($service->name)}}" class="dropdown-item">
+                                                                        @if($service->formatted_icon)
+                                                                            <i class="{{$service->formatted_icon}} me-2"></i>
+                                                                        @endif
+                                                                        <span>{{$service->name}}</span>
+                                                                    </a></li>
                                                                 @endforeach
                                                             </ul>
                                                         </div>
@@ -150,5 +155,16 @@
     .theme-main-menu .nav-item .nav-link{
         margin: 0 5px;
         font-size: 16px;
+    }
+
+    /* Service menu icons styling */
+    .mega-dropdown-list .dropdown-item i {
+        color: #96006B;
+        font-size: 14px;
+        min-width: 16px;
+    }
+
+    .mega-dropdown-list .dropdown-item:hover i {
+        color: #fff;
     }
 </style>

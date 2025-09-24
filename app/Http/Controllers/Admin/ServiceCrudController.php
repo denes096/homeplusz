@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ServiceRequest;
+use App\Models\ServiceCategory;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -40,12 +41,39 @@ class ServiceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+        CRUD::column('name')
+            ->label('Szolgáltatás neve')
+            ->type('text');
 
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        CRUD::column('service_category_id')
+            ->label('Kategória')
+            ->type('select')
+            ->entity('serviceCategory')
+            ->model(ServiceCategory::class)
+            ->attribute('name');
+
+        CRUD::column('description')
+            ->label('Leírás')
+            ->type('text')
+            ->limit(100);
+
+        CRUD::column('featured')
+            ->label('Kiemelt')
+            ->type('boolean');
+
+        CRUD::column('formatted_icon')
+            ->label('Ikon')
+            ->type('closure')
+            ->function(function ($entry) {
+                if ($entry->formatted_icon) {
+                    return '<i class="' . $entry->formatted_icon . '"></i> ' . $entry->icon;
+                }
+                return '-';
+            });
+
+        CRUD::column('created_at')
+            ->label('Létrehozva')
+            ->type('datetime');
     }
 
     /**
@@ -58,12 +86,31 @@ class ServiceCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(ServiceRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
 
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        CRUD::field('name')
+            ->label('Szolgáltatás neve')
+            ->type('text');
+
+        CRUD::field('service_category_id')
+            ->label('Szolgáltatás kategória')
+            ->type('select')
+            ->entity('serviceCategory')
+            ->model(ServiceCategory::class)
+            ->attribute('name');
+
+        CRUD::field('description')
+            ->label('Leírás')
+            ->type('textarea');
+
+        CRUD::field('featured')
+            ->label('Kiemelt')
+            ->type('boolean');
+
+        CRUD::field('icon')
+            ->label('Ikon')
+            ->type('text')
+            ->hint('Font Awesome ikon osztály (pl: fas fa-home)')
+            ->placeholder('fas fa-home');
     }
 
     /**

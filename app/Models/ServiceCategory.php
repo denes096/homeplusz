@@ -38,7 +38,7 @@ class ServiceCategory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function services(): Hasmany
+    public function services(): HasMany
     {
         return $this->hasMany(Service::class);
     }

@@ -25,7 +25,11 @@ class ServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => 'required|string|max:255',
+            'service_category_id' => 'required|exists:service_categories,id',
+            'description' => 'required|string',
+            'featured' => 'boolean',
+            'icon' => 'nullable|string|max:255',
         ];
     }
 
