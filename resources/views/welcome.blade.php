@@ -121,8 +121,8 @@
                                                 <div class="col-lg-5">
                                                     <figure class="position-relative overflow-hidden circle-1">
                                                         <div class="img-slider-btn">
-                                                            <a href="{{ $project->getImageUrls()[0] }}"class="d-block position-relative" data-fancybox="{{ $project->id }}" data-caption="{{ $project->id }}">
-                                                                <img src="{{ $project->getImageUrls()[0] }}" alt="" class="zoom tran5s img-fluid rounded-5">
+                                                            <a href="{{ $project->getImageUrls()[0] ?? ''  }}"class="d-block position-relative" data-fancybox="{{ $project->id }}" data-caption="{{ $project->id }}">
+                                                                <img src="{{ $project->getImageUrls()[0] ?? ''  }}" alt="" class="zoom tran5s img-fluid rounded-5">
                                                             </a>
                                                         </div>
                                                     </figure>

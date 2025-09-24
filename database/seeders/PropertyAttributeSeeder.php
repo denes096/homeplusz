@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -105,7 +104,7 @@ class PropertyAttributeSeeder extends Seeder
                 'label' => 'Telek domborzata',
                 'property_attribute_category_id' => 2,
                 'type' => 'select',
-                'values' => json_encode(["Sík", "Enyhe lejtős", "Lejtős", "Teraszos"], JSON_UNESCAPED_UNICODE),
+                'values' => json_encode(['Sík', 'Enyhe lejtős', 'Lejtős', 'Teraszos'], JSON_UNESCAPED_UNICODE),
                 'required' => true,
             ],
         );
@@ -115,7 +114,7 @@ class PropertyAttributeSeeder extends Seeder
                 'label' => 'Parkolási lehetőségek',
                 'property_attribute_category_id' => 2,
                 'type' => 'select',
-                'values' => json_encode(["Garázs", "Gk. beálló", "Utcán/közterületen", "Teremgarázs"], JSON_UNESCAPED_UNICODE),
+                'values' => json_encode(['Garázs', 'Gk. beálló', 'Utcán/közterületen', 'Teremgarázs'], JSON_UNESCAPED_UNICODE),
                 'required' => true,
             ],
         );

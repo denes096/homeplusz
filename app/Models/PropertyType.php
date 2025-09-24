@@ -19,8 +19,10 @@ class PropertyType extends Model
     */
 
     protected $table = 'property_types';
+
     // protected $primaryKey = 'id';
-     public $timestamps = false;
+    public $timestamps = false;
+
     protected $guarded = [];
     // protected $fillable = [];
     // protected $hidden = [];
@@ -36,7 +38,8 @@ class PropertyType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function subtypes():HasMany{
+    public function subtypes(): HasMany
+    {
         return $this->hasMany(PropertySubtype::class);
     }
 

@@ -18,6 +18,7 @@ class Information extends Model
     */
 
     protected $table = 'information';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

@@ -1,18 +1,16 @@
 <?php
+
 namespace App\Console\Commands;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use App\Models\Property;
-use Carbon\Carbon;
-use App\Models\Settlement;
-use App\Models\SettlementPart;
-use Illuminate\Support\Facades\Hash;
 
 class MigrateUsers extends Command
 {
     protected $signature = 'migrate:users';
+
     protected $description = 'Migrálja a régi usereket';
 
     public function handle()
@@ -21,7 +19,7 @@ class MigrateUsers extends Command
 
         $oldUsers = DB::connection('old')->table('users')->get();
 
-        $this->info("Talált felhasználók száma: " . $oldUsers->count());
+        $this->info('Talált felhasználók száma: '.$oldUsers->count());
         $skipped = 0;
 
         foreach ($oldUsers as $row) {
@@ -34,7 +32,7 @@ class MigrateUsers extends Command
             $lastLogin = $row->lastlogin ? Carbon::createFromTimestamp($row->lastlogin)->format('Y-m-d H:i:s') : null;
             $prevLogin = $row->prelastlogin ? Carbon::createFromTimestamp($row->prelastlogin)->format('Y-m-d H:i:s') : null;
 
-            $user = new User();
+            $user = new User;
             $user->id = $row->Id;
             $user->name = $row->name;
             $user->email = $row->email;
@@ -60,4 +58,3 @@ class MigrateUsers extends Command
         $this->info("Migráció kész! Kihagyott rekordok: {$skipped}");
     }
 }
-

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class PropertyAttributeCategorySeeder extends Seeder
 {
-
     public function run(): void
     {
         DB::table('property_attribute_categories')->insert(

@@ -11,9 +11,7 @@ class ProjectController extends Controller
     public function __construct(
         private ProjectService $projectService,
         private PropertyService $propertyService,
-    )
-    {
-    }
+    ) {}
 
     //
     public function list(int $id, Request $request)

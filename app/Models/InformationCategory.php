@@ -19,6 +19,7 @@ class InformationCategory extends Model
     */
 
     protected $table = 'information_categories';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

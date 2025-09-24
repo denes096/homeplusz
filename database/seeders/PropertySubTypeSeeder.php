@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -14,7 +13,7 @@ class PropertySubTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $path=database_path('sql/property_subtypes.sql');
+        $path = database_path('sql/property_subtypes.sql');
         if (File::exists($path)) {
             DB::unprepared(File::get($path));
         } else {

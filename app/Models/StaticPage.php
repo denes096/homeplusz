@@ -18,6 +18,7 @@ class StaticPage extends Model
     */
 
     protected $table = 'static_pages';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

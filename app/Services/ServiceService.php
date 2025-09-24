@@ -8,7 +8,8 @@ use Illuminate\Support\Collection;
 
 class ServiceService
 {
-    public function serviceCategories(): Collection{
+    public function serviceCategories(): Collection
+    {
         return ServiceCategory::with('services')->get();
     }
 

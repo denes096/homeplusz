@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-        //backpack_auth()->login(Auth::user());
+        // backpack_auth()->login(Auth::user());
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));

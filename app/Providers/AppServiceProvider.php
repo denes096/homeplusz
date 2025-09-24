@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole('super-admin') ? true : null;
         });
 
-        if (!App::runningInConsole()) {
+        if (! App::runningInConsole()) {
             View::share('settlements', Settlement::get());
             View::share('propertyTypes', PropertyType::get());
         }

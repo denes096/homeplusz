@@ -91,7 +91,8 @@ class PropertyService
             ->with('propertySubtype')
             ->with(['attributes' => function ($query) {
                 $query->where('show_in_list', true);
-            }]);
+            }])
+            ->where('is_active', 1);
         if (! empty($limit)) {
             $propertyQuery->limit($limit);
         }
@@ -313,6 +314,9 @@ class PropertyService
                 ->with('settlementPart')
                 ->with('propertyType')
                 ->with('propertySubtype')
+                ->with(['attributes' => function ($query) {
+                    $query->where('show_in_list', true);
+                }])
                 ->where('is_active', 1)
                 ->get();
         } catch (\Exception $e) {
@@ -623,13 +627,13 @@ class PropertyService
         }
 
         // Number of rooms check
-        if (isset($searchParams['number_of_rooms_min']) && $searchParams['number_of_rooms_min'] != 0 ) {
+        if (isset($searchParams['number_of_rooms_min']) && $searchParams['number_of_rooms_min'] != 0) {
             $rooms = $this->getPropertyAttributeValue($property, 'epulet_szobaszam');
             if ($rooms === null || $rooms < $searchParams['number_of_rooms_min']) {
                 return false;
             }
         }
-        if (isset($searchParams['number_of_rooms_max']) && $searchParams['number_of_rooms_max'] != 0 ) {
+        if (isset($searchParams['number_of_rooms_max']) && $searchParams['number_of_rooms_max'] != 0) {
             $rooms = $this->getPropertyAttributeValue($property, 'epulet_szobaszam');
             if ($rooms === null || $rooms > $searchParams['number_of_rooms_max']) {
                 return false;
@@ -637,13 +641,13 @@ class PropertyService
         }
 
         // Property area check
-        if (isset($searchParams['property_area_min']) && $searchParams['property_area_min'] != 0 ) {
+        if (isset($searchParams['property_area_min']) && $searchParams['property_area_min'] != 0) {
             $area = $this->getPropertyAttributeValue($property, 'epulet_lakotermeret');
             if ($area === null || $area < $searchParams['property_area_min']) {
                 return false;
             }
         }
-        if (isset($searchParams['property_area_max']) && $searchParams['property_area_max'] != 0 ) {
+        if (isset($searchParams['property_area_max']) && $searchParams['property_area_max'] != 0) {
             $area = $this->getPropertyAttributeValue($property, 'epulet_lakotermeret');
             if ($area === null || $area > $searchParams['property_area_max']) {
                 return false;
@@ -672,13 +676,13 @@ class PropertyService
                     $minField = $propAttr->name.'_min';
                     $maxField = $propAttr->name.'_max';
 
-                    if (isset($searchParams[$minField]) && $searchParams[$minField] != 0 ) {
+                    if (isset($searchParams[$minField]) && $searchParams[$minField] != 0) {
                         $value = $this->getPropertyAttributeValue($property, $propAttr->name);
                         if ($value === null || $value < $searchParams[$minField]) {
                             return false;
                         }
                     }
-                    if (isset($searchParams[$maxField]) && $searchParams[$maxField] != 0 ) {
+                    if (isset($searchParams[$maxField]) && $searchParams[$maxField] != 0) {
                         $value = $this->getPropertyAttributeValue($property, $propAttr->name);
                         if ($value === null || $value > $searchParams[$maxField]) {
                             return false;
@@ -774,6 +778,7 @@ class PropertyService
         $attribute = $property->attributes()->where('name', $attributeName)->first();
 
         dd($attribute->pivot, $attributeName);
+
         return $attribute ? $attribute->pivot->value : null;
     }
 }

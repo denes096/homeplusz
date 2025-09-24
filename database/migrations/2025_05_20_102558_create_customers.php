@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('status', 20)->default('Aktív');
             $table->integer('refId')->nullable();
-            $table->integer('kategoria')->default(1);
+            $table->string('kategoria')->default(1);
             $table->string('ekod', 20);
             $table->string('name_0', 100);
             $table->string('phone_0', 100)->nullable();

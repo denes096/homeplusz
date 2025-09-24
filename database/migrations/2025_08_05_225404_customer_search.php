@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $path=database_path('sql/customers.sql');
+        $path = database_path('sql/customers.sql');
         if (File::exists($path)) {
             DB::unprepared(File::get($path));
         } else {

@@ -9,9 +9,7 @@ class AboutUsController extends Controller
 {
     public function __construct(
         private UserService $userService
-    )
-    {
-    }
+    ) {}
 
     //
     public function show()

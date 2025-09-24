@@ -18,6 +18,7 @@ class PropertyAttributeCategory extends Model
     */
 
     protected $table = 'property_attribute_categories';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

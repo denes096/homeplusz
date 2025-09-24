@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class UniqueCode extends Model
 {
     //
     protected $table = 'unique_code';
+
     public $timestamps = false;
+
     protected $primaryKey = 'code'; // ez a meglévő egyetlen oszlop
+
     public $incrementing = false;   // nem automatikusan növekvő
+
     protected $keyType = 'int';     // ha integer típusú
 
     protected $guarded = [];
@@ -29,11 +32,14 @@ class UniqueCode extends Model
     public static function updateCode(int $code)
     {
         $record = static::first(); // vagy where(...) ha több van
-        if ($record->code < $code) {
+
+        if (! $record) {
+            $record = new static;
             $record->code = $code;
             $record->save();
         } else {
-
+            $record->code = $code;
+            $record->save();
         }
     }
 }

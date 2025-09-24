@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,11 +15,13 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use CrudTrait;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
+    use HasRoles;
     use Notifiable;
     use SoftDeletes;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -57,8 +60,40 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value)
     {
-        if (!empty($value)) {
+        if (! empty($value)) {
             $this->attributes['password'] = bcrypt($value);
         }
+    }
+
+    /**
+     * Get the properties for the user
+     */
+    public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class, 'user_id');
+    }
+
+    /**
+     * Get the projects for the user
+     */
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'user_id');
+    }
+
+    /**
+     * Get the customers for the user
+     */
+    public function customers(): HasMany
+    {
+        return $this->hasMany(Customers::class, 'refId');
+    }
+
+    /**
+     * Get the partners for the user
+     */
+    public function partners(): HasMany
+    {
+        return $this->hasMany(Partners::class, 'user_id');
     }
 }

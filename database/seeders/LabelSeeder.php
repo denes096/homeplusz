@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,18 +16,21 @@ class LabelSeeder extends Seeder
             [
                 'name' => 'CSOK+',
                 'color' => '#0000FF',
+                'filter' => true,
             ],
         );
         DB::table('labels')->insert(
             [
                 'name' => 'PROJEKT',
                 'color' => '#FFFF00',
+                'filter' => false,
             ],
         );
         DB::table('labels')->insert(
             [
                 'name' => 'Kiemelt',
                 'color' => '#FF0000',
+                'filter' => false,
             ],
         );
     }

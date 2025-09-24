@@ -9,11 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
     use CrudTrait;
     use HasFactory;
+    use LogsActivity;
 
     /*
     |--------------------------------------------------------------------------
@@ -22,6 +25,7 @@ class Project extends Model
     */
 
     protected $table = 'projects';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,34 +38,59 @@ class Project extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['project_code', 'name', 'title', 'description', 'user_id', 'partner_id', 'storage_count', 'storage_type', 'is_required_storage'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName('project')
+            ->setDescriptionForEvent(function (string $eventName) {
+                return match ($eventName) {
+                    'created' => "Projekt létrehozva: {$this->project_code} - {$this->name}",
+                    'updated' => "Projekt módosítva: {$this->project_code} - {$this->name}",
+                    'deleted' => "Projekt törölve: {$this->project_code} - {$this->name}",
+                    default => "Projekt esemény: {$this->project_code} - {$this->name}",
+                };
+            });
+    }
+
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
 
-            $manager = new ImageManager(new Driver());
+            // Automatically set the user_id if not provided
+            if (empty($model->user_id)) {
+                $model->user_id = backpack_user()->id ?? null;
+            }
+
+            $manager = new ImageManager(new Driver);
             $disk = 'public';
             $path = 'uploads';
 
             $finalPaths = [];
 
-            $images = is_array($model->images) ? $model->images : json_decode($model->images, true);
+            $images = is_array($model->images) ? $model->images : (is_string($model->images) ? json_decode($model->images, true) : []);
 
             foreach ($images as $imgPath) {
-                // Csak ha tényleges fájl elérési út (pl. uploads/kep.jpg)
-                if (Storage::disk($disk)->exists($imgPath)) {
-                    $fullPath = Storage::disk($disk)->path($imgPath);
+                // Eltávolítjuk az "uploads/" prefixet a helyes elérési út érdekében
+                $cleanImgPath = str_replace('uploads/', '', $imgPath);
+
+                // Csak ha tényleges fájl elérési út (pl. kep.jpg)
+                if (Storage::disk($disk)->exists($cleanImgPath)) {
+                    $fullPath = Storage::disk($disk)->path($cleanImgPath);
                     $image = $manager->read($fullPath)
                         ->place(public_path('images/watermark.png'), 'center');
 
-                    // Felülírja a meglévő fájlt
-                    Storage::disk($disk)->put($imgPath, (string) $image->encode());
+                    // Felülírja a meglévő fájlt a helyes elérési úttal
+                    Storage::disk($disk)->put($cleanImgPath, (string) $image->encode());
 
-                    $finalPaths[] = $imgPath;
+                    $finalPaths[] = $cleanImgPath;
                 } else {
                     // Ha valamiért nem létező, csak hozzáadjuk
-                    $finalPaths[] = $imgPath;
+                    $finalPaths[] = $cleanImgPath;
                 }
             }
 
@@ -70,28 +99,31 @@ class Project extends Model
         });
 
         static::updating(function ($model) {
-            $manager = new ImageManager(new Driver());
+            $manager = new ImageManager(new Driver);
             $disk = 'public';
             $path = 'uploads';
 
             $finalPaths = [];
 
-            $images = is_array($model->images) ? $model->images : json_decode($model->images, true);
+            $images = is_array($model->images) ? $model->images : (is_string($model->images) ? json_decode($model->images, true) : []);
 
             foreach ($images as $imgPath) {
-                // Csak ha tényleges fájl elérési út (pl. uploads/kep.jpg)
-                if (Storage::disk($disk)->exists($imgPath)) {
-                    $fullPath = Storage::disk($disk)->path($imgPath);
+                // Eltávolítjuk az "uploads/" prefixet a helyes elérési út érdekében
+                $cleanImgPath = str_replace('uploads/', '', $imgPath);
+
+                // Csak ha tényleges fájl elérési út (pl. kep.jpg)
+                if (Storage::disk($disk)->exists($cleanImgPath)) {
+                    $fullPath = Storage::disk($disk)->path($cleanImgPath);
                     $image = $manager->read($fullPath)
-                        ->place(public_path('images/watermark.png'), 'center', 0 , 0, 60);
+                        ->place(public_path('images/watermark.png'), 'center', 0, 0, 60);
 
-                    // Felülírja a meglévő fájlt
-                    Storage::disk($disk)->put($imgPath, (string) $image->encode());
+                    // Felülírja a meglévő fájlt a helyes elérési úttal
+                    Storage::disk($disk)->put($cleanImgPath, (string) $image->encode());
 
-                    $finalPaths[] = $imgPath;
+                    $finalPaths[] = $cleanImgPath;
                 } else {
                     // Ha valamiért nem létező, csak hozzáadjuk
-                    $finalPaths[] = $imgPath;
+                    $finalPaths[] = $cleanImgPath;
                 }
             }
 
@@ -110,10 +142,22 @@ class Project extends Model
         return $this->hasMany(Property::class);
     }
 
-    function shortDesc($maxLength = 200) {
+    public function partner()
+    {
+        return $this->belongsTo(Partners::class, 'partner_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function shortDesc($maxLength = 200)
+    {
         if (mb_strlen($this->description, 'UTF-8') > $maxLength) {
-            return mb_substr($this->description, 0, $maxLength, 'UTF-8') . '...';
+            return mb_substr($this->description, 0, $maxLength, 'UTF-8').'...';
         }
+
         return $this->description;
     }
 

@@ -19,11 +19,12 @@ class Label extends Model
     */
 
     protected $table = 'labels';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = [];
-    //protected $fillable = [
-     //];
+    // protected $fillable = [
+    // ];
     // protected $hidden = [];
 
     /*

@@ -19,6 +19,7 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::crud('user', 'UserCrudController');
+    Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::crud('property', 'PropertyCrudController');
     Route::crud('label', 'LabelCrudController');
     Route::crud('property-attribute', 'PropertyAttributeCrudController');
@@ -34,6 +35,18 @@ Route::group([
     Route::crud('information', 'InformationCrudController');
     Route::crud('static-page', 'StaticPageCrudController');
     Route::crud('project', 'ProjectCrudController');
+    Route::post('project/{projectId}/upload-document', [\App\Http\Controllers\Admin\ProjectCrudController::class, 'uploadDocument'])->name('admin.project.upload-document');
+    Route::delete('project/document/{documentId}/delete', [\App\Http\Controllers\Admin\ProjectCrudController::class, 'deleteDocument'])->name('admin.project.document.delete');
+    Route::crud('partners', 'PartnersCrudController');
+    Route::post('partners/{partnerId}/add-contact', [\App\Http\Controllers\Admin\PartnersCrudController::class, 'addContact']);
+    Route::delete('partners/contact/{contactId}/delete', [\App\Http\Controllers\Admin\PartnersCrudController::class, 'deleteContact']);
+    Route::post('partners/{partnerId}/upload-document', [\App\Http\Controllers\Admin\PartnersCrudController::class, 'uploadDocument']);
+    Route::delete('partners/document/{documentId}/delete', [\App\Http\Controllers\Admin\PartnersCrudController::class, 'deleteDocument']);
+    Route::crud('clients', 'ClientsCrudController');
+    Route::post('clients/{clientId}/add-contact', [\App\Http\Controllers\Admin\ClientsCrudController::class, 'addContact']);
+    Route::delete('clients/contact/{contactId}/delete', [\App\Http\Controllers\Admin\ClientsCrudController::class, 'deleteContact']);
+    Route::post('clients/{clientId}/upload-document', [\App\Http\Controllers\Admin\ClientsCrudController::class, 'uploadDocument']);
+    Route::delete('clients/document/{documentId}/delete', [\App\Http\Controllers\Admin\ClientsCrudController::class, 'deleteDocument']);
     Route::crud('customer', 'CustomersCrudController');
     Route::crud('property-image-downloader', 'PropertyImageDownloaderCrudController');
 
@@ -44,7 +57,10 @@ Route::group([
     Route::post('property/{propertyId}/send-to-search/{searchId}', [PropertyCrudController::class, 'sendToMatchingSearch'])->name('admin.property.send-to-search');
 
     // Inactive properties route
-    //Route::get('property-inactive', [PropertyCrudController::class, 'listInactive'])->name('admin.property.inactive');
+    // Route::get('property-inactive', [PropertyCrudController::class, 'listInactive'])->name('admin.property.inactive');
+
+    // Active properties route
+    //Route::get('property-active', [PropertyCrudController::class, 'listActive'])->name('admin.property.active');
 
     // Property listing routes
     Route::crud('customers', 'CustomersCrudController');
@@ -53,6 +69,10 @@ Route::group([
     Route::post('customers/{id}/send-offer', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendOffer']);
     Route::get('customers/{id}/offers/{searchId}', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOffers']);
     Route::get('offers/{id}/details', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOfferDetails']);
+    Route::post('customers/{customerId}/add-contact', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'addContact']);
+    Route::delete('customers/contact/{contactId}/delete', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'deleteContact']);
+    Route::post('customers/{customerId}/upload-document', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'uploadDocument']);
+    Route::delete('customers/document/{documentId}/delete', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'deleteDocument']);
     Route::crud('slider-images', 'SliderImagesCrudController');
     Route::crud('customer-search', 'CustomerSearchCrudController');
     Route::get('offers', [\App\Http\Controllers\Admin\OffersConstoller::class, 'index'])->name('backpack.offers.index');

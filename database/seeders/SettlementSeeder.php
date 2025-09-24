@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -13,15 +12,15 @@ class SettlementSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-//    public function run(): void
-//    {
-//        $path=database_path('sql/settlements.sql');
-//        if (File::exists($path)) {
-//            DB::unprepared(File::get($path));
-//        } else {
-//            throw new \Exception("SQL file not found: $path");
-//        }
-//    }
+    //    public function run(): void
+    //    {
+    //        $path=database_path('sql/settlements.sql');
+    //        if (File::exists($path)) {
+    //            DB::unprepared(File::get($path));
+    //        } else {
+    //            throw new \Exception("SQL file not found: $path");
+    //        }
+    //    }
 
     public function run()
     {
@@ -47,9 +46,7 @@ class SettlementSeeder extends Seeder
                     'id' => $item->Id,
                     'postal_code' => $this->guessPostalCode($item->label),
                     'name' => $item->label,
-                    'part' => null,
                     'county' => 'Pest', // vagy más logika alapján
-                    'area' => 'Közép-Magyarország', // vagy más logika alapján
                 ];
             } else {
                 $parts[] = [
@@ -66,9 +63,9 @@ class SettlementSeeder extends Seeder
 
         // AUTO_INCREMENT visszaállítása (ha szükséges)
         $maxId = max(array_keys($settlements));
-        DB::statement("ALTER TABLE settlements AUTO_INCREMENT = " . ($maxId + 1));
+        DB::statement('ALTER TABLE settlements AUTO_INCREMENT = '.($maxId + 1));
         $maxPartId = max(array_column($parts, 'id'));
-        DB::statement("ALTER TABLE settlement_parts AUTO_INCREMENT = " . ($maxPartId + 1));
+        DB::statement('ALTER TABLE settlement_parts AUTO_INCREMENT = '.($maxPartId + 1));
     }
 
     protected function guessPostalCode(string $city): int
@@ -82,6 +79,7 @@ class SettlementSeeder extends Seeder
             'Törökbálint' => 2045,
             'Sóskút' => 2038,
         ];
+
         return $postalCodes[$city] ?? 9999;
     }
 }

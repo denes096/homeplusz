@@ -41,6 +41,23 @@ class SliderImagesCrudController extends CrudController
     {
         CRUD::setFromDb(); // set columns from db columns.
 
+        // Add image preview column
+        CRUD::column('path')
+            ->label('Kép')
+            ->type('custom_html')
+            ->value(function ($entry) {
+                return '<img src="'.asset('storage/'.$entry->path).'" style="max-width: 100px; max-height: 100px; object-fit: cover;" alt="'.$entry->name.'">';
+            });
+
+        // Add active status column
+        CRUD::column('active')
+            ->label('Aktív')
+            ->type('boolean')
+            ->options([0 => 'Inaktív', 1 => 'Aktív'])
+            ->wrapper([
+                'class' => 'text-center',
+            ]);
+
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');
@@ -56,15 +73,20 @@ class SliderImagesCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation([
-            'name' => 'required|string',
-            'path' => 'required|file|image',
-        ]);
+        CRUD::setValidation(\App\Http\Requests\SliderImagesRequest::class);
 
-        CRUD::addField([   // SelectMultiple = n-n relationship (with pivot table)
+        CRUD::addField([
             'label' => 'Név',
             'type' => 'text',
-            'name' => 'name', // the method that defines the relationship in your Model,
+            'name' => 'name',
+        ]);
+
+        CRUD::addField([
+            'label' => 'Aktív',
+            'type' => 'boolean',
+            'name' => 'active',
+            'default' => true,
+            'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::field('path')
@@ -78,13 +100,10 @@ class SliderImagesCrudController extends CrudController
                 'id' => 'input_images', // 💡 ID hozzáadása a JS miatt
             ]);
 
+        // Add image preview for create operation
         CRUD::field('image_preview_helper')
             ->type('custom_html')
             ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>');
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
     }
 
     /**
@@ -96,6 +115,52 @@ class SliderImagesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        // Use the same request class for validation - it handles create vs update differently
+        CRUD::setValidation(\App\Http\Requests\SliderImagesRequest::class);
+
+        CRUD::addField([
+            'label' => 'Név',
+            'type' => 'text',
+            'name' => 'name',
+        ]);
+
+        CRUD::addField([
+            'label' => 'Aktív',
+            'type' => 'boolean',
+            'name' => 'active',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        // Get current entry for image preview
+        $entry = $this->crud->getCurrentEntry();
+        $imagePreviewHtml = '';
+
+        if ($entry && $entry->path) {
+            $imagePreviewHtml = '<div style="margin-bottom: 20px;">
+                <label>Jelenlegi kép:</label><br>
+                <img src="'.asset('storage/'.$entry->path).'" style="max-width: 300px; max-height: 200px; object-fit: cover; border: 2px solid #ddd; border-radius: 5px;" alt="'.$entry->name.'">
+            </div>';
+        }
+
+        CRUD::field('path')
+            ->type('upload')
+            ->withFiles(
+                [
+                    'disk' => 'public',
+                    'path' => 'uploads',
+                ]
+            )->attributes([
+                'id' => 'input_images',
+            ]);
+
+        // Add current image preview for update operation
+        CRUD::field('current_image_preview')
+            ->type('custom_html')
+            ->value($imagePreviewHtml);
+
+        // Add image preview helper
+        CRUD::field('image_preview_helper')
+            ->type('custom_html')
+            ->value('<div id="image_preview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>');
     }
 }

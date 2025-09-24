@@ -20,8 +20,11 @@ class Settlement extends Model
     */
 
     protected $table = 'settlements';
+
     protected $primaryKey = 'id';
+
     public $timestamps = false;
+
     protected $guarded = [];
 
     /*
@@ -35,9 +38,11 @@ class Settlement extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function parts():HasMany{
+    public function parts(): HasMany
+    {
         return $this->hasMany(SettlementPart::class);
     }
+
     public function properties(): HasMany
     {
         return $this->hasMany(Property::class);
@@ -55,7 +60,7 @@ class Settlement extends Model
     */
     public function getFullNameAttribute()
     {
-        return $this->postal_code . ' - ' . $this->name;
+        return $this->postal_code.' - '.$this->name;
     }
     /*
     |--------------------------------------------------------------------------

@@ -19,8 +19,10 @@ class PropertyAttribute extends Model
     */
 
     protected $table = 'property_attributes';
+
     // protected $primaryKey = 'id';
-     public $timestamps = false;
+    public $timestamps = false;
+
     protected $guarded = ['id'];
 
     // protected $fillable = [];
@@ -37,7 +39,7 @@ class PropertyAttribute extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function category():HasOne
+    public function category(): HasOne
     {
         return $this->hasOne(PropertyAttributeCategory::class, 'id', 'property_attribute_category_id');
     }

@@ -24,9 +24,20 @@ class SliderImagesRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'name' => 'required|min:5|max:255'
+        $rules = [
+            'name' => 'required|string',
+            'active' => 'boolean',
         ];
+
+        // For create operation, path is required
+        // For update operation, path is nullable (existing path will be preserved)
+        if ($this->isMethod('POST')) {
+            $rules['path'] = 'required|file|image';
+        } else {
+            $rules['path'] = 'nullable|string';
+        }
+
+        return $rules;
     }
 
     /**

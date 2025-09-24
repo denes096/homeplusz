@@ -1,33 +1,32 @@
 <?php
+
 namespace App\Console\Commands;
 
 use App\Models\Label;
+use App\Models\Property;
 use App\Models\PropertyAttribute;
-use App\Models\PropertyAttributeCategory;
 use App\Models\PropertySubtype;
 use App\Models\PropertyType;
-use App\Models\UniqueCode;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use App\Models\Property;
-use Carbon\Carbon;
 use App\Models\Settlement;
 use App\Models\SettlementPart;
+use App\Models\UniqueCode;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use stdClass;
 
 class MigrateIngatlanok extends Command
 {
     protected $signature = 'migrate:ingatlanok';
+
     protected $description = 'Migrálja a régi ingatlanokat az új struktúrába';
 
     public function handle()
     {
-        //$this->migrateCustomers();
+        // $this->migrateCustomers();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
@@ -77,9 +76,8 @@ class MigrateIngatlanok extends Command
         });
         $this->info('Ingatlanok migráció indítása...');
 
-
         $oldIngatlanok = DB::connection('old')->table('ingatlanok')->orderBy('Id')
-            //->limit(20)
+            ->limit(20)
             ->get();
         $skipped = 0;
 
@@ -87,9 +85,10 @@ class MigrateIngatlanok extends Command
         foreach ($oldIngatlanok as $index => $row) {
             $this->info($row->Id);
             // Ha már létezik az adott property_code, ugorjuk át
-            if (!$row->ingatlankod) {
+            if (! $row->ingatlankod) {
                 $this->warn("Hiányzó ingatlankód az ID: {$row->Id} rekordnál, kihagyva.");
                 $skipped++;
+
                 continue;
             }
 
@@ -111,23 +110,23 @@ class MigrateIngatlanok extends Command
                 'epulet_energetika' => $row->epulet_energetika,
                 'epulet_komfort' => $row->epulet_komfort,
 
-                //'falazat'...
-                //futes...
+                // 'falazat'...
+                // futes...
 
-                //'cserealap' => $row->cserealap,
-//                'kiado_butorozott' => $row->kiado_butorozott === 'Igen' ? '1' : '0',
-//                'kozmu_gaz' => $row->kozmu_gaz,
-//                'kozmu_villany' => $row->kozmu_villany,
-//                'kozmu_viz' => $row->kozmu_viz,
-//                'kozmu_csatorna' => $row->kozmu_csatorna,
-//                'kozmu_kabeltv' => $row->kozmu_kabeltv,
-//                'kozmu_internet' => $row->kozmu_internet,
-//                'parkolas' => $row->parkolas,
-//                'tomegkozlekedes' => $row->tomegkozlekedes,
-//                'telek_alapterulet' => $row->telek_alapterulet,
-//                'telek_domborzat' => $row->telek_domborzat,
-//                'haziallat' => $row->haziallat === 'Igen' ? '1' : '0',
-//                'butorozott' => $row->butorozott === 'Igen' ? '1' : '0',
+                // 'cserealap' => $row->cserealap,
+                //                'kiado_butorozott' => $row->kiado_butorozott === 'Igen' ? '1' : '0',
+                //                'kozmu_gaz' => $row->kozmu_gaz,
+                //                'kozmu_villany' => $row->kozmu_villany,
+                //                'kozmu_viz' => $row->kozmu_viz,
+                //                'kozmu_csatorna' => $row->kozmu_csatorna,
+                //                'kozmu_kabeltv' => $row->kozmu_kabeltv,
+                //                'kozmu_internet' => $row->kozmu_internet,
+                //                'parkolas' => $row->parkolas,
+                //                'tomegkozlekedes' => $row->tomegkozlekedes,
+                //                'telek_alapterulet' => $row->telek_alapterulet,
+                //                'telek_domborzat' => $row->telek_domborzat,
+                //                'haziallat' => $row->haziallat === 'Igen' ? '1' : '0',
+                //                'butorozott' => $row->butorozott === 'Igen' ? '1' : '0',
             ];
 
             $attributes = PropertyAttribute::all()->keyBy('name');
@@ -166,24 +165,23 @@ class MigrateIngatlanok extends Command
 
             $baseImageUrl = 'https://www.otthonplusz.hu/pictures/';
 
-//            foreach ($images as $filename) {
-//                try {
-//                    $url = $baseImageUrl . $filename;
-//
-//                    $response = Http::timeout(10)->get($url);
-//
-//                    if ($response->successful()) {
-//                        Storage::disk('public')->put("uploads/{$row->Id}/{$filename}", $response->body());
-//                        $this->info($index . " ingatlan képe letöltve");
-//                    } else {
-//                        $this->warn("Nem sikerült letölteni a képet: {$url}");
-//                        logger()->warning("Nem sikerült letölteni a képet: {$url}");
-//                    }
-//                } catch (\Exception $e) {
-//                    logger()->error("Hiba a {$url} letöltésekor: " . $e->getMessage());
-//                }
-//            }
-
+            //            foreach ($images as $filename) {
+            //                try {
+            //                    $url = $baseImageUrl . $filename;
+            //
+            //                    $response = Http::timeout(10)->get($url);
+            //
+            //                    if ($response->successful()) {
+            //                        Storage::disk('public')->put("uploads/{$row->Id}/{$filename}", $response->body());
+            //                        $this->info($index . " ingatlan képe letöltve");
+            //                    } else {
+            //                        $this->warn("Nem sikerült letölteni a képet: {$url}");
+            //                        logger()->warning("Nem sikerült letölteni a képet: {$url}");
+            //                    }
+            //                } catch (\Exception $e) {
+            //                    logger()->error("Hiba a {$url} letöltésekor: " . $e->getMessage());
+            //                }
+            //            }
 
             // új Property rekord létrehozása
             $property = new Property([
@@ -222,7 +220,6 @@ class MigrateIngatlanok extends Command
                 'updated_at' => $row->modifytime ? now()->setTimestamp($row->modifytime) : now(),
             ]);
 
-
             $property->save();
 
         }
@@ -230,6 +227,7 @@ class MigrateIngatlanok extends Command
         $this->migrateExtra();
 
         $propattrsfromtable = $this->migratePropTableColsThatNotBelongsToIt();
+
         $propattrsfromtable = array_combine(
             array_column(
                 $propattrsfromtable,
@@ -241,21 +239,21 @@ class MigrateIngatlanok extends Command
         $rows = [];
         foreach ($oldIngatlanok as $index => $row) {
             /**
-             * @var  $name
+             * @var $name
              * @var PropertyAttribute $propattr
              */
             foreach ($propattrsfromtable as $name => $propattr) {
                 if ($name === 'futes') {
                 }
 
-                if (!property_exists($row, $name)) {
+                if (! property_exists($row, $name)) {
 
                     continue;
                 }
                 $value = $row->{$name};
                 if ($value == 'Igen') {
                     $value = 1;
-                } else if ($value == 'Nem') {
+                } elseif ($value == 'Nem') {
                     $value = 0;
                 }
                 $rows[] = [
@@ -271,7 +269,7 @@ class MigrateIngatlanok extends Command
         }
 
         UniqueCode::create([
-            'code' => $lastCode
+            'code' => $lastCode,
         ]);
 
         PropertyAttribute::where('show_in_search', 1)->update([
@@ -283,14 +281,11 @@ class MigrateIngatlanok extends Command
         $this->info("Migráció kész. Kihagyott rekordok: $skipped db.");
     }
 
-    public function migrateDetails()
-    {
-
-    }
+    public function migrateDetails() {}
 
     public function migrateCustomers()
     {
-        $path=database_path('sql/customers.sql');
+        $path = database_path('sql/customers.sql');
         if (File::exists($path)) {
             DB::unprepared(File::get($path));
         } else {
@@ -331,7 +326,7 @@ class MigrateIngatlanok extends Command
             'type' => 'number',
             'property_attribute_category_id' => 1,
         ]);
-//
+        //
         $propAttrsFromTable[] = PropertyAttribute::create([
             'name' => 'epulet_lakoegysegek_szama',
             'label' => 'Lakóegységek száma',
@@ -360,7 +355,6 @@ class MigrateIngatlanok extends Command
             'type' => 'number',
             'property_attribute_category_id' => 1,
         ]);
-
 
         $propAttrsFromTable[] = PropertyAttribute::create([
             'name' => 'epulet_allapot_kivul',
@@ -454,7 +448,7 @@ class MigrateIngatlanok extends Command
                 '43' => 'Bekötve',
                 '44' => 'Telken belül',
                 '45' => 'Utcában',
-                '46' => 'Nincs'
+                '46' => 'Nincs',
             ]),
             'property_attribute_category_id' => 4,
         ]);
@@ -467,7 +461,7 @@ class MigrateIngatlanok extends Command
                 '43' => 'Bekötve',
                 '44' => 'Telken belül',
                 '45' => 'Utcában',
-                '46' => 'Nincs'
+                '46' => 'Nincs',
             ]),
             'property_attribute_category_id' => 4,
         ]);
@@ -480,7 +474,7 @@ class MigrateIngatlanok extends Command
                 '43' => 'Bekötve',
                 '44' => 'Telken belül',
                 '45' => 'Utcában',
-                '46' => 'Nincs'
+                '46' => 'Nincs',
             ]),
             'property_attribute_category_id' => 4,
         ]);
@@ -493,7 +487,7 @@ class MigrateIngatlanok extends Command
                 '43' => 'Bekötve',
                 '44' => 'Telken belül',
                 '45' => 'Utcában',
-                '46' => 'Nincs'
+                '46' => 'Nincs',
             ]),
             'property_attribute_category_id' => 4,
         ]);
@@ -506,7 +500,7 @@ class MigrateIngatlanok extends Command
                 '43' => 'Bekötve',
                 '44' => 'Telken belül',
                 '45' => 'Utcában',
-                '46' => 'Nincs'
+                '46' => 'Nincs',
             ]),
             'property_attribute_category_id' => 4,
         ]);
@@ -519,7 +513,7 @@ class MigrateIngatlanok extends Command
                 '43' => 'Bekötve',
                 '44' => 'Telken belül',
                 '45' => 'Utcában',
-                '46' => 'Nincs'
+                '46' => 'Nincs',
             ]),
             'property_attribute_category_id' => 4,
         ]);
@@ -668,7 +662,9 @@ class MigrateIngatlanok extends Command
             $category = $extra->category;
 
             // ha ismeretlen kategória, hagyjuk ki
-            if (!isset($categories[$category])) continue;
+            if (! isset($categories[$category])) {
+                continue;
+            }
 
             DB::connection('mariadb')->table('property_attributes')->insert([
                 'id' => $extra->Id,
@@ -707,7 +703,6 @@ class MigrateIngatlanok extends Command
             DB::table('property_property_attribute')->insert($chunk);
         }
 
-
         foreach ($extrak as $extra) {
             $category = $extra->category;
 
@@ -716,7 +711,7 @@ class MigrateIngatlanok extends Command
                     'id' => $extra->Id,
                     'name' => $extra->label ?? 'n/a',
                     'color' => $extra->value,
-                    'filter' => 0
+                    'filter' => 0,
                 ]);
 
                 $ingextrak = DB::connection('old')->table('ingatlanok_extrai')->where('extraId', '=', $extra->Id)->get();
@@ -743,6 +738,7 @@ class MigrateIngatlanok extends Command
     public function migratePropTypes()
     {
         $types = DB::connection('old')->table('torzsadat')->where('datatype', '=', 'ingatlantipus')->where('parent', '=', 0)->orderBy('sort')->get();
+
         foreach ($types as $type) {
             PropertyType::create([
                 'id' => $type->Id,
@@ -761,9 +757,5 @@ class MigrateIngatlanok extends Command
 
     }
 
-    public function migrateTorzsadat($dataType, $isMultiselect)
-    {
-
-    }
+    public function migrateTorzsadat($dataType, $isMultiselect) {}
 }
-

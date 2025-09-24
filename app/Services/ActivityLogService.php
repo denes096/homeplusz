@@ -26,6 +26,16 @@ class ActivityLogService
             ->get();
     }
 
+    public function getProjectActivities(int $projectId, int $limit = 10): \Illuminate\Database\Eloquent\Collection
+    {
+        return Activity::with(['causer', 'subject'])
+            ->where('subject_type', 'App\Models\Project')
+            ->where('subject_id', $projectId)
+            ->latest()
+            ->limit($limit)
+            ->get();
+    }
+
     public function getActivityIcon(string $event): string
     {
         return match ($event) {
@@ -53,6 +63,13 @@ class ActivityLogService
             $description = str_replace('Új vevő rögzítve:', "{$userName} új vevőt rögzített", $description);
             $description = str_replace('Vevő módosítva:', "{$userName} módosította a vevőt", $description);
             $description = str_replace('Vevő törölve:', "{$userName} törölt egy vevőt", $description);
+        }
+
+        // Ha van subject és project_code mezője (project)
+        if ($activity->subject && method_exists($activity->subject, 'project_code')) {
+            $description = str_replace('Projekt létrehozva:', "{$userName} létrehozott egy projektet {$activity->subject->project_code}", $description);
+            $description = str_replace('Projekt módosítva:', "{$userName} módosította a projektet {$activity->subject->project_code}", $description);
+            $description = str_replace('Projekt törölve:', "{$userName} törölt egy projektet {$activity->subject->project_code}", $description);
         }
 
         // Ha a description nem tartalmazza a felhasználó nevét, akkor hozzáadjuk
@@ -90,7 +107,7 @@ class ActivityLogService
 
         if ($user) {
             activity()
-                ->causedBy($user)
+                ->causedBy($user->id)
                 ->performedOn($model)
                 ->event($event)
                 ->log($description ?? $this->getDefaultDescription($model, $event));
@@ -114,6 +131,15 @@ class ActivityLogService
                 'updated' => "Vevő módosítva: {$model->name_0}",
                 'deleted' => "Vevő törölve: {$model->name_0}",
                 default => "Vevő esemény: {$model->name_0}",
+            };
+        }
+
+        if (method_exists($model, 'project_code')) {
+            return match ($event) {
+                'created' => "Projekt létrehozva: {$model->project_code} - {$model->name}",
+                'updated' => "Projekt módosítva: {$model->project_code} - {$model->name}",
+                'deleted' => "Projekt törölve: {$model->project_code} - {$model->name}",
+                default => "Projekt esemény: {$model->project_code} - {$model->name}",
             };
         }
 

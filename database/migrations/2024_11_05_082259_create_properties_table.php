@@ -15,39 +15,37 @@ return new class extends Migration
             $table->id();
             $table->boolean('featured')->default(false);
 
-
-// Leírások
+            // Leírások
             $table->longText('description')->nullable();
             $table->longText('short_description')->nullable();
 
             $table->text('images')->nullable();
 
-
-//status Aktív/Felfüggesztve
+            // status Aktív/Felfüggesztve
             $table->boolean('is_active')->default(true);
-//elado Igen/Nem
-//kiado Igen/Nem
+            // elado Igen/Nem
+            // kiado Igen/Nem
             $table->enum('ad_type', ['sell', 'rent', 'sell_and_rent'])->default('sell');
-//ingatlankod
+            // ingatlankod
             $table->string('property_code', 10)->unique()->nullable();
-//cimsor
+            // cimsor
             $table->text('title');
             $table->text('inner_comments')->nullable();
-//ar
+            // ar
             $table->float('price');
-//regiar
+            // regiar
             $table->float('old_price')->nullable();
-//arcsokkentes_datum
+            // arcsokkentes_datum
             $table->date('price_reduction_date')->nullable();
 
-// Bérleti díjak
+            // Bérleti díjak
             $table->float('rental_price')->nullable();
             $table->float('old_rental_price')->nullable();
             $table->date('rental_price_reduction_date')->nullable();
             $table->boolean('rental_utilities_included')->nullable();
             $table->integer('rental_deposit')->nullable();
 
-//belsomegjegyzes
+            // belsomegjegyzes
             $table->text('internal_note')->nullable();
 
             $table->foreignId('settlement_id')->constrained();

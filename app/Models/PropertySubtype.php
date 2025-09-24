@@ -6,7 +6,6 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PropertySubtype extends Model
 {
@@ -20,8 +19,10 @@ class PropertySubtype extends Model
     */
 
     protected $table = 'property_subtypes';
+
     // protected $primaryKey = 'id';
     public $timestamps = false;
+
     protected $guarded = [];
     // protected $fillable = [];
     // protected $hidden = [];
@@ -37,7 +38,8 @@ class PropertySubtype extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function propertyType():BelongsTo{
+    public function propertyType(): BelongsTo
+    {
         return $this->belongsTo(PropertyType::class);
     }
     /*

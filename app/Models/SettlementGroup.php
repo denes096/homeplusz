@@ -20,6 +20,7 @@ class SettlementGroup extends Model
     */
 
     protected $table = 'settlement_groups';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -38,7 +39,8 @@ class SettlementGroup extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function settlement(): BelongsTo{
+    public function settlement(): BelongsTo
+    {
         return $this->belongsTo(Settlement::class);
     }
 

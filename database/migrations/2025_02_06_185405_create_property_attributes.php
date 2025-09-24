@@ -18,10 +18,10 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('short_label')->nullable();
             $table->foreignId('property_attribute_category_id')->constrained();
-            $table->enum("type", ['text', 'checkbox', 'select', 'number', 'radio', 'select_multiple'])->default('text');
-            $table->json("values")->nullable();
-            $table->string("prefix")->nullable();
-            $table->string("suffix")->nullable();
+            $table->enum('type', ['text', 'checkbox', 'select', 'number', 'radio', 'select_multiple'])->default('text');
+            $table->json('values')->nullable();
+            $table->string('prefix')->nullable();
+            $table->string('suffix')->nullable();
             $table->boolean('required')->default(false);
             $table->boolean('show_in_search')->default(true);
             $table->boolean('show_in_list')->default(false);

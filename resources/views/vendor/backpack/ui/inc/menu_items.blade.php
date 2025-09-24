@@ -1,14 +1,11 @@
 {{-- This file is used for menu items by any Backpack v6 theme --}}
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> Irányítópult</a></li>
 
-<x-backpack::menu-dropdown title="Települések" icon="la la-globe">
-    <x-backpack::menu-dropdown-item title="Települések" icon="la la-question" :link="backpack_url('settlement')" />
-    <x-backpack::menu-dropdown-item title="Település részek" icon="la la-question" :link="backpack_url('settlement-part')" />
-    <x-backpack::menu-dropdown-item title="Település csoportok" icon="la la-question" :link="backpack_url('settlement-group')" />
-</x-backpack::menu-dropdown>
+
 
 <x-backpack::menu-dropdown title="Ingatlanok" icon="la la-home">
     <x-backpack::menu-dropdown-item title="Ingatlanok" icon="la la-home" :link="backpack_url('property')" />
+    <x-backpack::menu-dropdown-item title="Aktív ingatlanok" icon="la la-home" :link="backpack_url('property-active')" />
     <x-backpack::menu-dropdown-item title="Inaktív ingatlanok" icon="la la-home" :link="backpack_url('property-inactive')" />
     <x-backpack::menu-dropdown-item title="Saját ingatlanok" icon="la la-home" :link="backpack_url('property-sajat')" />    
     <x-backpack::menu-dropdown-header title="Mezők" />
@@ -18,7 +15,21 @@
     <x-backpack::menu-dropdown-item title="Ingatlan altípusok" icon="la la-question" :link="backpack_url('property-subtype')" />
 </x-backpack::menu-dropdown>
 
-<x-backpack::menu-item title="Címkék" icon="la la-tags" :link="backpack_url('label')" />
+<x-backpack::menu-dropdown title="Vevők" icon="la la-puzzle-piece">
+    <x-backpack::menu-dropdown-item title="Új vevő felvitele" icon="la la-user" :link="backpack_url('customers/create')" />
+    <x-backpack::menu-dropdown-item title="Vevők karbantartása" icon="la la-key" :link="backpack_url('customers')" />
+</x-backpack::menu-dropdown>
+
+<x-backpack::menu-dropdown title="Megbízók" icon="la la-handshake">
+    <x-backpack::menu-dropdown-item title="Új megbízó felvitele" icon="la la-plus" :link="backpack_url('clients/create')" />
+    <x-backpack::menu-dropdown-item title="Megbízók karbantartása" icon="la la-cogs" :link="backpack_url('clients')" />
+</x-backpack::menu-dropdown>
+
+<x-backpack::menu-dropdown title="Partnerek" icon="la la-handshake">
+    <x-backpack::menu-dropdown-item title="Új partner felvitele" icon="la la-plus" :link="backpack_url('partners/create')" />
+    <x-backpack::menu-dropdown-item title="Partnerek karbantartása" icon="la la-cogs" :link="backpack_url('partners')" />
+</x-backpack::menu-dropdown>
+
 
 <x-backpack::menu-dropdown title="Felhasználók" icon="la la-puzzle-piece">
     <x-backpack::menu-dropdown-header title="Authentication" />
@@ -27,10 +38,7 @@
     <x-backpack::menu-dropdown-item title="Jogosultságok" icon="la la-key" :link="backpack_url('permission')" />
 </x-backpack::menu-dropdown>
 
-<x-backpack::menu-dropdown title="Vevők" icon="la la-puzzle-piece">
-    <x-backpack::menu-dropdown-item title="Új vevő felvitele" icon="la la-user" :link="backpack_url('customers/create')" />
-    <x-backpack::menu-dropdown-item title="Vevők karbantartása" icon="la la-key" :link="backpack_url('customers')" />
-</x-backpack::menu-dropdown>
+
 
 <x-backpack::menu-dropdown title="Szolgáltatások" icon="la la-puzzle-piece">
     <x-backpack::menu-dropdown-item title="Szolgáltatások" icon="la la-group" :link="backpack_url('service')" />
@@ -48,3 +56,12 @@
 
 <x-backpack::menu-item title="Slider images" icon="la la-question" :link="backpack_url('slider-images')" />
 <x-backpack::menu-item title="Kiajánlások" icon="la la-question" :link="backpack_url('customer-search')" />
+
+
+<x-backpack::menu-dropdown title="Települések" icon="la la-globe">
+    <x-backpack::menu-dropdown-item title="Települések" icon="la la-question" :link="backpack_url('settlement')" />
+    <x-backpack::menu-dropdown-item title="Település részek" icon="la la-question" :link="backpack_url('settlement-part')" />
+    <x-backpack::menu-dropdown-item title="Település csoportok" icon="la la-question" :link="backpack_url('settlement-group')" />
+</x-backpack::menu-dropdown>
+
+<x-backpack::menu-item title="Címkék" icon="la la-tags" :link="backpack_url('label')" />

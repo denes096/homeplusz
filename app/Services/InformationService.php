@@ -4,15 +4,15 @@ namespace App\Services;
 
 use App\Models\Information;
 use App\Models\InformationCategory;
-use App\Models\ServiceCategory;
 use Illuminate\Support\Collection;
 
 class InformationService
 {
-    public function informationCategories():Collection
+    public function informationCategories(): Collection
     {
         return InformationCategory::with('informations')->get();
     }
+
     public function getInformationById(int $informationId): Information
     {
         return Information::findOrFail($informationId);

@@ -344,6 +344,11 @@
             * {
                 visibility: visible !important;
             }
+
+            /* Allow hiding specific blocks from print (use the `no-print` class) */
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 
@@ -416,6 +421,10 @@
                     <div class="info-row">
                         <span class="info-label">Ingatlan kód:</span>
                         <span class="info-value"><strong>{{ $property->property_code }}</strong></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Referens:</span>
+                        <span class="info-value"><strong>{{ $property->user->name ?? '-' }}</strong></span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Ár:</span>
@@ -532,9 +541,9 @@
         </div>
         @endif
 
-        <!-- Internal Comments -->
+        <!-- Internal Comments (hidden when printing) -->
         @if($property->inner_comments)
-        <div class="info-card">
+        <div class="info-card no-print">
             <h5><i class="la la-comment"></i> Belső komment</h5>
             <div class="mt-3">
                 {!! $property->inner_comments !!}

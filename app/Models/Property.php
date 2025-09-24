@@ -281,6 +281,16 @@ class Property extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(Partners::class, 'partner_id');
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
+
     public function documents()
     {
         return $this->hasMany(PropertyDocument::class);

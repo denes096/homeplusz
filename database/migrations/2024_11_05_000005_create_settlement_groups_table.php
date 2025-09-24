@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('settlement_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("settlement_id")->constrained("settlements");
+            $table->foreignId('settlement_id')->constrained('settlements');
             $table->timestamps();
         });
     }
