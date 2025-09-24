@@ -177,23 +177,23 @@ class ClientsCrudController extends CrudController
                     <div class="mb-4">
                         <div id="contact-form">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="contact-name" class="form-label">Név <small class="text-danger">*</small></label>
                                     <input type="text" class="form-control" id="contact-name" name="contact_name" placeholder="Kapcsolattartó neve">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-sm-6 col-md-2">
                                     <label for="contact-relationship" class="form-label">Kapcsolat</label>
                                     <input type="text" class="form-control" id="contact-relationship" name="contact_relationship" placeholder="pl. feleség, testvér">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="contact-phone" class="form-label">Telefonszám</label>
                                     <input type="text" class="form-control" id="contact-phone" name="contact_phone" placeholder="Telefonszám">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="contact-email" class="form-label">Email cím</label>
                                     <input type="email" class="form-control" id="contact-email" name="contact_email" placeholder="email@cim.com">
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-sm-6 col-md-1">
                                     <label class="form-label">&nbsp;</label>
                                     <button type="button" id="add-contact-btn" class="btn btn-primary d-block w-100">Hozzáadás</button>
                                 </div>
@@ -354,11 +354,11 @@ class ClientsCrudController extends CrudController
                     <div class="mb-4">
                         <div id="document-upload-form">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="document-name" class="form-label">Dokumentum neve <small class="text-muted">(opcionális)</small></label>
-                                    <input type="text" class="form-control" id="document-name" name="name" placeholder="Ha üres, a fájl neve lesz használva">
+                                    <input type="text" class="form-control" id="document-name" name="document_name" placeholder="Ha üres, a fájl neve lesz használva">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="document-category" class="form-label">Kategória <small class="text-muted">(opcionális)</small></label>
                                     <select class="form-select" id="document-category" name="category">
                                         <option value="">Válassz kategóriát</option>
@@ -369,11 +369,11 @@ class ClientsCrudController extends CrudController
                                         <option value="other">Egyéb</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-sm-6 col-md-4">
                                     <label for="document-file" class="form-label">Fájl <small class="text-danger">*</small></label>
                                     <input type="file" class="form-control" id="document-file" name="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-sm-6 col-md-2">
                                     <label class="form-label">&nbsp;</label>
                                     <button type="button" id="upload-document-btn" class="btn btn-primary d-block w-100">Feltöltés</button>
                                 </div>
@@ -406,7 +406,7 @@ class ClientsCrudController extends CrudController
                     e.stopPropagation();
 
                     // Get form values
-                    const name = document.getElementById("document-name").value;
+                    const documentName = document.getElementById("document-name").value;
                     const category = document.getElementById("document-category").value;
                     const file = document.getElementById("document-file").files[0];
 
@@ -417,7 +417,7 @@ class ClientsCrudController extends CrudController
                     }
 
                     // If file is selected but no name or category, use defaults
-                    const finalName = name || file.name;
+                    const finalName = documentName || file.name;
                     const finalCategory = category || "other";
 
                     // Disable button during upload
@@ -426,7 +426,7 @@ class ClientsCrudController extends CrudController
 
                     // Create FormData manually
                     const formData = new FormData();
-                    formData.append("name", finalName);
+                    formData.append("document_name", finalName);
                     formData.append("category", finalCategory);
                     formData.append("file", file);
                     formData.append("description", document.getElementById("document-description").value);
@@ -620,7 +620,7 @@ class ClientsCrudController extends CrudController
             ]);
 
             $request->validate([
-                'name' => 'nullable|string|max:255',
+                'document_name' => 'nullable|string|max:255',
                 'category' => 'nullable|in:contract,order,purchase,inspection,other',
                 'file' => 'required|file|max:10240', // 10MB max
                 'description' => 'nullable|string|max:1000',
@@ -638,7 +638,7 @@ class ClientsCrudController extends CrudController
             // Create document record
             $document = ClientDocument::create([
                 'client_id' => $clientId,
-                'name' => $request->input('name') ?: $file->getClientOriginalName(),
+                'name' => $request->input('document_name') ?: $file->getClientOriginalName(),
                 'category' => $request->input('category', 'other'),
                 'file_path' => $path,
                 'original_name' => $file->getClientOriginalName(),

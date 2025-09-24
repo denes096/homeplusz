@@ -150,7 +150,7 @@ class CustomersCrudController extends CrudController
                 'class' => 'form-control',
             ], // change the HTML attributes of your input
             'wrapper' => [
-                'class' => 'form-group col-md-3',
+                'class' => 'form-group col-sm-6 col-md-3',
             ], //
         ]);
 
@@ -163,7 +163,7 @@ class CustomersCrudController extends CrudController
                 'class' => 'form-control',
             ], // change the HTML attributes of your input
             'wrapper' => [
-                'class' => 'form-group col-md-3',
+                'class' => 'form-group col-sm-6 col-md-3',
             ], //
         ]);
 
@@ -178,7 +178,7 @@ class CustomersCrudController extends CrudController
                 'Minden' => 'Minden',
             ],
             'tab' => 'Keresési paraméterek',
-            'wrapper' => ['class' => 'form-group col-md-3'],
+            'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
 
         // Ingatlan típusok / altípusok / települések / településrészek (többszörös választás)
@@ -189,7 +189,7 @@ class CustomersCrudController extends CrudController
             'options' => \App\Models\PropertyType::all()->pluck('name', 'id')->toArray(),
             'allows_multiple' => true,
             'tab' => 'Keresési paraméterek',
-            'wrapper' => ['class' => 'form-group col-md-3'],
+            'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
 
         CRUD::addField([
@@ -199,7 +199,7 @@ class CustomersCrudController extends CrudController
             'options' => \App\Models\PropertySubtype::all()->pluck('name', 'id')->toArray(),
             'allows_multiple' => true,
             'tab' => 'Keresési paraméterek',
-            'wrapper' => ['class' => 'form-group col-md-3'],
+            'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
 
         CRUD::addField([
@@ -209,7 +209,7 @@ class CustomersCrudController extends CrudController
             'options' => \App\Models\Settlement::all()->pluck('name', 'id')->toArray(),
             'allows_multiple' => true,
             'tab' => 'Keresési paraméterek',
-            'wrapper' => ['class' => 'form-group col-md-3'],
+            'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
 
         CRUD::addField([
@@ -219,7 +219,7 @@ class CustomersCrudController extends CrudController
             'options' => \App\Models\SettlementPart::all()->pluck('name', 'id')->toArray(),
             'allows_multiple' => true,
             'tab' => 'Keresési paraméterek',
-            'wrapper' => ['class' => 'form-group col-md-3'],
+            'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
 
         // Dinamikus ingatlan attribútumok (számok, választók, jelölőnégyzetek)
@@ -233,14 +233,14 @@ class CustomersCrudController extends CrudController
                         'name' => 'p['.$propAttr->name.'_min]',
                         'type' => 'number',
                         'tab' => 'Keresési paraméterek',
-                        'wrapper' => ['class' => 'form-group col-md-3'],
+                        'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
                     ]);
                     CRUD::addField([
                         'label' => $propAttr->label.' max',
                         'name' => 'p['.$propAttr->name.'_max]',
                         'type' => 'number',
                         'tab' => 'Keresési paraméterek',
-                        'wrapper' => ['class' => 'form-group col-md-3'],
+                        'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
                     ]);
                 } elseif ($propAttr->type == 'select' || $propAttr->type == 'select_multiple') {
                     $options = json_decode($propAttr->values, true) ?: [];
@@ -251,7 +251,7 @@ class CustomersCrudController extends CrudController
                         'options' => $options,
                         'allows_multiple' => ($propAttr->type == 'select_multiple'),
                         'tab' => 'Keresési paraméterek',
-                        'wrapper' => ['class' => 'form-group col-md-3'],
+                        'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
                     ]);
                 } elseif ($propAttr->type == 'checkbox') {
                     CRUD::addField([
@@ -259,7 +259,7 @@ class CustomersCrudController extends CrudController
                         'name' => 'p['.$propAttr->name.']',
                         'type' => 'checkbox',
                         'tab' => 'Keresési paraméterek',
-                        'wrapper' => ['class' => 'form-group col-md-3'],
+                        'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
                     ]);
                 }
             }
@@ -500,29 +500,29 @@ class CustomersCrudController extends CrudController
                     <div class="mb-4">
                         <div id="contact-form">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="contact-name" class="form-label">Név <small class="text-danger">*</small></label>
                                     <input type="text" class="form-control" id="contact-name" name="contact_name" placeholder="Kapcsolattartó neve">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-sm-6 col-md-2">
                                     <label for="contact-relationship" class="form-label">Kapcsolat</label>
                                     <input type="text" class="form-control" id="contact-relationship" name="contact_relationship" placeholder="pl. feleség, testvér">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="contact-phone" class="form-label">Telefonszám</label>
                                     <input type="text" class="form-control" id="contact-phone" name="contact_phone" placeholder="Telefonszám">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="contact-email" class="form-label">Email cím</label>
                                     <input type="email" class="form-control" id="contact-email" name="contact_email" placeholder="email@cim.com">
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-sm-6 col-md-1">
                                     <label class="form-label">&nbsp;</label>
                                     <button type="button" id="add-contact-btn" class="btn btn-primary d-block w-100">Hozzáadás</button>
                                 </div>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <label for="contact-notes" class="form-label">Megjegyzések</label>
                                     <textarea class="form-control" id="contact-notes" name="contact_notes" rows="2" placeholder="Egyéb megjegyzések a kapcsolattartóról"></textarea>
                                 </div>
@@ -760,11 +760,11 @@ class CustomersCrudController extends CrudController
                     <div class="mb-4">
                         <div id="document-upload-form">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="document-name" class="form-label">Dokumentum neve <small class="text-muted">(opcionális)</small></label>
                                     <input type="text" class="form-control" id="document-name" name="name" placeholder="Ha üres, a fájl neve lesz használva">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <label for="document-category" class="form-label">Kategória <small class="text-muted">(opcionális)</small></label>
                                     <select class="form-select" id="document-category" name="category">
                                         <option value="">Válassz kategóriát</option>
@@ -775,17 +775,17 @@ class CustomersCrudController extends CrudController
                                         <option value="other">Egyéb</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-sm-6 col-md-4">
                                     <label for="document-file" class="form-label">Fájl <small class="text-danger">*</small></label>
                                     <input type="file" class="form-control" id="document-file" name="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-sm-6 col-md-2">
                                     <label class="form-label">&nbsp;</label>
                                     <button type="button" id="upload-document-btn" class="btn btn-primary d-block w-100">Feltöltés</button>
                                 </div>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <label for="document-description" class="form-label">Leírás (opcionális)</label>
                                     <textarea class="form-control" id="document-description" name="description" rows="2"></textarea>
                                 </div>
