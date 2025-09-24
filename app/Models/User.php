@@ -31,6 +31,25 @@ class User extends Authenticatable
     protected $guarded = ['password_confirmation'];
 
     /**
+     * Fill the model with an array of attributes.
+     *
+     * @param  array  $attributes
+     * @return $this
+     */
+    public function fill(array $attributes)
+    {
+        // Remove password_confirmation from attributes to prevent mass assignment error
+        unset($attributes['password_confirmation']);
+
+        // If password is empty, remove it from attributes so it doesn't get updated
+        if (isset($attributes['password']) && empty($attributes['password'])) {
+            unset($attributes['password']);
+        }
+
+        return parent::fill($attributes);
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
