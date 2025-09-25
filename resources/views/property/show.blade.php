@@ -17,7 +17,7 @@
                 <div class="col-lg-7 d-flex">
                     <div class="d-flex flex-wrap mt-10 align-items-center">
                         <div class="address mt-15 d-flex align-items-center pe-4"><i class="bi bi-geo-alt"></i><h5 class="property-titlee ps-1 m-0" style="font-size:20px !important;">{{$property->settlement?->name}} {{$property->settlementPart?->name}}</h5></div>
-                        <div class="text-uppercase border-1 roundes-pill mt-15 mb-0 ms-0 me-3"><p class="m-0" styele="font-size: 16px;">ID: XXXXX</p></div> <!-- hiányos-->
+                        <div class="text-uppercase border-1 roundes-pill mt-15 mb-0 ms-0 me-3"><p class="m-0" styele="font-size: 16px;">ID: {{$property->property_code}}</p></div> <!-- hiányos-->
                         <div class="list-type text-uppercase border-20 mt-15 me-3">{{$property->getAdType() }}</div>
                         <div class="labels-on-show d-flex align-items-center mt-15">
                             @foreach($property->labels as $label)
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-lg-5 text-lg-end">
                     <div class="d-inline-block md-mt-40">
-                        <div class="price color-dark fw-500" style="font-size:20px !important;">ÁR: {{$property->price }}M FT.</div>
+                        <div class="price color-dark fw-500" style="font-size:20px !important;">ÁR: {{$property->getShortPrice() }}</div>
                         <ul class="style-none d-flex align-items-center action-btns">
                             <li class="me-auto fw-500 color-dark"><i class="fa-sharp fa-regular fa-share-nodes me-2"></i> Megosztás</li>
                             <li><a href="#" class="d-flex align-items-center justify-content-center rounded-circle tran3s" style="width: 30px; height:30px;"><i class="fa-light fa-heart"></i></a></li>

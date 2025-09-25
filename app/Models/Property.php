@@ -353,6 +353,16 @@ class Property extends Model
         return $withSuffix ? $formatted.' E Ft' : $formatted;
     }
 
+    public function getShortPrice(): string
+    {
+
+        if ($this->ad_type == 'sell') {
+            return $this->formatHUFMillions(1, true);
+        } else {
+            return $this->formatHUFThousands(1, true);
+        }
+    }
+
     public function getFullAddress(): string
     {
         if ($this->address) {
