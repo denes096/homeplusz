@@ -17,7 +17,7 @@ class PropertyService
             ->with('propertyType')
             ->with('propertySubtype')
             ->with(['attributes' => function ($query) {
-                $query->where('show_in_list', true);
+                //$query->where('show_in_list', true);
             }]);
 
         return $propertyQuery->first();
