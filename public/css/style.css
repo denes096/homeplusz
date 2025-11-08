@@ -6250,6 +6250,10 @@ iframe {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.64) 100%);
     z-index: -1;
 }
+table.dataTable tbody td.dt-checkboxes-cell,
+table.dataTable thead th.dt-checkboxes-select-all {
+  display: none !important;
+}
 .listing-card-four .tag {
     width: 60px;
     line-height: 30px;

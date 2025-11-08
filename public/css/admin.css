@@ -12,11 +12,6 @@ label[for="input_images"] {
     display: none !important;
 }
 
-/* Hide the file list display but keep the input functional */
-.form-group:has(input[id="input_images"]) .file-preview,
-.form-group:has(input[id="input_images"]) .file-list {
-    display: none !important;
-}
 
 /* Keep the input functional but invisible */
 input[id="input_images"] {

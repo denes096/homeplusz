@@ -17,7 +17,7 @@ class PropertyService
             ->with('propertyType')
             ->with('propertySubtype')
             ->with(['attributes' => function ($query) {
-                //$query->where('show_in_list', true);
+                // $query->where('show_in_list', true);
             }]);
 
         return $propertyQuery->first();
@@ -30,16 +30,34 @@ class PropertyService
 
     public function getByCode(string $code)
     {
+        if (! is_numeric($code)) {
+            return null;
+        }
+
         $propertyQuery = Property::where('property_code', '=', $code)
+
+            ->with('settlement')
+            ->with('settlementPart')
+            ->with('propertyType')
+            ->with('propertySubtype')
+            ->with('attributes');
+
+        return $propertyQuery->first();
+    }
+
+    public function getByUserName(string $userName)
+    {
+        return Property::join('users', 'properties.user_id', '=', 'users.id')
+            ->where('users.name', 'like', '%'.$userName.'%')
             ->with('settlement')
             ->with('settlementPart')
             ->with('propertyType')
             ->with('propertySubtype')
             ->with(['attributes' => function ($query) {
                 $query->where('show_in_list', true);
-            }]);
+            }])
+            ->paginate(10);
 
-        return $propertyQuery->first();
     }
 
     public function getPropertiesForListingByLabel(Label $label, ?int $limit = null): Collection

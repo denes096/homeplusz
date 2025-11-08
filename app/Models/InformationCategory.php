@@ -37,7 +37,7 @@ class InformationCategory extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function informations(): Hasmany
+    public function informations(): HasMany
     {
         return $this->hasMany(Information::class);
     }

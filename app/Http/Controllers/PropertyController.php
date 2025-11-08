@@ -56,16 +56,24 @@ class PropertyController extends Controller
 
     public function getByCode(string $code, Request $request)
     {
+
         $property = $this->propertyService->getByCode($code);
 
         if (! $property) {
-            $project = $this->projectService->getByCode($code);
+            $properties = $this->propertyService->getByUserName($code);
 
-            if (! $project) {
-                return back()->with('message', 'Nem található ilyen projekt/ingatlan');
+            if (! $properties || $properties->count() == 0) {
+
+                $project = $this->projectService->getByCode($code);
+
+                if (! $project) {
+                    return back()->with('message', 'Nem található ilyen projekt/ingatlan');
+                }
+
+                return view('project.show', compact('project'));
             }
 
-            return view('project.show', compact('project'));
+            return view('property.list', compact('properties'));
         }
 
         $similarProperties = $this->propertyService->getSimilarProperties($property, 4);

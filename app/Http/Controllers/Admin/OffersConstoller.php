@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
-class OffersConstoller extends CrudController
+class OffersContoller extends CrudController
 {
     public function index()
     {

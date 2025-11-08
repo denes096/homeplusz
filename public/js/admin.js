@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function renderPreviews() {
             preview.innerHTML = '';
+            console.log(selectedFiles);
             selectedFiles.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function (e) {
@@ -76,12 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const singleFileButtons = document.querySelectorAll('.file_clear_button[data-filename]');
     fileButtons.forEach(button => {
         const filePath = button.getAttribute('data-filename');
+        console.log(filePath);
         if (filePath && previewContainer) {
             const wrapper = document.createElement('div');
             wrapper.style.position = 'relative';
 
             const img = document.createElement('img');
-            img.src = '/storage/uploads/' + filePath.split('_')[0] + "/" + filePath; // adjust this path if needed
+            img.src = '/storage/' + filePath; // adjust this path if needed
             img.style.maxWidth = '150px';
             img.style.maxHeight = '150px';
             img.style.border = '1px solid #ccc';
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             wrapper.style.position = 'relative';
 
             const img = document.createElement('img');
-            img.src = '/storage/uploads/' + filePath; // adjust this path if needed
+            img.src =  filePath; // adjust this path if needed
             img.style.maxWidth = '150px';
             img.style.maxHeight = '150px';
             img.style.border = '1px solid #ccc';

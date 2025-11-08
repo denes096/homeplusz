@@ -87,6 +87,69 @@ class CustomersCrudController extends CrudController
             'note' => 'nullable|string|max:250',
         ]);
 
+        // Only add Alapadatok (Basic data) fields during creation
+        $this->setupBasicDataFields();
+
+        // Add placeholder content for other tabs during creation
+        $this->addPlaceholderTabsForCreate();
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     *
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        CRUD::setValidation([
+            'status' => 'required|in:Aktív,Felfüggesztve,Archív',
+            'refId' => 'nullable|exists:users,id',
+            'kategoria' => 'required|in:maganszemely,beruhazo',
+            'name_0' => 'required|string|max:100',
+            'phone_0' => 'nullable|string|max:100',
+            'azonosito1_0' => 'nullable|string|max:100',
+            'azonosito2_0' => 'nullable|string|max:100',
+            'name_1' => 'nullable|string|max:100',
+            'phone_1' => 'nullable|string|max:100',
+            'name_2' => 'nullable|string|max:100',
+            'phone_2' => 'nullable|string|max:100',
+            'name_3' => 'nullable|string|max:100',
+            'phone_3' => 'nullable|string|max:100',
+            'name_4' => 'nullable|string|max:100',
+            'phone_4' => 'nullable|string|max:100',
+            'email' => 'nullable|email|max:100',
+            'address' => 'nullable|string|max:255',
+            'note' => 'nullable|string|max:250',
+        ]);
+
+        // Add all fields for update operation
+        $this->setupBasicDataFields();
+        $this->setupContactsTabFields();
+        $this->setupDocumentsTabFields();
+        $this->setupSearchParametersTabFields();
+
+        // A p[...] mezők előtöltése a mentett CustomerSearch alapján, ha van
+        $entry = $this->crud->getCurrentEntry();
+        if ($entry) {
+            $search = CustomerSearch::where('customer_id', $entry->id)->first();
+            if ($search) {
+                $params = json_decode($search->search, true) ?: [];
+                foreach ($params as $key => $value) {
+                    $fieldName = 'p['.$key.']';
+                    // set field value (handles arrays and scalars)
+                    CRUD::modifyField($fieldName, ['value' => $value]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Setup basic data fields (Alapadatok tab)
+     */
+    protected function setupBasicDataFields()
+    {
         CRUD::field('status')->type('select_from_array')->options([
             'Aktív' => 'Aktív',
             'Felfüggesztve' => 'Felfüggesztve',
@@ -124,23 +187,39 @@ class CustomersCrudController extends CrudController
         CRUD::field('email')->type('email')->tab('Alapadatok');
         CRUD::field('address')->type('text')->label('Cím')->tab('Alapadatok');
         CRUD::field('note')->type('textarea')->tab('Alapadatok');
+    }
 
-        // Kapcsolattartók fül
+    /**
+     * Setup contacts tab fields
+     */
+    protected function setupContactsTabFields()
+    {
         CRUD::addField([
             'name' => 'contacts',
             'type' => 'custom_html',
             'value' => $this->getContactsWidget(),
             'tab' => 'Kapcsolattartók',
         ]);
+    }
 
-        // Dokumentumok fül
+    /**
+     * Setup documents tab fields
+     */
+    protected function setupDocumentsTabFields()
+    {
         CRUD::addField([
             'name' => 'documents',
             'type' => 'custom_html',
             'value' => $this->getDocumentsWidget(),
             'tab' => 'Dokumentumok',
         ]);
+    }
 
+    /**
+     * Setup search parameters tab fields
+     */
+    protected function setupSearchParametersTabFields()
+    {
         CRUD::addField([
             'label' => 'Min ár',
             'type' => 'number',
@@ -264,33 +343,36 @@ class CustomersCrudController extends CrudController
                 }
             }
         }
-
     }
 
     /**
-     * Define what happens when the Update operation is loaded.
-     *
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     *
-     * @return void
+     * Add placeholder content for tabs during creation
      */
-    protected function setupUpdateOperation()
+    protected function addPlaceholderTabsForCreate()
     {
-        $this->setupCreateOperation();
+        // Kapcsolattartók tab placeholder
+        CRUD::addField([
+            'name' => 'contacts_placeholder',
+            'type' => 'custom_html',
+            'value' => '<div class="alert alert-info"><i class="la la-info-circle"></i> <strong>Először mentsd el a Vevőt, utána tudod csak szerkeszteni a kapcsolattartókat!</strong></div>',
+            'tab' => 'Kapcsolattartók',
+        ]);
 
-        // A p[...] mezők előtöltése a mentett CustomerSearch alapján, ha van
-        $entry = $this->crud->getCurrentEntry();
-        if ($entry) {
-            $search = CustomerSearch::where('customer_id', $entry->id)->first();
-            if ($search) {
-                $params = json_decode($search->search, true) ?: [];
-                foreach ($params as $key => $value) {
-                    $fieldName = 'p['.$key.']';
-                    // set field value (handles arrays and scalars)
-                    CRUD::modifyField($fieldName, ['value' => $value]);
-                }
-            }
-        }
+        // Dokumentumok tab placeholder
+        CRUD::addField([
+            'name' => 'documents_placeholder',
+            'type' => 'custom_html',
+            'value' => '<div class="alert alert-info"><i class="la la-info-circle"></i> <strong>Először mentsd el a Vevőt, utána tudod csak feltölteni a dokumentumokat!</strong></div>',
+            'tab' => 'Dokumentumok',
+        ]);
+
+        // Keresési paraméterek tab placeholder
+        CRUD::addField([
+            'name' => 'search_params_placeholder',
+            'type' => 'custom_html',
+            'value' => '<div class="alert alert-info"><i class="la la-info-circle"></i> <strong>Először mentsd el a Vevőt, utána tudod csak beállítani a keresési paramétereket!</strong></div>',
+            'tab' => 'Keresési paraméterek',
+        ]);
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -73,7 +74,6 @@ class Property extends Model
 
             $manager = new ImageManager(new Driver);
             $disk = 'public';
-            $path = 'uploads';
 
             $finalPaths = [];
 
@@ -86,10 +86,11 @@ class Property extends Model
                     $image = $manager->read($fullPath)
                         ->place(public_path('images/watermark.png'), 'center');
 
-                    // Felülírja a meglévő fájlt
-                    Storage::disk($disk)->put($imgPath, (string) $image->encode());
+                    // For new properties, we'll store in a temp location and reorganize after save
+                    $tempPath = 'uploads/temp_'.time().'_'.basename($imgPath);
+                    Storage::disk($disk)->put($tempPath, (string) $image->encode());
 
-                    $finalPaths[] = $imgPath;
+                    $finalPaths[] = $tempPath;
                 } else {
                     // Ha valamiért nem létező, csak hozzáadjuk
                     $finalPaths[] = $imgPath;
@@ -100,6 +101,40 @@ class Property extends Model
             $model->images = json_encode($finalPaths);
         });
 
+        static::created(function ($model) {
+            if (app()->runningInConsole()) {
+                return;
+            }
+
+            $manager = new ImageManager(new Driver);
+            $disk = 'public';
+
+            $finalPaths = [];
+            $images = is_array($model->images) ? $model->images : json_decode($model->images, true);
+
+            foreach ($images as $imgPath) {
+                if (Storage::disk($disk)->exists($imgPath)) {
+                    // Move from temp location to proper directory structure
+                    $newPath = 'uploads/'.$model->id.'/'.basename($imgPath);
+
+                    // Ensure the directory exists
+                    Storage::disk($disk)->makeDirectory('uploads/'.$model->id);
+
+                    // Move the file
+                    Storage::disk($disk)->move($imgPath, $newPath);
+
+                    // Store full path instead of just filename
+                    $finalPaths[] = 'uploads/'.$model->id.'/'.basename($imgPath);
+                } else {
+                    $finalPaths[] = $imgPath;
+                }
+            }
+
+            // Update the model with the new paths
+            $model->images = json_encode($finalPaths);
+            $model->save();
+        });
+
         static::updating(function ($model) {
             if (app()->runningInConsole()) {
                 return;
@@ -107,27 +142,51 @@ class Property extends Model
 
             $manager = new ImageManager(new Driver);
             $disk = 'public';
-            $path = 'uploads';
 
             $finalPaths = [];
 
             $images = is_array($model->images) ? $model->images : json_decode($model->images, true);
 
             foreach ($images as $imgPath) {
-                // Csak ha tényleges fájl elérési út (pl. uploads/kep.jpg)
-                if (Storage::disk($disk)->exists($imgPath)) {
+                // Ensure the property directory exists
+                Storage::disk($disk)->makeDirectory('uploads/'.$model->id);
+
+                // Handle both old and new path structures
+                $actualPath = $imgPath;
+                if (Storage::disk($disk)->exists('uploads/'.$model->id.'/'.$imgPath)) {
+                    // New structure path
+                    $actualPath = 'uploads/'.$model->id.'/'.$imgPath;
+                } elseif (Storage::disk($disk)->exists($imgPath)) {
+                    // Old flat structure or temp path - move to new structure
                     $fullPath = Storage::disk($disk)->path($imgPath);
                     $image = $manager->read($fullPath)
                         ->place(public_path('images/watermark.png'), 'center', 0, 0, 60);
 
-                    // Felülírja a meglévő fájlt
-                    Storage::disk($disk)->put($imgPath, (string) $image->encode());
+                    // Move to new structure
+                    $newPath = 'uploads/'.$model->id.'/'.basename($imgPath);
+                    Storage::disk($disk)->put($newPath, (string) $image->encode());
 
-                    $finalPaths[] = $imgPath;
+                    // Store full path instead of just filename
+                    $finalPaths[] = $newPath;
+
+                    continue;
                 } else {
-                    // Ha valamiért nem létező, csak hozzáadjuk
+                    // File doesn't exist, keep the path as is
                     $finalPaths[] = $imgPath;
+
+                    continue;
                 }
+
+                // Process existing file with watermark
+                $fullPath = Storage::disk($disk)->path($actualPath);
+                $image = $manager->read($fullPath)
+                    ->place(public_path('images/watermark.png'), 'center', 0, 0, 60);
+
+                // Update the file in place
+                Storage::disk($disk)->put($actualPath, (string) $image->encode());
+
+                // Store full path instead of just filename
+                $finalPaths[] = $actualPath;
             }
 
             // JSON-be visszarakjuk
@@ -164,7 +223,9 @@ class Property extends Model
 
         if ($images != null) {
             foreach ($images as $image) {
-                return Storage::url("uploads/{$this->id}/".$image);
+                if ($image != null && $image != '') {
+                    return Storage::url($image);
+                }
             }
         }
 
@@ -174,10 +235,10 @@ class Property extends Model
 
     public function getFirstImageUrlAttribute()
     {
-        $images = json_decode($this->images);
+        $images = json_decode($this->images, true);
 
-        if (! empty($images)) {
-            return "uploads/{$this->id}/".$images[0];
+        if (! empty($images) && ! empty($images[0])) {
+            return Storage::url($images[0]);
         }
 
         return 'images/defaultProperty.png'; // alapértelmezett kép
@@ -230,12 +291,19 @@ class Property extends Model
     public function getImageUrls()
     {
         $r = [];
-        foreach (json_decode($this->images) as $image) {
-            $r[] = Storage::url("uploads/{$this->id}/".$image);
+        $images = json_decode($this->images, true);
+        if (empty($images)) {
+            $r[] = Storage::url('images/defaultProperty.png');
+
+            return $r;
+        }
+
+        foreach ($images as $image) {
+            $r[] = Storage::url($image);
         }
 
         if (empty($r)) {
-            $r[] = Storage::url('../images/defaultProperty.png');
+            $r[] = Storage::url('images/defaultProperty.png');
         }
 
         return $r;
@@ -317,7 +385,7 @@ class Property extends Model
             $propertyIds = is_string($offer->property_ids) ? json_decode($offer->property_ids, true) : $offer->property_ids;
 
             // Debug logging
-            \Log::info('Checking offer', [
+            Log::info('Checking offer', [
                 'property_id' => $this->id,
                 'offer_property_ids' => $propertyIds,
                 'is_array' => is_array($propertyIds),

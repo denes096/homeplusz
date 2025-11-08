@@ -52,13 +52,25 @@
             <div class="address" style="margin-bottom: 0 !important; font-size: 14px !important;"><i class="bi bi-geo-alt pe-1"></i>{{$property->settlement?->name}} {{$property->settlementPart?->name}}</div>
             <ul class="style-none feature d-flex flex-wrap align-items-center p2" style="min-height: 55px; max-height: 55px; font-size: 14px;">
                 @foreach($property->attributes as $attribute)
-                    @if($attribute->pivot->value)
+                    @if($attribute->pivot->value && $attribute->name == 'epulet_lakotermeret')
                         <div class="d-block ps-2 pe-3"  style="min-height: 50px; max-height: 50px;">
 
-                            <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/icon_48.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
+                            <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/rooms-icon.png"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
+                        </div>
+                    @elseif($attribute->pivot->value && $attribute->name == 'epulet_szobaszam') 
+                        <div class="d-block ps-2 pe-3"  style="min-height: 50px; max-height: 50px;">
+
+                            <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/icon_33.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
+                        </div>
+                    @elseif($attribute->pivot->value && $attribute->name == 'telek_alapterulet') 
+                        <div class="d-block ps-2 pe-3"  style="min-height: 50px; max-height: 50px;">
+                            <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/47.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{$attribute->pivot->value}}{{$attribute->suffix}}</strong></span>
+                        </div>
+                    @elseif($attribute->pivot->value && $attribute->name == 'parkolas') 
+                        <div class="d-block ps-2 pe-3"  style="min-height: 50px; max-height: 50px;">
+                            <span><strong style="font-size: 16px !important;" class="fw-500 border px-1 color-dark d-flex justify-content-center align-items-center"><img src="/images/icon/garage.svg"alt="..." class="me-2" style="width: 20px; height: 20px;">{{$attribute->prefix}}{{json_decode($attribute->values, true)[$attribute->pivot->value] ?? 'asd'}}{{$attribute->suffix}}</strong></span>
                         </div>
                     @endif
-
                 @endforeach
             </ul>
             <div class="pl-footer d-flex align-items-center justify-content-between py-0" style="margin-top: 15px !important;" >

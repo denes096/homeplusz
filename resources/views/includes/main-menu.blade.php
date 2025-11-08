@@ -56,7 +56,7 @@
                             <li class="nav-item dropdown">
                                 <div class="input-group">
 
-                                    <input type="text" style="border-right:none;" name="code" id="search-code" class="form-control" placeholder="Keresés kód alapján" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <input type="text" style="border-right:none;" name="code" id="search-code" class="form-control" placeholder="Ingatlan kód / referens" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                     <span class="input-group-text" id="basic-addon2" style="background-color:rgba(255, 255, 255, 0); color:#fff;"><button type="button" class="search-for-code"><i class="bi bi-arrow-right-circle" style="font-size: 20px; color: #96006B; border-left: none;"></i></button></span>
                                 </div>
                             </li>

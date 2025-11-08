@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\InformationRequest;
+use App\Models\InformationCategory;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -28,7 +29,7 @@ class InformationCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Information::class);
         CRUD::setRoute(config('backpack.base.route_prefix').'/information');
-        CRUD::setEntityNameStrings('information', 'information');
+        CRUD::setEntityNameStrings('információ', 'információk');
     }
 
     /**
@@ -40,7 +41,23 @@ class InformationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+        // Name column
+        CRUD::column('name')
+            ->type('text')
+            ->label('Név');
+
+        // Category column
+        CRUD::column('informationCategory.name')
+            ->type('text')
+            ->label('Kategória')
+            ->entity('informationCategory')
+            ->attribute('name');
+
+        // Description column (show only first 100 characters)
+        CRUD::column('description')
+            ->type('text')
+            ->label('Leírás')
+            ->limit(100);
 
         /**
          * Columns can be defined using the fluent syntax:
@@ -58,7 +75,33 @@ class InformationCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(InformationRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+
+        // Name field
+        CRUD::field('name')
+            ->type('text')
+            ->label('Név')
+            ->tab('Alapadatok')
+            ->wrapperAttributes(['class' => 'col-12 col-md-6']);
+
+        // Category field
+        CRUD::addField([
+            'label' => 'Kategória',
+            'type' => 'select',
+            'name' => 'information_category_id',
+            'entity' => 'informationCategory',
+            'attribute' => 'name',
+            'model' => InformationCategory::class,
+            'tab' => 'Alapadatok',
+            'wrapperAttributes' => ['class' => 'col-12 col-md-6'],
+        ]);
+
+        // Description field with CKEditor
+        CRUD::field('description')
+            ->type('textarea')
+            ->attributes(['class' => 'ckeditor form-control'])
+            ->label('Leírás')
+            ->tab('Alapadatok')
+            ->wrapperAttributes(['class' => 'col-12 col-md-12']);
 
         /**
          * Fields can be defined using the fluent syntax:
@@ -75,6 +118,33 @@ class InformationCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(InformationRequest::class);
+
+        // Name field
+        CRUD::field('name')
+            ->type('text')
+            ->label('Név')
+            ->tab('Alapadatok')
+            ->wrapperAttributes(['class' => 'col-12 col-md-6']);
+
+        // Category field
+        CRUD::addField([
+            'label' => 'Kategória',
+            'type' => 'select',
+            'name' => 'information_category_id',
+            'entity' => 'informationCategory',
+            'attribute' => 'name',
+            'model' => InformationCategory::class,
+            'tab' => 'Alapadatok',
+            'wrapperAttributes' => ['class' => 'col-12 col-md-6'],
+        ]);
+
+        // Description field with CKEditor
+        CRUD::field('description')
+            ->type('textarea')
+            ->attributes(['class' => 'ckeditor form-control'])
+            ->label('Leírás')
+            ->tab('Alapadatok')
+            ->wrapperAttributes(['class' => 'col-12 col-md-12']);
     }
 }

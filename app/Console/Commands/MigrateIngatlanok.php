@@ -77,7 +77,7 @@ class MigrateIngatlanok extends Command
         $this->info('Ingatlanok migráció indítása...');
 
         $oldIngatlanok = DB::connection('old')->table('ingatlanok')->orderBy('Id')
-            //->limit(20)
+            ->limit(20)
             ->get();
         $skipped = 0;
 
@@ -165,24 +165,25 @@ class MigrateIngatlanok extends Command
 
             $baseImageUrl = 'https://www.otthonplusz.hu/pictures/';
 
-            //            foreach ($images as $filename) {
-            //                try {
-            //                    $url = $baseImageUrl . $filename;
-            //
-            //                    $response = Http::timeout(10)->get($url);
-            //
-            //                    if ($response->successful()) {
-            //                        Storage::disk('public')->put("uploads/{$row->Id}/{$filename}", $response->body());
-            //                        $this->info($index . " ingatlan képe letöltve");
-            //                    } else {
-            //                        $this->warn("Nem sikerült letölteni a képet: {$url}");
-            //                        logger()->warning("Nem sikerült letölteni a képet: {$url}");
-            //                    }
-            //                } catch (\Exception $e) {
-            //                    logger()->error("Hiba a {$url} letöltésekor: " . $e->getMessage());
-            //                }
-            //            }
+            $newImages = [];
+            foreach ($images as $filename) {
+                try {
+                    $url = $baseImageUrl . $filename;
+//
+                    $response = Http::timeout(10)->get($url);
 
+                    if ($response->successful()) {
+                        Storage::disk('public')->put("uploads/{$row->Id}/{$filename}", $response->body());
+                        $newImages[] = "uploads/{$row->Id}/{$filename}";
+                        $this->info($index . " ingatlan képe letöltve");
+                    } else {
+                        $this->warn("Nem sikerült letölteni a képet: {$url}");
+                        logger()->warning("Nem sikerült letölteni a képet: {$url}");
+                    }
+                } catch (\Exception $e) {
+                    logger()->error("Hiba a {$url} letöltésekor: " . $e->getMessage());
+                }
+            }
             // új Property rekord létrehozása
             $property = new Property([
                 'id' => $row->Id,
@@ -190,7 +191,7 @@ class MigrateIngatlanok extends Command
 
                 'description' => $row->leiras,
                 'short_description' => $row->rovid_leiras,
-                'images' => $imageJson,
+                'images' => json_encode($newImages),
 
                 'is_active' => $row->status === 'Aktív',
                 'ad_type' => $adType,
@@ -339,6 +340,8 @@ class MigrateIngatlanok extends Command
             'label' => 'Lakótér méret (m²)',
             'type' => 'number',
             'suffix' => 'm²',
+            'show_in_search' => 1,
+            'show_in_list' => 1,
             'property_attribute_category_id' => 1,
         ]);
 
@@ -346,6 +349,8 @@ class MigrateIngatlanok extends Command
             'name' => 'epulet_szobaszam',
             'label' => 'Szobák száma',
             'type' => 'number',
+            'show_in_search' => 1,
+            'show_in_list' => 1,
             'property_attribute_category_id' => 1,
         ]);
 
@@ -522,6 +527,8 @@ class MigrateIngatlanok extends Command
             'name' => 'parkolas',
             'label' => 'Parkolás',
             'type' => 'select',
+            'show_in_search' => 1,
+            'show_in_list' => 1,
             'values' => json_encode([
                 '47' => 'Dupla garázs',
                 '48' => 'Garázs',
@@ -553,6 +560,8 @@ class MigrateIngatlanok extends Command
             'label' => 'Telek alapterület',
             'type' => 'number',
             'suffix' => 'm²',
+            'show_in_search' => 1,
+            'show_in_list' => 1,
             'property_attribute_category_id' => 5,
         ]);
 
@@ -707,6 +716,11 @@ class MigrateIngatlanok extends Command
             $category = $extra->category;
 
             if ($category == 'cimke') {
+                if ($extra->label == 'CSOK +') {
+                    $filter = 1;
+                } else {
+                    $filter = 0;
+                }
                 Label::create([
                     'id' => $extra->Id,
                     'name' => $extra->label ?? 'n/a',

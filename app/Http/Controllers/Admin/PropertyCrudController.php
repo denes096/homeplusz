@@ -52,6 +52,9 @@ class PropertyCrudController extends CrudController
         $this->crud->removeButton('edit');
         $this->crud->removeButton('delete'); // Remove delete button from listing
 
+        // Add create button for new property
+        CRUD::addButton('top', 'create', 'view', 'crud::buttons.create', 'beginning');
+
         // Add custom buttons
         $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
         $this->crud->addButtonFromModelFunction('line', 'editProperty', 'getEditButton', 'end');
@@ -66,9 +69,9 @@ class PropertyCrudController extends CrudController
                 'name' => 'first_image_url',
                 'label' => 'Kép',
                 'type' => 'image',
-                'prefix' => 'storage/',
-                'height' => '120px',
-                'width' => '160px',
+
+                'height' => '200px',
+                'width' => '250px',
                 'orderable' => false,
                 'searchLogic' => false,
             ],
@@ -184,6 +187,9 @@ class PropertyCrudController extends CrudController
         $this->crud->removeButton('edit');
         $this->crud->removeButton('delete'); // Remove delete button from listing
 
+        // Add create button for new property
+        CRUD::addButton('top', 'create', 'view', 'crud::buttons.create', 'beginning');
+
         // Add custom buttons
         $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
         $this->crud->addButtonFromModelFunction('line', 'editProperty', 'getEditButton', 'end');
@@ -198,9 +204,8 @@ class PropertyCrudController extends CrudController
                 'name' => 'first_image_url',
                 'label' => 'Kép',
                 'type' => 'image',
-                'prefix' => 'storage/',
-                'height' => '120px',
-                'width' => '160px',
+                'height' => '200px',
+                'width' => '250px',
                 'orderable' => false,
                 'searchLogic' => false,
             ],
@@ -316,6 +321,9 @@ class PropertyCrudController extends CrudController
         $this->crud->removeButton('edit');
         $this->crud->removeButton('delete'); // Remove delete button from listing
 
+        // Add create button for new property
+        CRUD::addButton('top', 'create', 'view', 'crud::buttons.create', 'beginning');
+
         // Add custom buttons
         $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
         $this->crud->addButtonFromModelFunction('line', 'editProperty', 'getEditButton', 'end');
@@ -330,9 +338,9 @@ class PropertyCrudController extends CrudController
                 'name' => 'first_image_url',
                 'label' => 'Kép',
                 'type' => 'image',
-                'prefix' => 'storage/',
-                'height' => '120px',
-                'width' => '160px',
+
+                'height' => '200px',
+                'width' => '250px',
                 'orderable' => false,
                 'searchLogic' => false,
             ],
@@ -438,7 +446,6 @@ class PropertyCrudController extends CrudController
     {
         CRUD::setValidation(PropertyRequest::class);
 
-      
         // Filter to show only active properties
         // $this->crud->addClause('where', 'is_active', true);
 
@@ -446,11 +453,12 @@ class PropertyCrudController extends CrudController
             $this->crud->addClause('where', 'user_id', request()->input('user_id'));
         }
 
-
         // Remove default buttons
         $this->crud->removeButton('show');
-        CRUD::removeButton('create');
         $this->crud->removeButton('delete'); // Remove delete button from listing
+
+        // Add create button for new property
+        CRUD::addButton('top', 'create', 'view', 'crud::buttons.create', 'beginning');
 
         // Add custom buttons
         $this->crud->addButtonFromModelFunction('line', 'showProperty', 'getShowButton', 'end');
@@ -467,11 +475,15 @@ class PropertyCrudController extends CrudController
                 'name' => 'first_image_url',
                 'label' => 'Kép',
                 'type' => 'image',
-                'prefix' => 'storage/',
-                'height' => '120px',
-                'width' => '160px',
+
+                'height' => '200px',
+                'width' => '250px',
                 'orderable' => false,
                 'searchLogic' => false,
+                'wrapper' => [
+                    'element' => 'div',
+                    'style' => 'overflow: visible; height: auto; width: 150px;',
+                ],
             ],
             [
                 'name' => 'property_code',
@@ -623,7 +635,7 @@ class PropertyCrudController extends CrudController
                 'name' => 'first_image_url',
                 'label' => 'Kép',
                 'type' => 'image',
-                'prefix' => 'storage/',
+
                 'height' => '300px',
                 'width' => '400px',
             ],
@@ -1291,9 +1303,12 @@ class PropertyCrudController extends CrudController
         CRUD::field('images')
             ->type('upload_multiple')
             ->tab('Base')
+            ->prefix('storage/')
+            ->upload('false')
             ->withFiles([
                 'disk' => 'public',
                 'path' => 'uploads',
+                'fileNamer' => \Backpack\CRUD\app\Library\Uploaders\Support\FileNameGenerator::class,
             ])
             ->attributes(['id' => 'input_images'])
             ->wrapperAttributes(['class' => 'col-12']);

@@ -6,6 +6,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\ModelHasRole;
 
 class MigrateUsers extends Command
 {
@@ -21,6 +23,8 @@ class MigrateUsers extends Command
 
         $this->info('Talált felhasználók száma: '.$oldUsers->count());
         $skipped = 0;
+
+        $role = Role::create(['name' => 'super-admin']);
 
         foreach ($oldUsers as $row) {
 
@@ -53,8 +57,11 @@ class MigrateUsers extends Command
             $user->updated_at = now();
 
             $user->save();
+
+            $user->assignRole($role);
         }
 
+    
         $this->info("Migráció kész! Kihagyott rekordok: {$skipped}");
     }
 }

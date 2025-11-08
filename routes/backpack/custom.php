@@ -68,7 +68,7 @@ Route::group([
     Route::post('customers/{id}/send-property-email', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendPropertyEmail']);
     Route::post('customers/{id}/send-offer', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendOffer']);
     Route::get('customers/{id}/offers/{searchId}', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOffers']);
-    Route::get('offers/{id}/details', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOfferDetails']);
+    Route::get('offers/{id}/details', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOfferDetails'])
     Route::post('customers/{customerId}/add-contact', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'addContact']);
     Route::delete('customers/contact/{contactId}/delete', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'deleteContact']);
     Route::post('customers/{customerId}/upload-document', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'uploadDocument']);
