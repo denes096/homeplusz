@@ -60,7 +60,7 @@ Route::group([
     // Route::get('property-inactive', [PropertyCrudController::class, 'listInactive'])->name('admin.property.inactive');
 
     // Active properties route
-    //Route::get('property-active', [PropertyCrudController::class, 'listActive'])->name('admin.property.active');
+    // Route::get('property-active', [PropertyCrudController::class, 'listActive'])->name('admin.property.active');
 
     // Property listing routes
     Route::crud('customers', 'CustomersCrudController');
@@ -68,14 +68,14 @@ Route::group([
     Route::post('customers/{id}/send-property-email', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendPropertyEmail']);
     Route::post('customers/{id}/send-offer', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'sendOffer']);
     Route::get('customers/{id}/offers/{searchId}', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOffers']);
-    Route::get('offers/{id}/details', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOfferDetails'])
+    Route::get('offers/{id}/details', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'getOfferDetails']);
     Route::post('customers/{customerId}/add-contact', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'addContact']);
     Route::delete('customers/contact/{contactId}/delete', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'deleteContact']);
     Route::post('customers/{customerId}/upload-document', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'uploadDocument']);
     Route::delete('customers/document/{documentId}/delete', [\App\Http\Controllers\Admin\CustomersCrudController::class, 'deleteDocument']);
     Route::crud('slider-images', 'SliderImagesCrudController');
     Route::crud('customer-search', 'CustomerSearchCrudController');
-    Route::get('offers', [\App\Http\Controllers\Admin\OffersConstoller::class, 'index'])->name('backpack.offers.index');
+    Route::get('offers', [\App\Http\Controllers\Admin\OffersController::class, 'index'])->name('backpack.offers.index');
 }); // this should be the absolute last line of this file
 
 /**

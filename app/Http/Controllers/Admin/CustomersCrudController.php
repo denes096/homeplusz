@@ -252,9 +252,9 @@ class CustomersCrudController extends CrudController
             'name' => 'p[ad_type]',
             'type' => 'select_from_array',
             'options' => [
-                'Eladó' => 'Eladó',
-                'Kiadó' => 'Kiadó',
-                'Minden' => 'Minden',
+                'sell' => 'Eladó',
+                'rent' => 'Kiadó',
+                'all' => 'Minden',
             ],
             'tab' => 'Keresési paraméterek',
             'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
@@ -264,9 +264,9 @@ class CustomersCrudController extends CrudController
         CRUD::addField([
             'label' => 'Ingatlantípus',
             'name' => 'p[property_types]',
-            'type' => 'select_from_array',
+            'type' => 'multi_select_dropdown',
             'options' => \App\Models\PropertyType::all()->pluck('name', 'id')->toArray(),
-            'allows_multiple' => true,
+            'placeholder' => 'Válassz ingatlantípusokat...',
             'tab' => 'Keresési paraméterek',
             'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
@@ -274,9 +274,9 @@ class CustomersCrudController extends CrudController
         CRUD::addField([
             'label' => 'Ingatlan altípus',
             'name' => 'p[property_subtypes]',
-            'type' => 'select_from_array',
+            'type' => 'multi_select_dropdown',
             'options' => \App\Models\PropertySubtype::all()->pluck('name', 'id')->toArray(),
-            'allows_multiple' => true,
+            'placeholder' => 'Válassz ingatlan altípusokat...',
             'tab' => 'Keresési paraméterek',
             'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
@@ -284,9 +284,9 @@ class CustomersCrudController extends CrudController
         CRUD::addField([
             'label' => 'Település',
             'name' => 'p[settlements]',
-            'type' => 'select_from_array',
+            'type' => 'multi_select_dropdown',
             'options' => \App\Models\Settlement::all()->pluck('name', 'id')->toArray(),
-            'allows_multiple' => true,
+            'placeholder' => 'Válassz településeket...',
             'tab' => 'Keresési paraméterek',
             'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
@@ -294,9 +294,9 @@ class CustomersCrudController extends CrudController
         CRUD::addField([
             'label' => 'Település rész',
             'name' => 'p[settlement_parts]',
-            'type' => 'select_from_array',
+            'type' => 'multi_select_dropdown',
             'options' => \App\Models\SettlementPart::all()->pluck('name', 'id')->toArray(),
-            'allows_multiple' => true,
+            'placeholder' => 'Válassz településrészeket...',
             'tab' => 'Keresési paraméterek',
             'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
         ]);
@@ -321,14 +321,24 @@ class CustomersCrudController extends CrudController
                         'tab' => 'Keresési paraméterek',
                         'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
                     ]);
-                } elseif ($propAttr->type == 'select' || $propAttr->type == 'select_multiple') {
+                } elseif ($propAttr->type == 'select') {
                     $options = json_decode($propAttr->values, true) ?: [];
                     CRUD::addField([
                         'label' => $propAttr->label,
                         'name' => 'p['.$propAttr->name.']',
                         'type' => 'select_from_array',
                         'options' => $options,
-                        'allows_multiple' => ($propAttr->type == 'select_multiple'),
+                        'tab' => 'Keresési paraméterek',
+                        'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
+                    ]);
+                } elseif ($propAttr->type == 'select_multiple') {
+                    $options = json_decode($propAttr->values, true) ?: [];
+                    CRUD::addField([
+                        'label' => $propAttr->label,
+                        'name' => 'p['.$propAttr->name.']',
+                        'type' => 'multi_select_dropdown',
+                        'options' => $options,
+                        'placeholder' => 'Válassz...',
                         'tab' => 'Keresési paraméterek',
                         'wrapper' => ['class' => 'form-group col-sm-6 col-md-3'],
                     ]);

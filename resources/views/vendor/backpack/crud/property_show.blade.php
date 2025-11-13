@@ -510,7 +510,7 @@
             <div class="image-gallery">
                 @foreach(json_decode($property->images) as $image)
                 <div class="image-item">
-                    <img src="{{ Storage::url('uploads/'.$property->id.'/'.$image) }}" alt="{{ $property->title }}">
+                    <img src="/storage/{{ $image }}" alt="{{ $property->title }}">
                 </div>
                 @endforeach
             </div>
