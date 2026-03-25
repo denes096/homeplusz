@@ -70,7 +70,7 @@ class Property extends Model
                 return;
             }
 
-            $model->user_id = backpack_user()->id;
+            $model->user_id = auth()->id();
 
             $manager = new ImageManager(new Driver);
             $disk = 'public';

@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-require __DIR__.'/backpack/custom.php';
+require __DIR__.'/admin.php';
+// require __DIR__.'/backpack/custom.php'; // Commented out - using new admin routes
 
 Route::get('/szolgaltatasok/{serviceId}-{name}', [ServiceController::class, 'show']);
 Route::get('/informaciok/{informationId}-{name}', [InformationController::class, 'show']);
